@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  &__left {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    & > * {
+      padding: 1rem;
+    }
+  }
+
+  &__right {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    & li {
+      padding: 1rem;
+    }
+    & li:not(:last-child):hover {
+      background-color: $color-darker;
+      color: $color-light;
+      cursor: pointer;
+    }
+  }
+}

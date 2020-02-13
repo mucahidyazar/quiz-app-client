@@ -1,0 +1,13 @@
+//Main
+@import "./public/scss/variables";
+@import "./public/scss/base";
+@import "./public/scss/typography";
+
+//Components
+@import "./components/Layout/Layout";
+@import "./components/Home/Home";
+@import "./components/Header/Header";
+@import "./components/Quizes/Quizes";
+@import "./components/Quizes/QuizPage/QuizPage";
+@import "./components/Quizes/ResultPage/ResultPage";
+@import "./components/Quizes/Quiz/Quiz";

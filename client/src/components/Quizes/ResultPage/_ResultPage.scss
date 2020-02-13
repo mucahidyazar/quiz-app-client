@@ -1,0 +1,81 @@
+.section__resultpage {
+  margin-top: 10rem;
+  padding: 5rem 0;
+  box-shadow: 0 2rem 3rem rgba($color-light, 0.1);
+}
+.section__resultpage-tfp {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+
+  & > div {
+    background-color: $color-white;
+    padding: 0 4rem 1rem 4rem;
+  }
+}
+
+.tfp__true {
+  border: 1rem solid $color-easy-2;
+  &-point {
+    font-weight: 700;
+    font-size: 5rem;
+    color: $color-easy-2;
+  }
+
+  &-type {
+    font-weight: 700;
+    color: $color-easy-2;
+  }
+}
+
+.tfp__pass {
+  border: 1rem solid $color-medium-2;
+  &-point {
+    font-weight: 700;
+    font-size: 5rem;
+    color: $color-medium-2;
+  }
+
+  &-type {
+    font-weight: 700;
+    color: $color-medium-2;
+  }
+}
+
+.tfp__false {
+  border: 1rem solid $color-hard-2;
+  &-point {
+    font-weight: 700;
+    font-size: 5rem;
+    color: $color-hard-2;
+  }
+
+  &-type {
+    font-weight: 700;
+    color: $color-hard-2;
+  }
+}
+
+.section__resultpage-total {
+  width: 81%;
+  margin: 5rem auto 0 auto;
+  padding-bottom: 2rem;
+  background: linear-gradient(
+    to right bottom,
+    rgba($color-easy-1, 0.5),
+    rgba($color-easy-2, 0.5)
+  );
+  box-shadow: 0 1rem 3rem rgba($color-light, 0.2);
+  color: $color-white;
+  text-align: center;
+  border: 1rem solid $color-white;
+
+  .tfp__point {
+    font-weight: 700;
+    font-size: 10rem;
+  }
+
+  .tfp__type {
+    font-weight: 700;
+  }
+}
