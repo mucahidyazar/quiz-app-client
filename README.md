@@ -8,6 +8,11 @@
 <img src="./public/assets/gif/travia-quiz-app.gif">
 </div>
 
+## View the demo
+
+<a href="https://travia-quiz-app.herokuapp.com">Travia Quiz App</a>
+(This App wasn't completed yet)
+
 ## Description
 
 I deleted my old quiz app and started to build a new big app that is my own. And this will be my biggest app so far. Actually I applied a job and they had gave this quest for me. But they was wanting to a developer that lives in Ankara. Therefore I had didn't do this quest. Now I want to build this with React Hooks and I also want improve my Hooks and Context API experience. I will also add new features for this app soon. For example: Adding new quiz, Dark mode and Light mode, saving progress, counter for quizes, NodeJS Database, maybe login authentication and authorization etc... I will share with you the news about this application. (Note: The questions that in under the Quizes Nav are coming to https://opentdb.com. I didn't add the feature that is adding quiz and questions so far 12.02.2020)
