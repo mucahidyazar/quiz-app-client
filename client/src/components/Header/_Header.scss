@@ -17,10 +17,10 @@
     justify-content: space-evenly;
     align-items: center;
 
-    & li {
+    & a {
       padding: 1rem;
     }
-    & li:not(:last-child):hover {
+    & a:not(:last-child):hover {
       background-color: $color-darker;
       color: $color-light;
       cursor: pointer;

@@ -1,6 +1,11 @@
 export const GET_QUIZES = "GET_QUIZES";
 export const GET_QUIZ = "GET_QUIZ";
 
+export const ADD_NEW_ANSWER = "ADD_NEW_ANSWER";
+export const TRUE_OR_FALSE_ACTION = "TRUE_OR_FALSE_ACTION";
+export const SET_ANSWER = "SET_ANSWER";
+export const SET_ANSWERS = "SET_ANSWERS";
+
 /*
 
 export const GET_CONTACTS = "GET_CONTACTS";

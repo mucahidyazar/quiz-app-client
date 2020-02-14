@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import Question from "./Question/Question";
 import QuizContext from "../../../context/quiz/quizContext";
 
 const QuizPage = props => {
   const quizContext = useContext(QuizContext);
-  const { quizes, getQuizes } = quizContext;
+  const { quizes } = quizContext;
 
   useEffect(() => {
     if (quizes === null) {
@@ -25,7 +24,7 @@ const QuizPage = props => {
   const [question, setQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
-  const [countdown, setCountdown] = useState(6000);
+  const [countdown, setCountdown] = useState(60);
   const [disabledTwoOff, setDisabledTwoOff] = useState(false);
   const [disabledTime, setDisabledTime] = useState(false);
   const [ans, setAns] = useState([]);

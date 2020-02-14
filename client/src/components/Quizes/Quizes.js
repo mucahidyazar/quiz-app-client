@@ -13,15 +13,13 @@ const Quizes = () => {
     }
   }, []);
 
-  return (
+  return quizes === null && quizesLoading ? (
+    <Spinner />
+  ) : (
     <section className="section__quizes">
-      {quizes === null && quizesLoading ? (
-        <Spinner />
-      ) : (
-        quizes.map((quiz, index) => (
-          <Quiz key={index + 1} index={index} quiz={quiz} info={quiz[0]} />
-        ))
-      )}
+      {quizes.map((quiz, index) => (
+        <Quiz key={index + 1} index={index} quiz={quiz} info={quiz[0]} />
+      ))}
     </section>
   );
 };

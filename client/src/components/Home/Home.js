@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import imgQuizTime from "../../public/img/quiz-time.jpg";
+import QuizContext from "../../context/quiz/quizContext";
+import { Link } from "react-router-dom";
 
 const Home = props => {
+  const quizContext = useContext(QuizContext);
+  const { quizes, getQuizes } = quizContext;
+
+  useEffect(() => {
+    getQuizes();
+  }, []);
+
+  const randomQuizLink = () => {
+    if (quizes) {
+      return `/quiz/${Math.floor(Math.random() * quizes.length)}`;
+    } else {
+      return "!#";
+    }
+  };
+
   return (
     <section className="section__main">
       <div className="section__left">
@@ -20,7 +37,9 @@ const Home = props => {
         <div className="section__right-description">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, dicta?
         </div>
-        <div className="section__right-button">Start</div>
+        <div className="section__right-button">
+          <Link to={randomQuizLink}>Start</Link>
+        </div>
       </div>
     </section>
   );

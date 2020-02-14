@@ -1,0 +1,96 @@
+.section__quizpage {
+  margin-top: 10rem;
+  padding: 10rem;
+  box-shadow: 0 2rem 3rem rgba($color-light, 0.1);
+  position: relative;
+
+  .section__question {
+    width: 100%;
+    height: 10rem;
+    background: darken($color: $color-light, $amount: 20);
+    color: $color-white;
+    padding: 1rem 2rem;
+    min-height: 8rem;
+    border: none;
+    border-radius: 0.5rem;
+    color: inherit;
+    font-size: 2rem;
+
+    &::placeholder {
+      color: inherit;
+    }
+
+    &:hover,
+    &:focus {
+      background: $color-darker;
+      cursor: pointer;
+      outline: none;
+    }
+  }
+
+  .section__answers {
+    .section__answer {
+      padding: 0;
+      width: 100%;
+      margin-top: 1rem;
+      background-color: darken($color: $color-light, $amount: 50);
+      border: none;
+      border-radius: 0.5rem;
+      position: relative;
+
+      &-input {
+        width: 100%;
+        padding: 1.5rem 1.5rem 1.5rem 12%;
+        font-size: 1.8rem;
+        transition: all 0.3s;
+        background-color: darken($color: $color-light, $amount: 50);
+        border: none;
+        border-radius: 0.5rem;
+        color: inherit;
+
+        &:hover,
+        &:focus {
+          background: $color-darker;
+          cursor: pointer;
+          outline: none;
+        }
+      }
+
+      &-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 10%;
+        height: 100%;
+        background-color: $color-darker;
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+
+        &:hover {
+          background-color: darken($color: $color-darker, $amount: 5);
+        }
+      }
+      .checked {
+        background-color: $color-light-green-2;
+      }
+    }
+
+    .section__addAnswer {
+      text-align: center;
+    }
+  }
+
+  .chosen {
+    background: $color-darker;
+  }
+}
+
+@media only screen and (max-width: 37.5em) {
+  .section__quizpage {
+    margin-top: 1vh;
+    padding: 5vh;
+  }
+}

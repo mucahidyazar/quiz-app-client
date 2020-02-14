@@ -6,21 +6,18 @@ const Header = () => {
     <header className="header">
       <div className="header__left">
         <i className="fas fa-feather-alt header__left-icon"></i>
-        <div className="header__left-brand">Trillo App</div>
+        <div className="header__left-brand">
+          <Link to="/">Trillo App</Link>
+        </div>
       </div>
       <ul className="header__right">
-        <li>
-          <Link to="/">Create Quiz</Link>
-        </li>
-        <li>
-          <Link to="/quizes">Quizes</Link>
-        </li>
-        <li>
-          <Link to="/">About</Link>
-        </li>
-        <li>
-          <i className="fas fa-sun"></i>
-        </li>
+        <Link to="/create-quiz">Create Quiz</Link>
+
+        <Link to="/quizes">Quizes</Link>
+
+        <Link to="/">About</Link>
+
+        <i className="fas fa-sun"></i>
       </ul>
     </header>
   );
