@@ -1,14 +1,28 @@
-.section__quizpage {
-  margin-top: 10rem;
+.create {
   padding: 10rem;
   box-shadow: 0 2rem 3rem rgba($color-light, 0.1);
   position: relative;
+
+  .create__error {
+    padding: 1.5rem;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    background-color: $color-hard-2;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+
+    &:hover {
+      background: $color-darker;
+      cursor: pointer;
+    }
+  }
 
   .section__question {
     width: 100%;
     height: 10rem;
     background: darken($color: $color-light, $amount: 20);
-    color: $color-white;
+    color: $color-light;
     padding: 1rem 2rem;
     min-height: 8rem;
     border: none;
@@ -17,7 +31,7 @@
     font-size: 2rem;
 
     &::placeholder {
-      color: inherit;
+      color: $color-dark;
     }
 
     &:hover,
@@ -25,6 +39,10 @@
       background: $color-darker;
       cursor: pointer;
       outline: none;
+
+      &::placeholder {
+        color: $color-light;
+      }
     }
   }
 
@@ -79,12 +97,56 @@
     }
 
     .section__addAnswer {
+      padding: 1.5rem;
+      margin-top: 1rem;
+      transition: all 0.3s;
+      background-color: darken($color: $color-light, $amount: 50);
+      border-radius: 0.5rem;
       text-align: center;
+
+      &:hover {
+        background: $color-darker;
+        cursor: pointer;
+      }
     }
   }
 
   .chosen {
     background: $color-darker;
+  }
+
+  .create__quiz {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5rem;
+    color: $color-white;
+    text-align: center;
+
+    &--back,
+    &--next {
+      background-color: $color-darker;
+      width: 35%;
+      padding: 1.3rem 5%;
+      border-radius: 0.5rem;
+      font-size: 2rem;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      font-size: 2.5rem;
+
+      &:hover {
+        background-color: darken($color-darker, 5);
+        cursor: pointer;
+      }
+    }
+
+    &--back i {
+      margin-left: -2rem;
+      margin-right: 2rem;
+    }
+    &--next i {
+      margin-left: 2rem;
+      margin-right: -2rem;
+    }
   }
 }
 

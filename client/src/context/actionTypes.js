@@ -3,8 +3,12 @@ export const GET_QUIZ = "GET_QUIZ";
 
 export const ADD_NEW_ANSWER = "ADD_NEW_ANSWER";
 export const TRUE_OR_FALSE_ACTION = "TRUE_OR_FALSE_ACTION";
+export const SET_QUESTION = "SET_QUESTION";
 export const SET_ANSWER = "SET_ANSWER";
-export const SET_ANSWERS = "SET_ANSWERS";
+export const ADD_NEXT_QUESTION = "ADD_NEXT_QUESTION";
+export const CLEAR_VALUES = "CLEAR_VALUES";
+export const SEND_ERROR = "SEND_ERROR";
+export const CLEAR_ERROR = "CLEAR_ERROR";
 
 /*
 

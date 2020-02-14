@@ -6,10 +6,14 @@ const CreateQuizPage = props => {
   const {
     correct_answer,
     incorrect_answers,
+    question,
     answers,
+    setQuestion,
     addNewAnswer,
     trueOrFalseAction,
-    setAnswer
+    setAnswer,
+    addNextQuestion,
+    error
   } = createQuizContext;
 
   //   const trueOrFalseAction = () => {
@@ -29,12 +33,17 @@ const CreateQuizPage = props => {
     return "";
   };
 
+  const hasError = error ? <div className="create__error">{error}</div> : null;
+
   return (
-    <div className="section__quizpage">
+    <div className="create">
+      {hasError}
       <textarea
         className="section__question"
         placeholder='Your question? For example: In which film does Humphrey Bogart say the famous line,
       "Here&#039;s looking at you, kid"?'
+        onChange={e => setQuestion(e.target.value)}
+        value={question}
       ></textarea>
       <div className="section__answers">
         {answers && answers.length > 0
@@ -54,7 +63,7 @@ const CreateQuizPage = props => {
                 </div>
                 <input
                   type="text"
-                  placeholder="The Maltese Falcon"
+                  placeholder="Enter your answer as you wish"
                   className="section__answer-input"
                   onChange={e => setAnswer(e.target.value, index)}
                 />
@@ -66,6 +75,17 @@ const CreateQuizPage = props => {
             <i className="fas fa-plus-square"></i>
           </div>
         ) : null}
+      </div>
+      <div className="create__quiz">
+        <div className="create__quiz--back">
+          <i class="fas fa-arrow-alt-circle-left"></i>Back
+        </div>
+        <div
+          className="create__quiz--next"
+          onClick={() => addNextQuestion(question, answers, correct_answer)}
+        >
+          Next<i class="fas fa-arrow-alt-circle-right"></i>
+        </div>
       </div>
     </div>
   );
