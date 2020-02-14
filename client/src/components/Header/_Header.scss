@@ -27,3 +27,17 @@
     }
   }
 }
+
+@media only screen and (max-width: 37.5em) {
+  .header {
+    display: block;
+
+    &__left {
+      justify-content: space-between;
+    }
+
+    &__right {
+      justify-content: space-between;
+    }
+  }
+}

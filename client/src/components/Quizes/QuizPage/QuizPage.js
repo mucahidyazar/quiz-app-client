@@ -25,7 +25,7 @@ const QuizPage = props => {
   const [question, setQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
-  const [countdown, setCountdown] = useState(1500);
+  const [countdown, setCountdown] = useState(6000);
   const [disabledTwoOff, setDisabledTwoOff] = useState(false);
   const [disabledTime, setDisabledTime] = useState(false);
   const [ans, setAns] = useState([]);
@@ -129,7 +129,7 @@ const QuizPage = props => {
               setDisabledTwoOff(true);
             }}
           >
-            2 OUT
+            <i class="fas fa-hands-helping"></i> 2 OUT
           </button>
           <button
             className={`jokers__time ${disabledTime ? "disabled" : ""}`}
@@ -139,11 +139,13 @@ const QuizPage = props => {
               setDisabledTime(true);
             }}
           >
-            +15 Seconds
+            <i class="far fa-clock"></i> +15
           </button>
         </div>
         <div className="options">
-          <div className="section__buttons-finish">FINISH</div>
+          <div className="section__buttons-finish">
+            <i class="fas fa-times-circle"></i> FINISH
+          </div>
           <div
             className="section__buttons-next"
             onClick={() => {
@@ -165,7 +167,7 @@ const QuizPage = props => {
               }
             }}
           >
-            NEXT
+            <i class="fas fa-arrow-circle-right"></i> NEXT
           </div>
         </div>
       </div>

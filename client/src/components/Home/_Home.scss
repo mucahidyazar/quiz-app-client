@@ -21,9 +21,9 @@
     color: $color-white;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    padding: 3rem;
+    padding: 2vh;
     text-align: justify;
 
     &-img {
@@ -50,6 +50,21 @@
       background-color: $color-blue-1;
       padding: 1rem 4rem;
       border-radius: 0.5rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 43.75em) {
+  .section__main {
+    flex-direction: column;
+
+    .section__left {
+      margin-bottom: 4rem;
+      width: 90%;
+    }
+
+    .section__right {
+      width: 90%;
     }
   }
 }
