@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Home from "../Home/Home";
 import Quizes from "../Quizes/Quizes";
-import CreateQuiz from "../Quizes/CreateQuiz/CreateQuiz";
+import CreateQuiz from "../CreateQuiz/CreateQuiz";
 import QuizPage from "../Quizes/QuizPage/QuizPage";
 import ResultPage from "../Quizes/ResultPage/ResultPage";
 
