@@ -15,7 +15,8 @@ import {
   SEND_ERROR,
   CLEAR_ERROR,
   PREVIOUS_QUESTION,
-  PREVIOUS_QUIZ_INFORMATION
+  PREVIOUS_QUIZ_INFORMATION,
+  SET_CLEAR_CREATE_QUIZ
 } from "../actionTypes";
 
 export default (state, action) => {
@@ -88,6 +89,20 @@ export default (state, action) => {
         quiz_category: action.quiz_category,
         quiz_type: action.quiz_type,
         quiz_difficulty: action.quiz_difficulty
+      };
+    case SET_CLEAR_CREATE_QUIZ:
+      return {
+        ...state,
+        quiz: null,
+        quiz_title: "",
+        quiz_description: "",
+        quiz_category: "General",
+        quiz_type: "Multiple",
+        quiz_difficulty: "easy",
+        question: "",
+        correct_answer: null,
+        incorrect_answers: [],
+        answers: []
       };
     case ADD_QUIZ_QUESTION:
       let correct_answer = state.answers[action.correct];

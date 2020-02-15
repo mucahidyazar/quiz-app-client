@@ -5,7 +5,6 @@ import {
   ADD_QUIZ_QUESTION,
   ADD_QUIZ_INFORMATION,
   SAVE_QUIZ,
-  ADD_QUIZ,
   CHANGE_CREATE_QUIZ_TITLE,
   CHANGE_CREATE_QUIZ_DESCRIPTION,
   CHANGE_CREATE_QUIZ_CATEGORY,
@@ -19,7 +18,8 @@ import {
   SEND_ERROR,
   CLEAR_ERROR,
   PREVIOUS_QUESTION,
-  PREVIOUS_QUIZ_INFORMATION
+  PREVIOUS_QUIZ_INFORMATION,
+  SET_CLEAR_CREATE_QUIZ
 } from "../actionTypes";
 
 const CreateQuizState = props => {
@@ -158,6 +158,12 @@ const CreateQuizState = props => {
     }
   };
 
+  const setClearCreateQuiz = () => {
+    dispatch({
+      type: SET_CLEAR_CREATE_QUIZ
+    });
+  };
+
   const isAnswerCorrect = () => state.answers.some(answer => answer === "");
 
   const addQuizQuestion = (question, answers, correct) => {
@@ -267,6 +273,7 @@ const CreateQuizState = props => {
         questions: state.questions,
         error: state.error,
         previousQuestion,
+        setClearCreateQuiz,
         addQuizInformation,
         addQuizQuestion,
         saveQuiz,

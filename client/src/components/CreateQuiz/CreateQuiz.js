@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CreateQuizContext from "../../context/createQuiz/createQuizContext";
 
 //Components
@@ -21,6 +21,7 @@ const CreateQuizPage = props => {
     error,
     //Func
     previousQuestion,
+    setClearCreateQuiz,
     addQuizQuestion,
     addQuizInformation,
     saveQuiz
@@ -84,6 +85,12 @@ const CreateQuizPage = props => {
     );
     props.history.push("/");
   };
+
+  useEffect(() => {
+    return () => {
+      setClearCreateQuiz();
+    };
+  }, []);
 
   return (
     <div className="create">
