@@ -4,6 +4,7 @@ import quizesContext from "./quizesContext";
 import quizesReducer from "./quizesReducer";
 import {
   //COMMON
+  SET_VALID_QUIZES,
 
   //GET TRAVIAS QUIZES
   GET_TRAVIAS_QUIZES,
@@ -14,9 +15,14 @@ import {
 
 const QuizesState = props => {
   const initialState = {
+    //Common
+    validQuizes: null,
     countdown: 60,
     disabledTwoOff: false,
     disabledTime: false,
+
+    //All Quizes
+    allQuizes: [],
 
     //TraviasQuizes
     traviasQuizes: null,
@@ -41,6 +47,14 @@ const QuizesState = props => {
   ];
 
   const [state, dispatch] = useReducer(quizesReducer, initialState);
+
+  // setValidQuizes
+  const setValidQuizes = quizes => {
+    dispatch({
+      type: SET_VALID_QUIZES,
+      quizes
+    });
+  };
 
   // getTraviasQuizes
   const getTraviasQuizes = async () => {
@@ -83,6 +97,11 @@ const QuizesState = props => {
     <quizesContext.Provider
       value={{
         //COMMON
+        validQuizes: state.validQuizes,
+        setValidQuizes,
+
+        //AllQuizes
+        allQuizes: state.allQuizes,
 
         //TraviasQuizes
         traviasQuizes: state.traviasQuizes,

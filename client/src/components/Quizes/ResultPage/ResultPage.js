@@ -20,8 +20,14 @@ export default function ResultPage(props) {
   };
 
   const calcPass = () => {
-    if (props.location.state.answers.length < 10) {
-      setPassVal(10 - props.location.state.answers.length);
+    if (
+      props.location.state.answers.length <
+      props.location.state.correctAnswers.length
+    ) {
+      setPassVal(
+        props.location.state.correctAnswers.length -
+          props.location.state.answers.length
+      );
     } else {
       props.location.state.answers.filter((answer, index) =>
         answer === "PASS" ? setPassVal(prevPassVal => prevPassVal + 1) : passVal
@@ -54,7 +60,9 @@ export default function ResultPage(props) {
         </div>
       </div>
       <div className="section__resultpage-total">
-        <div className="tfp__point">{trueVal * 10} / 100</div>
+        <div className="tfp__point">
+          {(trueVal * 100) / props.location.state.answers.length} / 100
+        </div>
         <div className="tfp__type">POINT</div>
       </div>
     </div>

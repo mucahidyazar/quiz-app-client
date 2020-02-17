@@ -132,7 +132,7 @@ const TraviasQuizPage = props => {
               setDisabledTwoOff(true);
             }}
           >
-            <i class="fas fa-hands-helping"></i> 2 OUT
+            <i className="fas fa-hands-helping"></i> 2 OUT
           </button>
           <button
             className={`jokers__time ${disabledTime ? "disabled" : ""}`}
@@ -142,12 +142,12 @@ const TraviasQuizPage = props => {
               setDisabledTime(true);
             }}
           >
-            <i class="far fa-clock"></i> +15
+            <i className="far fa-clock"></i> +15
           </button>
         </div>
         <div className="options">
           <div className="section__buttons-finish">
-            <i class="fas fa-times-circle"></i> FINISH
+            <i className="fas fa-times-circle"></i> FINISH
           </div>
           <div
             className="section__buttons-next"
@@ -170,7 +170,7 @@ const TraviasQuizPage = props => {
               }
             }}
           >
-            <i class="fas fa-arrow-circle-right"></i> NEXT
+            <i className="fas fa-arrow-circle-right"></i> NEXT
           </div>
         </div>
       </div>

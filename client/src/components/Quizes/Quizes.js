@@ -3,11 +3,13 @@ import Quiz from "./Quiz/Quiz";
 import QuizesContext from "../../context/quizes/quizesContext";
 import Spinner from "../Spinner/Spinner";
 
-const Quizes = () => {
+const Quizes = props => {
   const quizesContext = useContext(QuizesContext);
   const {
-    traviasQuizes,
+    setValidQuizes,
+    allQuizes,
     yourQuizes,
+    traviasQuizes,
     quizesLoading,
     getTraviasQuizes,
     getYourQuizes,
@@ -21,7 +23,7 @@ const Quizes = () => {
       return yourQuizes.map((quiz, index) => (
         <Quiz
           key={index + 1}
-          index={index}
+          index={index + 1}
           quiz={quiz.quizQuestions}
           isComingFrom={isComingFrom}
           info={{
@@ -44,13 +46,20 @@ const Quizes = () => {
         />
       ));
     } else if (allQuizNav === "active-quiz-nav") {
-      return traviasQuizes.map((quiz, index) => (
+      return allQuizes.map((quiz, index) => (
         <Quiz
           key={index + 1}
-          isComingFrom={isComingFrom}
+          isComingFrom={() => (quiz[0] ? "travias-quizes" : "your-quizes")}
           index={index}
           quiz={quiz}
-          info={quiz[0]}
+          info={{ ...quiz[0] }}
+          infoY={{
+            title: quiz.quizTitle,
+            description: quiz.quizDescription,
+            category: quiz.quizCategory,
+            type: quiz.quizType,
+            difficulty: quiz.quizDifficulty
+          }}
         />
       ));
     } else {
@@ -82,9 +91,7 @@ const Quizes = () => {
   };
 
   const isComingFrom = () => {
-    if (allQuizNav !== "") {
-      return "all";
-    } else if (yourQuizNav !== "") {
+    if (yourQuizNav !== "") {
       return "your-quizes";
     } else if (traviasQuizNav !== "") {
       return "travias-quizes";
@@ -96,7 +103,7 @@ const Quizes = () => {
       getTraviasQuizes();
     }
     getYourQuizes();
-    setAllQuizNav("active-quiz-nav");
+    setYourQuizNav("active-quiz-nav");
   }, []);
 
   return traviasQuizes === null && quizesLoading ? (

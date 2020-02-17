@@ -1,30 +1,28 @@
 import {
   //COMMON
+  SET_VALID_QUIZES,
 
-  //GET TRAVIAS QUIZES
-  GET_TRAVIAS_QUIZES,
+  //GET_ALL_QUIZES
+  GET_ALL_QUIZES,
 
   //GET YOUR QUIZES
   GET_YOUR_QUIZES,
   ACTIVE_ALL_QUIZES,
   ACTIVE_YOUR_QUIZES,
-  ACTIVE_TRAVIAS_QUIZES
+  ACTIVE_TRAVIAS_QUIZES,
+
+  //GET TRAVIAS QUIZES
+  GET_TRAVIAS_QUIZES
 } from "../actionTypes";
 
 export default (state, action) => {
   switch (action.type) {
     //COMMON
-
-    //GET TRAVIAS QUIZES
-    case GET_TRAVIAS_QUIZES:
-      console.log(action.payload);
+    case SET_VALID_QUIZES:
       return {
         ...state,
-        traviasQuizes: action.traviasQuizes,
-        quizesLoading: false
+        validQuizes: action.quizes
       };
-
-    /* ######### */
 
     //GET YOU QUIZES
     case GET_YOUR_QUIZES:
@@ -32,6 +30,18 @@ export default (state, action) => {
         ...state,
         yourQuizes: action.yourQuizes
       };
+
+    //GET TRAVIAS QUIZES
+    case GET_TRAVIAS_QUIZES:
+      console.log(action.payload);
+      return {
+        ...state,
+        traviasQuizes: action.traviasQuizes,
+        allQuizes: [...state.yourQuizes, ...action.traviasQuizes],
+        quizesLoading: false
+      };
+
+    /* ######### */
     default:
       return state;
   }
