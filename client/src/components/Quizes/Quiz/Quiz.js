@@ -10,7 +10,10 @@ const Quiz = props => {
       </div>
       <div className="section__quiz-header">{props.info.category}</div>
       <div className="section__quiz-description">{props.info.difficulty}</div>
-      <Link to={`/quiz/${props.index}`} className="section__quiz-button">
+      <Link
+        to={`/quizes/${props.isComingFrom()}/${props.index}`}
+        className="section__quiz-button"
+      >
         Start
       </Link>
     </div>

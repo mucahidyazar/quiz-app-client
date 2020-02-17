@@ -1,6 +1,71 @@
-.section__quizes {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-  grid-gap: 3rem;
+.quizes {
   padding: 10rem 0;
+
+  &__nav {
+    &--top {
+      display: flex;
+      width: max-content;
+      margin: 2rem auto;
+      background-color: darken($color: $color-light, $amount: 50);
+      border-radius: 10rem;
+
+      & > * {
+        padding: 1rem 2rem;
+        transition: all 0.3s;
+      }
+
+      & > *:hover,
+      & > .active-quiz-nav {
+        background-color: darken($color: $color-light, $amount: 55);
+        cursor: pointer;
+      }
+
+      & .all-quizes {
+        border-top-left-radius: 10rem;
+        border-bottom-left-radius: 10rem;
+      }
+
+      & .travias-quizes {
+        border-top-right-radius: 10rem;
+        border-bottom-right-radius: 10rem;
+      }
+    }
+
+    &--bottom {
+      display: flex;
+      justify-content: space-between;
+      padding: 2rem 0;
+
+      .search {
+        background: none;
+        color: inherit;
+        border: none;
+        border-bottom: 2px solid $color-light;
+        outline: none;
+        padding: 0.5rem;
+        font-size: 2rem;
+      }
+
+      .sort {
+        &__span {
+          font-size: 1.5rem;
+        }
+        &__select {
+          margin-left: 1rem;
+          background: darken($color: $color-light, $amount: 50);
+          border: none;
+          color: inherit;
+          padding: 1rem;
+          font-size: 1.5rem;
+          outline: none;
+        }
+      }
+    }
+  }
+
+  &__board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    grid-gap: 3rem;
+  }
 }

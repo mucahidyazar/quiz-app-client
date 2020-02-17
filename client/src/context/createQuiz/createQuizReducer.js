@@ -18,6 +18,13 @@ import {
   PREVIOUS_QUIZ_INFORMATION,
   SET_CLEAR_CREATE_QUIZ
 } from "../actionTypes";
+import axios from "axios";
+
+const config = {
+  header: {
+    "Content-type": "application/json"
+  }
+};
 
 export default (state, action) => {
   switch (action.type) {
@@ -131,18 +138,30 @@ export default (state, action) => {
         quiz: "Active"
       };
     case SAVE_QUIZ:
-      const quiz = {
-        quiz_title: action.quiz_title,
-        quiz_description: action.quiz_description,
-        quiz_category: action.quiz_category,
-        quiz_type: action.quiz_type,
-        quiz_difficulty: action.quiz_difficulty,
-        questions: state.quiz_questions
-      };
+      // const quiz = {
+      //   quiz_title: action.quiz_title,
+      //   quiz_description: action.quiz_description,
+      //   quiz_category: action.quiz_category,
+      //   quiz_type: action.quiz_type,
+      //   quiz_difficulty: action.quiz_difficulty,
+      //   questions: state.questions
+      // };
+      axios.post(
+        "/quiz/add-quiz",
+        {
+          quizTitle: action.quiz_title,
+          quizDescription: action.quiz_description,
+          quizCategory: action.quiz_category,
+          quizType: action.quiz_type,
+          quizDifficulty: action.quiz_difficulty,
+          quizQuestions: state.questions
+        },
+        config
+      );
       return {
         ...state,
-        quizes: [...state.quizes, quiz],
         quiz: null,
+        questions: [],
         quiz_title: "",
         quiz_description: "",
         quiz_category: "General",

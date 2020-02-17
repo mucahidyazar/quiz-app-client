@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import axios from "axios";
 import createQuizReducer from "./createQuizReducer";
 import createQuizContext from "./createQuizContext";
 import {
@@ -184,6 +185,7 @@ const CreateQuizState = props => {
         answers,
         correct
       });
+      console.log("Corre" + correct);
       clearValues();
     }
   };
@@ -223,7 +225,7 @@ const CreateQuizState = props => {
     quiz_type,
     quiz_difficulty
   ) => {
-    addQuizQuestion(state.question, state.answers, state.correct);
+    addQuizQuestion(state.question, state.answers, state.correct_answer);
     try {
       dispatch({
         type: SAVE_QUIZ,

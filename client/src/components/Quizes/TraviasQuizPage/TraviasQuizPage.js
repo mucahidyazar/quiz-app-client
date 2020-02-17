@@ -1,16 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
-import QuizContext from "../../../context/quiz/quizContext";
+import QuizesContext from "../../../context/quizes/quizesContext";
 
-const QuizPage = props => {
-  const quizContext = useContext(QuizContext);
-  const { quizes } = quizContext;
+const TraviasQuizPage = props => {
+  const quizesContext = useContext(QuizesContext);
+  const { traviasQuizes } = quizesContext;
 
   useEffect(() => {
-    if (quizes === null) {
+    if (traviasQuizes === null) {
       props.history.push("/quizes");
     } else {
       setCorrectAnswers(
-        quizes[props.match.params.id].map(que => {
+        traviasQuizes[props.match.params.id].map(que => {
           return que.correct_answer;
         })
       );
@@ -27,14 +27,14 @@ const QuizPage = props => {
   const [countdown, setCountdown] = useState(60);
   const [disabledTwoOff, setDisabledTwoOff] = useState(false);
   const [disabledTime, setDisabledTime] = useState(false);
-  const [ans, setAns] = useState([]);
+  const [chosenAnswer, setChosenAnswer] = useState([]);
 
   let quiz = null;
   let answersArray = null;
-  if (quizes === null && answersArray === null) {
+  if (traviasQuizes === null && answersArray === null) {
     props.history.push("/quizes");
   } else {
-    quiz = quizes[props.match.params.id];
+    quiz = traviasQuizes[props.match.params.id];
     answersArray = [
       ...quiz[question].incorrect_answers,
       quiz[question].correct_answer
@@ -50,14 +50,14 @@ const QuizPage = props => {
   };
 
   const twoOut = () => {
-    quiz = quizes[props.match.params.id];
+    quiz = traviasQuizes[props.match.params.id];
     answersArray = [
       quiz[question].incorrect_answers[
         Math.floor(Math.random() * quiz[question].incorrect_answers.length)
       ],
       quiz[question].correct_answer
     ];
-    setAns(answersArray);
+    setChosenAnswer(answersArray);
   };
 
   const setAnswer = (value, index) => {
@@ -85,39 +85,43 @@ const QuizPage = props => {
     });
   }
 
-  return quizes ? (
+  const answerSection = () => {
+    if (chosenAnswer.length > 1) {
+      return chosenAnswer.map((answerArray, index) => (
+        <div
+          className={`section__answers ${corIncor(
+            quiz[question],
+            answerArray
+          )} ${setChosen(question, answerArray)}`}
+          key={index}
+          onClick={e => setAnswer(e.target.innerHTML, question)}
+        >
+          {answerArray}
+        </div>
+      ));
+    } else {
+      return answersArray.map((answerArray, index) => (
+        <div
+          className={`section__answers ${corIncor(
+            quiz[question],
+            answerArray
+          )} ${setChosen(question, answerArray)}`}
+          key={index}
+          onClick={e => setAnswer(e.target.innerHTML, question)}
+        >
+          {answerArray}
+        </div>
+      ));
+    }
+  };
+
+  return traviasQuizes ? (
     <div className="section__quizpage">
       <div className="section__information">
         <div className="section__information-countdown">{countdown}</div>
       </div>
       <div className="section__question">{quiz[question].question}</div>
-      <div className="section__answers">
-        {ans.length > 1
-          ? ans.map((answerArray, index) => (
-              <div
-                className={`section__answers ${corIncor(
-                  quiz[question],
-                  answerArray
-                )} ${setChosen(question, answerArray)}`}
-                key={index}
-                onClick={e => setAnswer(e.target.innerHTML, question)}
-              >
-                {answerArray}
-              </div>
-            ))
-          : answersArray.map((answerArray, index) => (
-              <div
-                className={`section__answers ${corIncor(
-                  quiz[question],
-                  answerArray
-                )} ${setChosen(question, answerArray)}`}
-                key={index}
-                onClick={e => setAnswer(e.target.innerHTML, question)}
-              >
-                {answerArray}
-              </div>
-            ))}
-      </div>
+      <div className="section__answers">{answerSection()}</div>
       <div className="section__buttons">
         <div className="jokers">
           <button
@@ -162,7 +166,7 @@ const QuizPage = props => {
               } else {
                 setQuestion(question + 1);
                 setCountdown(countdown + 15);
-                setAns([]);
+                setChosenAnswer([]);
               }
             }}
           >
@@ -174,4 +178,29 @@ const QuizPage = props => {
   ) : null;
 };
 
-export default QuizPage;
+export default TraviasQuizPage;
+
+// const validQuizes = () => {
+//   if (props.match.url === `/quizes/all/${props.match.params.id}`) {
+//     return all_quizes;
+//   } else if (
+//     props.match.url === `/quizes/your-quizes/${props.match.params.id}`
+//   ) {
+//     return your_quizes.map((qui, indexQui) => [
+//       qui.quizQuestions.map((que, indexQue) => ({
+//         title: qui.quizTitle,
+//         description: qui.quizDescription,
+//         category: qui.quizCategory,
+//         type: qui.quizType,
+//         difficulty: qui.quizDifficulty,
+//         question: que.question,
+//         correct_answer: que.correct_answer,
+//         incorrect_answers: que.incorrect_answers
+//       }))
+//     ]);
+//   } else if (
+//     props.match.url === `/quizes/travias-quizes/${props.match.params.id}`
+//   ) {
+//     return quizes;
+//   }
+// };

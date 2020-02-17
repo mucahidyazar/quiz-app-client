@@ -69,13 +69,7 @@ const CreateQuizPage = props => {
         )
       : addQuizQuestion(question, answers, correct_answer);
 
-  const onSaveQuiz = (
-    quiz_title,
-    quiz_description,
-    quiz_category,
-    quiz_type,
-    quiz_difficulty
-  ) => {
+  const onSaveQuiz = () => {
     saveQuiz(
       quiz_title,
       quiz_description,

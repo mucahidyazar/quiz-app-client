@@ -7,6 +7,8 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 app.use(express.json({ extended: false }));
 
+app.use("/", require("./routes/quizRoute"));
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 

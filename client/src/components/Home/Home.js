@@ -1,19 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import imgQuizTime from "../../public/img/quiz-time.jpg";
-import QuizContext from "../../context/quiz/quizContext";
+import QuizesContext from "../../context/quizes/quizesContext";
 import { Link } from "react-router-dom";
 
 const Home = props => {
-  const quizContext = useContext(QuizContext);
-  const { quizes, getQuizes } = quizContext;
+  const quizesContext = useContext(QuizesContext);
+  const { traviasQuizes, getTraviasQuizes } = quizesContext;
 
   useEffect(() => {
-    getQuizes();
+    getTraviasQuizes();
   }, []);
 
   const randomQuizLink = () => {
-    if (quizes) {
-      return `/quiz/${Math.floor(Math.random() * quizes.length)}`;
+    if (traviasQuizes) {
+      return `/quiz/${Math.floor(Math.random() * traviasQuizes.length)}`;
     } else {
       return "!#";
     }

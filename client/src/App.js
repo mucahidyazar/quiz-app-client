@@ -1,18 +1,18 @@
 import React from "react";
 import Layout from "./components/Layout/Layout";
 import { BrowserRouter } from "react-router-dom";
-import QuizState from "./context/quiz/QuizState";
+import QuizesState from "./context/quizes/QuizesState";
 import CreateQuizState from "./context/createQuiz/CreateQuizState";
 
 function App() {
   return (
-    <QuizState>
+    <QuizesState>
       <CreateQuizState>
         <BrowserRouter>
           <Layout />
         </BrowserRouter>
       </CreateQuizState>
-    </QuizState>
+    </QuizesState>
   );
 }
 

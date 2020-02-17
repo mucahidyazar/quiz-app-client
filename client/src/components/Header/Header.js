@@ -11,11 +11,12 @@ const Header = () => {
         </div>
       </div>
       <ul className="header__right">
-        <Link to="/create-quiz">Create Quiz</Link>
-
+        <Link className="header__right-create" to="/create-quiz">
+          Create Quiz
+        </Link>
         <Link to="/quizes">Quizes</Link>
-
         <Link to="/">About</Link>
+        <Link to="/">Leaderboard</Link>
 
         <i className="fas fa-sun"></i>
       </ul>

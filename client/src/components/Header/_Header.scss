@@ -25,6 +25,24 @@
       color: $color-light;
       cursor: pointer;
     }
+
+    &-create {
+      background: linear-gradient(
+        to right bottom,
+        rgba($color-primary, 0.5),
+        rgba($color-blue-1, 0.5)
+      );
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+
+      &:hover {
+        background: linear-gradient(
+          to right bottom,
+          rgba($color-primary, 0.7),
+          rgba($color-blue-1, 0.7)
+        );
+      }
+    }
   }
 }
 
