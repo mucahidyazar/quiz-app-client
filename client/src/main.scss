@@ -3,6 +3,10 @@
 @import "./public/scss/base";
 @import "./public/scss/typography";
 
+//Layouts
+@import "./public/scss/layout/input";
+@import "./public/scss/layout/button";
+
 //Components
 @import "./components/Layout/Layout";
 @import "./components/Home/Home";
@@ -15,3 +19,6 @@
 @import "./components/Quizes/YourQuizPage/YourQuizPage";
 @import "./components/Quizes/ResultPage/ResultPage";
 @import "./components/Quizes/Quiz/Quiz";
+@import "./components/Registration/Registration";
+@import "./components/Registration/Login/Login";
+@import "./components/Registration/Register/Register";

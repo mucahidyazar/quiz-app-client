@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import CreateQuizContext from "../../context/createQuiz/createQuizContext";
 
 //Components
@@ -26,13 +26,6 @@ const CreateQuizPage = props => {
     addQuizInformation,
     saveQuiz
   } = createQuizContext;
-
-  const trueOrFalse = index => {
-    if (index === correct_answer) {
-      return "-double";
-    }
-    return "";
-  };
 
   const hasError = error ? <div className="create__error">{error}</div> : null;
 

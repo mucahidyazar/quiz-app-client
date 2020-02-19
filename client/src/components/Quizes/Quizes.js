@@ -26,7 +26,7 @@ const Quizes = props => {
           index={index + 1}
           quiz={quiz.quizQuestions}
           isComingFrom={isComingFrom}
-          info={{
+          infoY={{
             title: quiz.quizTitle,
             description: quiz.quizDescription,
             category: quiz.quizCategory,
@@ -40,7 +40,7 @@ const Quizes = props => {
         <Quiz
           key={index + 1}
           isComingFrom={isComingFrom}
-          index={index}
+          index={index + 1}
           quiz={quiz}
           info={quiz[0]}
         />
@@ -52,10 +52,12 @@ const Quizes = props => {
           isComingFrom={() => (quiz[0] ? "travias-quizes" : "your-quizes")}
           index={index}
           quiz={quiz}
-          info={{ ...quiz[0] }}
+          info={quiz[0]}
           infoY={{
-            title: quiz.quizTitle,
-            description: quiz.quizDescription,
+            title: quiz.quizTitle ? quiz.quizTitle : "Travias Quize",
+            description: quiz.quizDescription
+              ? quiz.quizDescription
+              : "Enjoy by solving",
             category: quiz.quizCategory,
             type: quiz.quizType,
             difficulty: quiz.quizDifficulty
@@ -134,7 +136,7 @@ const Quizes = props => {
         <div className="quizes__nav--bottom">
           <input type="text" placeholder="Search" className="search" />
           <div className="sort">
-            <span className="sort__span">Search by</span>
+            <span className="sort__span">Sort by</span>
             <select className="sort__select">
               <option value="Date">Date</option>
             </select>

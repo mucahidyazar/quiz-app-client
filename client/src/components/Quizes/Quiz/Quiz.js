@@ -6,17 +6,22 @@ const Quiz = props => {
   return (
     <div
       className={`section__quiz section__quiz-${
-        props.info.difficulty ? props.info.difficulty : props.infoY.difficulty
+        props.info ? props.info.difficulty : props.infoY.difficulty
       }`}
     >
       <div className="section__quiz-img">
         <img src={imgQuizTime} alt="Quiz Time" />
       </div>
       <div className="section__quiz-header">
-        {props.info.category ? props.info.category : props.infoY.category}
+        {props.infoY ? props.infoY.title : "Travias Quize"}
       </div>
       <div className="section__quiz-description">
-        {props.info.difficulty ? props.info.difficulty : props.infoY.difficulty}
+        {props.infoY ? props.infoY.description : "Enjoy by solving"}
+      </div>
+      <div className="section__quiz--information">
+        <div>{props.info ? props.info.category : props.infoY.category}</div>
+        <div>{props.info ? props.info.type : props.infoY.type}</div>
+        <div>{props.info ? props.info.difficulty : props.infoY.difficulty}</div>
       </div>
       <Link
         to={`/quizes/${props.isComingFrom()}/${props.index}`}

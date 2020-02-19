@@ -3,14 +3,17 @@ import Layout from "./components/Layout/Layout";
 import { BrowserRouter } from "react-router-dom";
 import QuizesState from "./context/quizes/QuizesState";
 import CreateQuizState from "./context/createQuiz/CreateQuizState";
+import RegistrationState from "./context/registration/RegistrationState";
 
 function App() {
   return (
     <QuizesState>
       <CreateQuizState>
-        <BrowserRouter>
-          <Layout />
-        </BrowserRouter>
+        <RegistrationState>
+          <BrowserRouter>
+            <Layout />
+          </BrowserRouter>
+        </RegistrationState>
       </CreateQuizState>
     </QuizesState>
   );

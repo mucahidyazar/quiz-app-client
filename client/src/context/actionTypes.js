@@ -33,6 +33,14 @@ export const CLEAR_VALUES = "CLEAR_VALUES";
 export const SEND_ERROR = "SEND_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 
+//REGISTRATION
+export const SET_LOGIN_ACTIVE = "SET_LOGIN_ACTIVE";
+export const SET_REGISTER_ACTIVE = "SET_REGISTER_ACTIVE";
+
+export const USER_LOADED = "USER_LOADED";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+
 /*
 
 export const GET_CONTACTS = "GET_CONTACTS";

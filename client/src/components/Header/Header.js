@@ -15,8 +15,8 @@ const Header = () => {
           Create Quiz
         </Link>
         <Link to="/quizes">Quizes</Link>
-        <Link to="/">About</Link>
         <Link to="/">Leaderboard</Link>
+        <Link to="/registration">Login</Link>
 
         <i className="fas fa-sun"></i>
       </ul>

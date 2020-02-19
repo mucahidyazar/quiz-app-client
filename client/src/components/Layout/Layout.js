@@ -7,6 +7,7 @@ import CreateQuiz from "../CreateQuiz/CreateQuiz";
 import TraviasQuizPage from "../Quizes/TraviasQuizPage/TraviasQuizPage";
 import YourQuizPage from "../Quizes/YourQuizPage/YourQuizPage";
 import ResultPage from "../Quizes/ResultPage/ResultPage";
+import Registration from "../Registration/Registration";
 
 const Layout = props => {
   return (
@@ -20,6 +21,7 @@ const Layout = props => {
         <Route path="/quizes/travias-quizes/:id" component={TraviasQuizPage} />
         <Route path="/quizes/your-quizes/:id" component={YourQuizPage} />
         <Route path="/result/:id" component={ResultPage} />
+        <Route path="/registration" component={Registration} />
       </Switch>
     </div>
   );

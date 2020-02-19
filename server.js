@@ -7,7 +7,18 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 app.use(express.json({ extended: false }));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.use("/", require("./routes/quizRoute"));
+app.use("/users", require("./routes/userRoute"));
+app.use("/auth", require("./routes/authRoute"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

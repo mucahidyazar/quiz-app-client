@@ -10,7 +10,7 @@ const TraviasQuizPage = props => {
       props.history.push("/quizes");
     } else {
       setCorrectAnswers(
-        traviasQuizes[props.match.params.id].map(que => {
+        traviasQuizes[props.match.params.id - 1].map(que => {
           return que.correct_answer;
         })
       );
@@ -34,7 +34,7 @@ const TraviasQuizPage = props => {
   if (traviasQuizes === null && answersArray === null) {
     props.history.push("/quizes");
   } else {
-    quiz = traviasQuizes[props.match.params.id];
+    quiz = traviasQuizes[props.match.params.id - 1];
     answersArray = [
       ...quiz[question].incorrect_answers,
       quiz[question].correct_answer
@@ -50,7 +50,7 @@ const TraviasQuizPage = props => {
   };
 
   const twoOut = () => {
-    quiz = traviasQuizes[props.match.params.id];
+    quiz = traviasQuizes[props.match.params.id - 1];
     answersArray = [
       quiz[question].incorrect_answers[
         Math.floor(Math.random() * quiz[question].incorrect_answers.length)
@@ -77,7 +77,7 @@ const TraviasQuizPage = props => {
 
   if (countdown < 1) {
     props.history.push({
-      pathname: `/result/${props.match.params.id}`,
+      pathname: `/result/${props.match.params.id - 1}`,
       state: {
         answers,
         correctAnswers
@@ -157,7 +157,7 @@ const TraviasQuizPage = props => {
               }
               if (question > 8) {
                 props.history.push({
-                  pathname: `/result/${props.match.params.id}`,
+                  pathname: `/result/${props.match.params.id - 1}`,
                   state: {
                     answers,
                     correctAnswers
@@ -181,10 +181,10 @@ const TraviasQuizPage = props => {
 export default TraviasQuizPage;
 
 // const validQuizes = () => {
-//   if (props.match.url === `/quizes/all/${props.match.params.id}`) {
+//   if (props.match.url === `/quizes/all/${props.match.params.id - 1}`) {
 //     return all_quizes;
 //   } else if (
-//     props.match.url === `/quizes/your-quizes/${props.match.params.id}`
+//     props.match.url === `/quizes/your-quizes/${props.match.params.id - 1}`
 //   ) {
 //     return your_quizes.map((qui, indexQui) => [
 //       qui.quizQuestions.map((que, indexQue) => ({
@@ -199,7 +199,7 @@ export default TraviasQuizPage;
 //       }))
 //     ]);
 //   } else if (
-//     props.match.url === `/quizes/travias-quizes/${props.match.params.id}`
+//     props.match.url === `/quizes/travias-quizes/${props.match.params.id - 1}`
 //   ) {
 //     return quizes;
 //   }
