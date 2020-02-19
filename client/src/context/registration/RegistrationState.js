@@ -1,23 +1,29 @@
 import React, { useReducer } from "react";
-import axios from "../../axios-orders";
+import axios from "axios";
 import registrationContext from "./registrationContext";
 import registrationReducer from "./registrationReducer";
-import setAuthToken from "../../utils/setAuthToken";
 import {
   SET_LOGIN_ACTIVE,
   SET_REGISTER_ACTIVE,
   USER_LOADED,
   LOGIN_SUCCESS,
-  REGISTER_SUCCESS
+  REGISTER_SUCCESS,
+  AUTH_ERROR,
+  LOGIN_FAIL,
+  REGISTER_FAIL,
+  LOGOUT,
+  CLEAR_ERRORS
 } from "../actionTypes";
 
 const RegistrationState = props => {
   const initialState = {
     sectionLogin: "active",
     sectionRegister: "",
+    token: localStorage.getItem("token"),
     user: null,
     isAuthenticated: false,
-    loading: false
+    loading: false,
+    error: null
   };
 
   const [state, dispatch] = useReducer(registrationReducer, initialState);
@@ -34,38 +40,47 @@ const RegistrationState = props => {
     }
   };
 
+  // Load User
   const loadUser = async () => {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
-
+    const config = {
+      headers: {
+        "x-auth-token": localStorage.token
+      }
+    };
     try {
-      const res = await axios.get("/auth");
+      const res = await axios.get("/auth", config);
       dispatch({ type: USER_LOADED, payload: res.data });
     } catch (err) {
-      console.log(err);
+      dispatch({
+        type: AUTH_ERROR,
+        payload:
+          "AUTH_ERROR: Token dogrulanamadi veya /auth'a GET isteginde bir sorun var"
+      });
     }
   };
 
-  const loginHandler = async loginObject => {
+  const loginHandler = async formData => {
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
     };
     try {
-      const user = await axios.post("/auth", loginObject, config);
+      const res = await axios.post("/auth", formData, config);
       dispatch({
         type: LOGIN_SUCCESS,
-        user: user.data
+        payload: res.data
       });
       loadUser();
     } catch (err) {
-      console.log("Login" + err);
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.msg
+      });
     }
   };
 
-  const registerHandler = registerObject => {
+  const registerHandler = async registerObject => {
     const config = {
       headers: {
         "Content-Type": "application/json"
@@ -73,15 +88,30 @@ const RegistrationState = props => {
     };
 
     try {
-      const newUser = axios.post("/users", registerObject, config);
+      const newUser = await axios.post("/users", registerObject, config);
       dispatch({
         type: REGISTER_SUCCESS,
-        user: newUser.data
+        payload: newUser.data
       });
       loadUser();
     } catch (err) {
-      console.log("Register" + err);
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: err.response.data.msg
+      });
     }
+  };
+
+  const logoutHandler = () => {
+    dispatch({
+      type: LOGOUT
+    });
+  };
+
+  const clearErrors = () => {
+    dispatch({
+      type: CLEAR_ERRORS
+    });
   };
 
   return (
@@ -89,12 +119,17 @@ const RegistrationState = props => {
       value={{
         sectionLogin: state.sectionLogin,
         sectionRegister: state.sectionRegister,
+        token: state.token,
         user: state.user,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
+        error: state.error,
         setLoginRegisterActive,
+        loadUser,
         loginHandler,
-        registerHandler
+        registerHandler,
+        logoutHandler,
+        clearErrors
       }}
     >
       {props.children}

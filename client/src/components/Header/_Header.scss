@@ -18,7 +18,7 @@
     align-items: center;
 
     & a {
-      padding: 1rem;
+      padding: 1.5rem;
     }
     & a:not(:last-child):hover {
       background-color: $color-darker;
@@ -41,6 +41,27 @@
           rgba($color-primary, 0.7),
           rgba($color-blue-1, 0.7)
         );
+      }
+    }
+
+    .header__profile {
+      display: flex;
+      width: min-content;
+      padding: 1rem;
+
+      &--image {
+        width: 2.5rem;
+        margin-right: 1rem;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      &:hover {
+        background-color: $color-darker;
+        color: $color-light;
+        cursor: pointer;
       }
     }
   }

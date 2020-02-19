@@ -1,18 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import RegistrationContext from "../../../context/registration/registrationContext";
 
-export default function Login() {
+export default function Login(props) {
   const registrationContext = useContext(RegistrationContext);
   const { loginHandler } = registrationContext;
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const onLoginHandler = e => {
     e.preventDefault();
     loginHandler({
-      email,
-      password
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value
     });
   };
 
@@ -23,14 +20,12 @@ export default function Login() {
         className="registration__login--email"
         placeholder="Email"
         name="email"
-        onChange={e => setEmail(e.target.value)}
       />
       <input
         type="password"
         className="registration__login--password"
         placeholder="Password"
         name="password"
-        onChange={e => setPassword(e.target.value)}
       />
       <button className="registration__login--button">Login</button>
     </form>

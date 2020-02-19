@@ -1,9 +1,14 @@
 import {
   SET_LOGIN_ACTIVE,
   SET_REGISTER_ACTIVE,
+  USER_LOADED,
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
-  USER_LOADED
+  AUTH_ERROR,
+  LOGIN_FAIL,
+  REGISTER_FAIL,
+  LOGOUT,
+  CLEAR_ERRORS
 } from "../actionTypes";
 
 const registrationReducer = (state, action) => {
@@ -22,7 +27,7 @@ const registrationReducer = (state, action) => {
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", action.user.token);
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
         ...action.payload,
@@ -30,12 +35,29 @@ const registrationReducer = (state, action) => {
         loading: false
       };
     case USER_LOADED:
-      console.log(action.paylaod);
       return {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: action.paylaod
+        user: action.payload
+      };
+    case AUTH_ERROR:
+    case LOGIN_FAIL:
+    case REGISTER_FAIL:
+    case LOGOUT:
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        error: action.payload
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null
       };
     default:
       return state;

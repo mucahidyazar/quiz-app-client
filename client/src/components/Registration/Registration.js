@@ -8,8 +8,15 @@ const Registration = props => {
   const {
     sectionLogin,
     sectionRegister,
+    user,
     setLoginRegisterActive
   } = registrationContext;
+
+  useEffect(() => {
+    if (user !== null) {
+      props.history.push("/");
+    }
+  }, [user]);
 
   return (
     <div className="section__registration">

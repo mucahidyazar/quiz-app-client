@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Home from "../Home/Home";
@@ -8,8 +8,18 @@ import TraviasQuizPage from "../Quizes/TraviasQuizPage/TraviasQuizPage";
 import YourQuizPage from "../Quizes/YourQuizPage/YourQuizPage";
 import ResultPage from "../Quizes/ResultPage/ResultPage";
 import Registration from "../Registration/Registration";
+import RegistrationContext from "../../context/registration/registrationContext";
 
 const Layout = props => {
+  const registrationContext = useContext(RegistrationContext);
+  const { loadUser } = registrationContext;
+
+  useEffect(() => {
+    if (localStorage.token) {
+      loadUser();
+    }
+  }, []);
+
   return (
     <div className="container">
       <Header />

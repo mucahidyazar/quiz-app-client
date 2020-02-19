@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import axios from "axios";
+import axios from "../../axios-orders";
 import quizesContext from "./quizesContext";
 import quizesReducer from "./quizesReducer";
 import {
@@ -59,7 +59,11 @@ const QuizesState = props => {
   // getTraviasQuizes
   const getTraviasQuizes = async () => {
     try {
-      const quizData1 = await axios.get(quizLinks[0]);
+      const quizData1 = await axios.get(quizLinks[0], {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
       const quizData2 = await axios.get(quizLinks[1]);
       const quizData3 = await axios.get(quizLinks[2]);
       const quizData4 = await axios.get(quizLinks[3]);

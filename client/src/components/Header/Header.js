@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import RegistrationContext from "../../context/registration/registrationContext";
+import defaultUser from "../../public/png/default-user.png";
 
 const Header = () => {
+  const registrationContext = useContext(RegistrationContext);
+  const { user } = registrationContext;
+
   return (
     <header className="header">
       <div className="header__left">
@@ -16,7 +21,16 @@ const Header = () => {
         </Link>
         <Link to="/quizes">Quizes</Link>
         <Link to="/">Leaderboard</Link>
-        <Link to="/registration">Login</Link>
+        {user ? (
+          <Link to={user.username} className="header__profile">
+            <div className="header__profile--image">
+              <img src={defaultUser} alt="" />
+            </div>
+            <div className="header__profile--name">{user.username}</div>
+          </Link>
+        ) : (
+          <Link to="/registration">Login</Link>
+        )}
 
         <i className="fas fa-sun"></i>
       </ul>
