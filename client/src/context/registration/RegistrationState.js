@@ -42,7 +42,9 @@ const RegistrationState = props => {
 
   // Load User
   const loadUser = async () => {
-    axios.defaults.headers.common["x-auth-token"] = localStorage.token;
+    if (localStorage.token) {
+      axios.defaults.headers.common["x-auth-token"] = localStorage.token;
+    }
     console.log(localStorage.token);
     console.log(localStorage.getItem("token"));
     console.log("token");
