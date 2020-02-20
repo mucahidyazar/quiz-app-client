@@ -49,7 +49,7 @@ const RegistrationState = props => {
     };
     try {
       const res = await axios.get("/auth", config);
-      dispatch({ type: USER_LOADED, payload: res.data });
+      dispatch({ type: USER_LOADED, payload: res });
     } catch (err) {
       dispatch({
         type: AUTH_ERROR,
