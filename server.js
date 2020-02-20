@@ -25,15 +25,15 @@ if (process.env.NODE_ENV === "production") {
 //   res.sendStatus(200);
 // });
 
-app.all("*", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
-  );
-  next();
-});
+// app.all("*", function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
+//   );
+//   next();
+// });
 
 app.use("/", require("./routes/quizRoute"));
 app.use("/users", require("./routes/userRoute"));
