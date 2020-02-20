@@ -44,7 +44,7 @@ const RegistrationState = props => {
   const loadUser = async () => {
     const config = {
       headers: {
-        "x-auth-token": localStorage.token
+        "x-auth-token": localStorage.getItem("token")
       }
     };
     console.log(localStorage.token);
