@@ -22,9 +22,6 @@ app.all("*", function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 });
-//
-
-app.get("/", (req, res) => res.send("Hello World"));
 
 //Defining Routes
 app.use("/auth", require("./routes/authRoute"));
