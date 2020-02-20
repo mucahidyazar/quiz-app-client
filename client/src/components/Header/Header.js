@@ -33,15 +33,16 @@ const Header = () => {
               <Link to={user.username} className="header__profile--profile">
                 <i class="fas fa-user"></i>Profile
               </Link>
-              <div className="header__profile--settings">
+              <Link to="/settings" className="header__profile--settings">
                 <i class="fas fa-cog"></i>Settings
-              </div>
-              <div
+              </Link>
+              <Link
+                to="/"
                 className="header__profile--logout"
                 onClick={() => logoutHandler()}
               >
                 <i class="fas fa-sign-out-alt"></i>Logout
-              </div>
+              </Link>
             </div>
           </Link>
         ) : (
