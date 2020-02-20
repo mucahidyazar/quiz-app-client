@@ -7,13 +7,11 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 app.use(express.json({ extended: false }));
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+app.use(express.json({ extended: false }));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-  });
-}
+app.listen(PORT, () => console.log("Server started on port " + PORT));
+
+app.get("/", (req, res) => res.send("Hello World"));
 
 // app.options("/*", function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
@@ -38,7 +36,3 @@ if (process.env.NODE_ENV === "production") {
 app.use("/", require("./routes/quizRoute"));
 app.use("/users", require("./routes/userRoute"));
 app.use("/auth", require("./routes/authRoute"));
-
-app.listen(PORT, () => {
-  console.log("Server is started on the port " + PORT);
-});
