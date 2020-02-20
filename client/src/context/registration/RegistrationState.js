@@ -42,17 +42,12 @@ const RegistrationState = props => {
 
   // Load User
   const loadUser = async () => {
-    const config = {
-      headers: {
-        "x-auth-token": localStorage.getItem("token"),
-        "Content-Type": "application/json"
-      }
-    };
+    axios.defaults.headers.common["x-auth-token"] = localStorage.token;
     console.log(localStorage.token);
     console.log(localStorage.getItem("token"));
     console.log("token");
     try {
-      const res = await axios.get("/auth", config);
+      const res = await axios.get("/auth");
       dispatch({ type: USER_LOADED, payload: res.data });
     } catch (err) {
       dispatch({
@@ -64,13 +59,8 @@ const RegistrationState = props => {
   };
 
   const loginHandler = async formData => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
     try {
-      const res = await axios.post("/auth", formData, config);
+      const res = await axios.post("/auth", formData);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
@@ -85,14 +75,8 @@ const RegistrationState = props => {
   };
 
   const registerHandler = async registerObject => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-
     try {
-      const newUser = await axios.post("/users", registerObject, config);
+      const newUser = await axios.post("/users", registerObject);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: newUser.data
