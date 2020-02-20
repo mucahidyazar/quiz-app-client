@@ -5,7 +5,7 @@ import defaultUser from "../../public/png/default-user.png";
 
 const Header = () => {
   const registrationContext = useContext(RegistrationContext);
-  const { user } = registrationContext;
+  const { user, logoutHandler } = registrationContext;
 
   return (
     <header className="header">
@@ -26,7 +26,23 @@ const Header = () => {
             <div className="header__profile--image">
               <img src={defaultUser} alt="" />
             </div>
-            <div className="header__profile--name">{user.username}</div>
+            <div className="header__profile--name">
+              {user.username ? user.username : "Username"}
+            </div>
+            <div className="header__profile--options">
+              <Link to={user.username} className="header__profile--profile">
+                <i class="fas fa-user"></i>Profile
+              </Link>
+              <div className="header__profile--settings">
+                <i class="fas fa-cog"></i>Settings
+              </div>
+              <div
+                className="header__profile--logout"
+                onClick={() => logoutHandler()}
+              >
+                <i class="fas fa-sign-out-alt"></i>Logout
+              </div>
+            </div>
           </Link>
         ) : (
           <Link to="/registration">Login</Link>

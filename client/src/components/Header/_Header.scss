@@ -48,6 +48,13 @@
       display: flex;
       width: min-content;
       padding: 1rem;
+      position: relative;
+
+      &:hover {
+        background-color: $color-darker;
+        color: $color-light;
+        cursor: pointer;
+      }
 
       &--image {
         width: 2.5rem;
@@ -58,10 +65,29 @@
         }
       }
 
-      &:hover {
+      &--options {
+        display: none;
+      }
+
+      &:hover .header__profile--options {
+        display: block;
+        width: 100%;
+        position: absolute;
+        top: 5rem;
+        left: 0;
+        background-color: darken($color: $color-light, $amount: 50);
+      }
+
+      .header__profile--options > * {
+        padding: 1rem;
+      }
+
+      .header__profile--options > *:hover {
         background-color: $color-darker;
-        color: $color-light;
-        cursor: pointer;
+      }
+
+      .header__profile--options i {
+        margin-right: 1rem;
       }
     }
   }
