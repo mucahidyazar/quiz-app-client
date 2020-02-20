@@ -14,6 +14,7 @@ import {
   LOGOUT,
   CLEAR_ERRORS
 } from "../actionTypes";
+import setAuthToken from "../../utils/setAuthToken";
 
 const RegistrationState = props => {
   const initialState = {
@@ -43,7 +44,7 @@ const RegistrationState = props => {
   // Load User
   const loadUser = async () => {
     if (localStorage.token) {
-      axios.defaults.headers.common["x-auth-token"] = localStorage.token;
+      setAuthToken(localStorage.token);
     }
     console.log(localStorage.token);
     console.log(localStorage.getItem("token"));

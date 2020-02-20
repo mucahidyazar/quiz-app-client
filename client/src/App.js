@@ -4,10 +4,10 @@ import { BrowserRouter } from "react-router-dom";
 import QuizesState from "./context/quizes/QuizesState";
 import CreateQuizState from "./context/createQuiz/CreateQuizState";
 import RegistrationState from "./context/registration/RegistrationState";
-import axios from "axios";
+import setAuthToken from "./utils/setAuthToken";
 
 if (localStorage.token) {
-  axios.defaults.headers.common["x-auth-token"] = localStorage.token;
+  setAuthToken(localStorage.token);
 }
 
 function App() {
