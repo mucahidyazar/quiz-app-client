@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 app.use(express.json({ extended: false }));
 
-app.get("/", (req, res) => res.send("Hello World"));
+app.get("/", (req, res) => res.send("Hello Worlde"));
 
 // // Quizleri cekebilmek icin izin verdik CORS'a
 // app.options("/*", function(req, res, next) {
