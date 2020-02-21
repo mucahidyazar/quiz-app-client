@@ -16,7 +16,11 @@ router.get("/", auth, async (req, res) => {
     );
 
     res.header("Content-Type", "application/json");
-    res.json(user);
+    res
+      .set({
+        "content-type": "application/json"
+      })
+      .json(user);
   } catch (err) {
     res.status(500).send("Server error");
   }
