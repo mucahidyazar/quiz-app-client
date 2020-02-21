@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
   app.all("*", function(req, res, next) {
     res.header(
-      "Access-Control-Allow-Headers",
+      "Accept",
       "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
     );
     next();
