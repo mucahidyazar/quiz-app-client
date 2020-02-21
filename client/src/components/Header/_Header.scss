@@ -45,10 +45,12 @@
     }
 
     .header__profile {
-      display: flex;
-      width: min-content;
-      padding: 1rem;
       position: relative;
+      &--header {
+        display: flex;
+        width: min-content;
+        padding: 1rem;
+      }
 
       &:hover {
         background-color: $color-darker;

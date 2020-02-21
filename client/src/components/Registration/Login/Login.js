@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import RegistrationContext from "../../../context/registration/registrationContext";
 
 export default function Login(props) {

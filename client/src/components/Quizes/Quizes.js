@@ -15,7 +15,8 @@ const Quizes = props => {
     getYourQuizes,
     activeAllQuizes,
     activeYourQuizes,
-    activeTraviasQuizes
+    activeTraviasQuizes,
+    searchQuizes
   } = quizesContext;
 
   const activeQuizNav = () => {
@@ -100,6 +101,10 @@ const Quizes = props => {
     }
   };
 
+  const onSearchQuizes = e => {
+    searchQuizes(e.target.value);
+  };
+
   useEffect(() => {
     if (!traviasQuizes) {
       getTraviasQuizes();
@@ -134,7 +139,12 @@ const Quizes = props => {
           </div>
         </div>
         <div className="quizes__nav--bottom">
-          <input type="text" placeholder="Search" className="search" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="search"
+            onChange={onSearchQuizes}
+          />
           <div className="sort">
             <span className="sort__span">Sort by</span>
             <select className="sort__select">

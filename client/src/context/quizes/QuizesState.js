@@ -5,6 +5,7 @@ import quizesReducer from "./quizesReducer";
 import {
   //COMMON
   SET_VALID_QUIZES,
+  SEARCH_QUIZES,
 
   //GET TRAVIAS QUIZES
   GET_TRAVIAS_QUIZES,
@@ -23,6 +24,7 @@ const QuizesState = props => {
 
     //All Quizes
     allQuizes: [],
+    searchedQuizes: null,
 
     //TraviasQuizes
     traviasQuizes: null,
@@ -97,6 +99,13 @@ const QuizesState = props => {
     }
   };
 
+  const searchQuizes = key => {
+    dispatch({
+      type: SEARCH_QUIZES,
+      key
+    });
+  };
+
   return (
     <quizesContext.Provider
       value={{
@@ -106,6 +115,8 @@ const QuizesState = props => {
 
         //AllQuizes
         allQuizes: state.allQuizes,
+        searchedQuizes: state.searchedQuizes,
+        searchQuizes,
 
         //TraviasQuizes
         traviasQuizes: state.traviasQuizes,

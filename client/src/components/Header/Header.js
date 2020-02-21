@@ -22,13 +22,15 @@ const Header = () => {
         <Link to="/quizes">Quizes</Link>
         <Link to="/">Leaderboard</Link>
         {user ? (
-          <Link to={user.username} className="header__profile">
-            <div className="header__profile--image">
-              <img src={defaultUser} alt="" />
-            </div>
-            <div className="header__profile--name">
-              {user.username ? user.username : "Username"}
-            </div>
+          <div className="header__profile">
+            <Link to={user.username} className="header__profile--header">
+              <div className="header__profile--image">
+                <img src={defaultUser} alt="" />
+              </div>
+              <div className="header__profile--name">
+                {user.username ? user.username : "Username"}
+              </div>
+            </Link>
             <div className="header__profile--options">
               <Link to={user.username} className="header__profile--profile">
                 <i className="fas fa-user"></i>Profile
@@ -44,7 +46,7 @@ const Header = () => {
                 <i className="fas fa-sign-out-alt"></i>Logout
               </Link>
             </div>
-          </Link>
+          </div>
         ) : (
           <Link to="/registration">Login</Link>
         )}
