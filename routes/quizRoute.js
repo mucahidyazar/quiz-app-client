@@ -5,6 +5,7 @@ const Quiz = require("../models/Quizes");
 router.get("/quizes", async (req, res) => {
   try {
     const quizes = await Quiz.find();
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(quizes);
   } catch (err) {
     console.error(err);

@@ -2,40 +2,52 @@ import React, { useContext, useEffect, useState } from "react";
 import Quiz from "./Quiz/Quiz";
 import QuizesContext from "../../context/quizes/quizesContext";
 import Spinner from "../Spinner/Spinner";
+import moment from "moment";
 
 const Quizes = props => {
   const quizesContext = useContext(QuizesContext);
   const {
     setValidQuizes,
+    searchedQuizes,
+    sortedQuizes,
     allQuizes,
     yourQuizes,
     traviasQuizes,
     quizesLoading,
+
+    searchQuizes,
+    sortYourQuizesByDate,
+    sortYourQuizesByTitle,
+    sortYourQuizesByQuestion,
     getTraviasQuizes,
     getYourQuizes,
     activeAllQuizes,
     activeYourQuizes,
-    activeTraviasQuizes,
-    searchQuizes
+    activeTraviasQuizes
   } = quizesContext;
 
   const activeQuizNav = () => {
     if (yourQuizNav === "active-quiz-nav") {
-      return yourQuizes.map((quiz, index) => (
-        <Quiz
-          key={index + 1}
-          index={index + 1}
-          quiz={quiz.quizQuestions}
-          isComingFrom={isComingFrom}
-          infoY={{
-            title: quiz.quizTitle,
-            description: quiz.quizDescription,
-            category: quiz.quizCategory,
-            type: quiz.quizType,
-            difficulty: quiz.quizDifficulty
-          }}
-        />
-      ));
+      return (searchedQuizes ? searchedQuizes : yourQuizes).map(
+        (quiz, index) => (
+          <Quiz
+            key={index + 1}
+            index={index + 1}
+            quiz={quiz.quizQuestions}
+            isComingFrom={isComingFrom}
+            infoY={{
+              title: quiz.quizTitle,
+              description: quiz.quizDescription,
+              category: quiz.quizCategory,
+              type: quiz.quizType,
+              difficulty: quiz.quizDifficulty,
+              date: moment(quiz.quizDate)
+                .startOf("day")
+                .fromNow()
+            }}
+          />
+        )
+      );
     } else if (traviasQuizNav === "active-quiz-nav") {
       return traviasQuizes.map((quiz, index) => (
         <Quiz
@@ -47,24 +59,29 @@ const Quizes = props => {
         />
       ));
     } else if (allQuizNav === "active-quiz-nav") {
-      return allQuizes.map((quiz, index) => (
-        <Quiz
-          key={index + 1}
-          isComingFrom={() => (quiz[0] ? "travias-quizes" : "your-quizes")}
-          index={index}
-          quiz={quiz}
-          info={quiz[0]}
-          infoY={{
-            title: quiz.quizTitle ? quiz.quizTitle : "Travias Quize",
-            description: quiz.quizDescription
-              ? quiz.quizDescription
-              : "Enjoy by solving",
-            category: quiz.quizCategory,
-            type: quiz.quizType,
-            difficulty: quiz.quizDifficulty
-          }}
-        />
-      ));
+      return (searchKey !== "" ? searchedQuizes : allQuizes).map(
+        (quiz, index) => (
+          <Quiz
+            key={index + 1}
+            isComingFrom={() => (quiz[0] ? "travias-quizes" : "your-quizes")}
+            index={index}
+            quiz={quiz}
+            info={quiz[0]}
+            infoY={{
+              title: quiz.quizTitle ? quiz.quizTitle : "Travias Quize",
+              description: quiz.quizDescription
+                ? quiz.quizDescription
+                : "Enjoy by solving",
+              category: quiz.quizCategory,
+              type: quiz.quizType,
+              difficulty: quiz.quizDifficulty,
+              date: moment(quiz.quizDate)
+                .startOf("day")
+                .fromNow()
+            }}
+          />
+        )
+      );
     } else {
       return <Spinner />;
     }
@@ -101,8 +118,27 @@ const Quizes = props => {
     }
   };
 
+  const [searchKey, setSearchKey] = useState("");
+  const [sortVisibility, setSortVisibility] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("");
   const onSearchQuizes = e => {
-    searchQuizes(e.target.value);
+    setSearchKey(e.target.value.trim());
+    searchQuizes(e.target.value.trim());
+  };
+
+  const onSortYourQuizesByDate = () => {
+    sortYourQuizesByDate();
+    setSelectedSort("Date");
+  };
+
+  const onSortYourQuizesByTitle = () => {
+    sortYourQuizesByTitle();
+    setSelectedSort("Title");
+  };
+
+  const onSortYourQuizesByQuestion = () => {
+    sortYourQuizesByQuestion();
+    setSelectedSort("Question");
   };
 
   useEffect(() => {
@@ -145,11 +181,42 @@ const Quizes = props => {
             className="search"
             onChange={onSearchQuizes}
           />
-          <div className="sort">
+          <div
+            className="sort"
+            onClick={() => setSortVisibility(!sortVisibility)}
+          >
             <span className="sort__span">Sort by</span>
-            <select className="sort__select">
-              <option value="Date">Date</option>
-            </select>
+            <div
+              className={`sort__select ${
+                sortVisibility ? "sort__select--show" : ""
+              }`}
+            >
+              <div value="Date" className="sort__select--example">
+                {selectedSort}
+              </div>
+              <div className="sort__options">
+                <div
+                  className="sort__options--date"
+                  onClick={onSortYourQuizesByDate}
+                >
+                  Date
+                </div>
+
+                <div
+                  className="sort__options--title"
+                  onClick={onSortYourQuizesByTitle}
+                >
+                  Title
+                </div>
+
+                <div
+                  className="sort__options--question"
+                  onClick={onSortYourQuizesByQuestion}
+                >
+                  Question
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

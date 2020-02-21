@@ -9,6 +9,9 @@ const Quiz = props => {
         props.info ? props.info.difficulty : props.infoY.difficulty
       }`}
     >
+      {props.infoY ? (
+        <div className="section__quiz--date">{props.infoY.date}</div>
+      ) : null}
       <div className="section__quiz-img">
         <img src={imgQuizTime} alt="Quiz Time" />
       </div>

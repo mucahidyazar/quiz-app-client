@@ -6,6 +6,9 @@ import {
   //COMMON
   SET_VALID_QUIZES,
   SEARCH_QUIZES,
+  SORT_YOUR_QUIZES_BY_DATE,
+  SORT_YOUR_QUIZES_BY_TITLE,
+  SORT_YOUR_QUIZES_BY_QUESTION,
 
   //GET TRAVIAS QUIZES
   GET_TRAVIAS_QUIZES,
@@ -25,6 +28,7 @@ const QuizesState = props => {
     //All Quizes
     allQuizes: [],
     searchedQuizes: null,
+    sortedQuizes: null,
 
     //TraviasQuizes
     traviasQuizes: null,
@@ -106,6 +110,24 @@ const QuizesState = props => {
     });
   };
 
+  const sortYourQuizesByDate = () => {
+    dispatch({
+      type: SORT_YOUR_QUIZES_BY_DATE
+    });
+  };
+
+  const sortYourQuizesByTitle = () => {
+    dispatch({
+      type: SORT_YOUR_QUIZES_BY_TITLE
+    });
+  };
+
+  const sortYourQuizesByQuestion = () => {
+    dispatch({
+      type: SORT_YOUR_QUIZES_BY_QUESTION
+    });
+  };
+
   return (
     <quizesContext.Provider
       value={{
@@ -116,7 +138,11 @@ const QuizesState = props => {
         //AllQuizes
         allQuizes: state.allQuizes,
         searchedQuizes: state.searchedQuizes,
+        sortedQuizes: state.sortedQuizes,
         searchQuizes,
+        sortYourQuizesByDate,
+        sortYourQuizesByTitle,
+        sortYourQuizesByQuestion,
 
         //TraviasQuizes
         traviasQuizes: state.traviasQuizes,

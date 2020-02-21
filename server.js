@@ -9,17 +9,12 @@ app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static("client/build"));
 
+app.use("/", require("./routes/quizRoute"));
+app.use("/users", require("./routes/userRoute"));
+app.use("/auth", require("./routes/authRoute"));
+
+// Every other API or similar routes should be before this catch-all
 if (process.env.NODE_ENV === "production") {
-  app.use(express.json()); // for parsing application/json
-  app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-  app.use("/auth", function(req, res, next) {
-    res.header(
-      "Accept",
-      "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
-    );
-    res.header("Content-Type", "application/json");
-    next();
-  });
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
@@ -44,10 +39,6 @@ if (process.env.NODE_ENV === "production") {
 //   );
 //   next();
 // });
-
-app.use("/", require("./routes/quizRoute"));
-app.use("/users", require("./routes/userRoute"));
-app.use("/auth", require("./routes/authRoute"));
 
 app.listen(PORT, () => {
   console.log("Server is started on the port " + PORT);
