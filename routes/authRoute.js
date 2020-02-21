@@ -10,6 +10,12 @@ const auth = require("../middleware/auth");
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
+    res.header(
+      "Accept",
+      "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
+    );
+
+    res.header("Content-Type", "application/json");
     res.json(user);
   } catch (err) {
     res.status(500).send("Server error");

@@ -12,11 +12,12 @@ app.use(express.static("client/build"));
 if (process.env.NODE_ENV === "production") {
   app.use(express.json()); // for parsing application/json
   app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-  app.all("*", function(req, res, next) {
+  app.use("/auth", function(req, res, next) {
     res.header(
       "Accept",
       "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
     );
+    res.header("Content-Type", "application/json");
     next();
   });
   app.get("*", (req, res) => {
