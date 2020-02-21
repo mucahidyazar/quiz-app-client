@@ -5,30 +5,51 @@ import { Link } from "react-router-dom";
 const Quiz = props => {
   return (
     <div
-      className={`section__quiz section__quiz-${
+      className={`quiz quiz--${
         props.info ? props.info.difficulty : props.infoY.difficulty
       }`}
     >
-      {props.infoY ? (
-        <div className="section__quiz--date">{props.infoY.date}</div>
-      ) : null}
-      <div className="section__quiz-img">
-        <img src={imgQuizTime} alt="Quiz Time" />
+      <div className="quiz__header">
+        {props.infoY ? (
+          <div className="quiz__header--date">{props.infoY.date}</div>
+        ) : null}
+        <div className="quiz__header--question">
+          {props.quiz.length} Question
+        </div>
+        <div className="quiz__header--img">
+          <img src={imgQuizTime} alt="Quiz Time" />
+        </div>
       </div>
-      <div className="section__quiz-header">
-        {props.infoY ? props.infoY.title : "Travias Quize"}
+
+      {/*QUIZ BODY*/}
+      <div className="quiz__body">
+        <div className="body__header">
+          <div className="body__header--title">
+            {props.infoY ? props.infoY.title : "Travias Quize"}
+          </div>
+          <div className="body__header--description">
+            {props.infoY ? props.infoY.description : "Enjoy by solving"}
+          </div>
+        </div>
+
+        <div className="body__information">
+          <div className="body__information--category">
+            {props.info ? props.info.category : props.infoY.category}
+          </div>
+          <div className="body__information--type">
+            {props.info ? props.info.type : props.infoY.type}
+          </div>
+          <div className="body__information--difficulty">
+            {props.info ? props.info.difficulty : props.infoY.difficulty}
+          </div>
+        </div>
       </div>
-      <div className="section__quiz-description">
-        {props.infoY ? props.infoY.description : "Enjoy by solving"}
-      </div>
-      <div className="section__quiz--information">
-        <div>{props.info ? props.info.category : props.infoY.category}</div>
-        <div>{props.info ? props.info.type : props.infoY.type}</div>
-        <div>{props.info ? props.info.difficulty : props.infoY.difficulty}</div>
-      </div>
+
       <Link
         to={`/quizes/${props.isComingFrom()}/${props.index}`}
-        className="section__quiz-button"
+        className={`quiz__button quiz__button--${
+          props.info ? props.info.difficulty : props.infoY.difficulty
+        }`}
       >
         Start
       </Link>

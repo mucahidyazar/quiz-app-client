@@ -59,26 +59,22 @@ export default (state, action) => {
           if (
             moment(a.quizDate)
               .startOf("day")
-              .fromNow()
-              .slice(0, 1) <
+              .fromNow() <
             moment(b.quizDate)
               .startOf("day")
               .fromNow()
-              .slice(0, 1)
           ) {
-            return -1;
+            return 1;
           }
           if (
             moment(a.quizDate)
               .startOf("day")
-              .fromNow()
-              .slice(0, 1) >
+              .fromNow() <
             moment(b.quizDate)
               .startOf("day")
               .fromNow()
-              .slice(0, 1)
           ) {
-            return -1;
+            return 1;
           }
           return 0;
         })
@@ -88,8 +84,8 @@ export default (state, action) => {
       return {
         ...state,
         yourQizes: state.yourQuizes.sort((a, b) => {
-          let titleA = a.quizTitle.toUpperCase();
-          let titleB = b.quizTitle.toUpperCase();
+          let titleA = a.quizTitle.toLowerCase();
+          let titleB = b.quizTitle.toLowerCase();
           if (titleA < titleB) {
             return -1;
           }

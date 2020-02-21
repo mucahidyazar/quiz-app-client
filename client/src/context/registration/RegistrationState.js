@@ -46,9 +46,6 @@ const RegistrationState = props => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    console.log(localStorage.token);
-    console.log(localStorage.getItem("token"));
-    console.log("token");
     try {
       const res = await axios.get("/auth");
       dispatch({ type: USER_LOADED, payload: res.data });
