@@ -1,98 +1,122 @@
 .header {
   display: flex;
   justify-content: space-between;
+}
 
-  &__left {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.header__left {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 2.5rem;
+
+  & > * {
+    padding: 1rem;
+  }
+}
+
+.header__right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.5rem;
+
+  & a {
+    padding: 0.5rem 1.5rem;
+    margin-left: 1rem;
+  }
+  & a:hover {
+    color: $color-light;
+    cursor: pointer;
+  }
+
+  &--active {
+    border-bottom: 2px solid $color-light;
+  }
+}
+
+.nav__profile {
+  margin-left: 1rem;
+  width: 20rem;
+  height: 4rem;
+  display: flex;
+  position: relative;
+  background-color: rgba($color-light, 0.4);
+  color: $color-white;
+  border-radius: 0.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  a {
+    color: $color-white;
+  }
+}
+
+.nav__profile--left {
+  display: flex;
+  align-items: center;
+  border-radius: 0.5rem;
+  margin-left: -1rem;
+  padding: 0.5rem 0;
+  overflow: hidden;
+
+  &:hover .nav__options {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    background-color: darken($color: $color-light, $amount: 50);
 
     & > * {
       padding: 1rem;
+      margin-left: 0;
     }
   }
+}
 
-  &__right {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.nav__profile--right {
+  background-color: rgba($color-hard-2, 0.6);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 
-    & a {
-      padding: 1.5rem;
+  &:hover {
+    background-color: rgba($color-hard-2, 0.8);
+  }
+}
+
+.nav__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+
+  &--image {
+    margin-right: 0.8rem;
+    margin-left: -0.8rem;
+    img {
+      width: 2.5rem;
     }
-    & a:not(:last-child):hover {
-      background-color: $color-darker;
-      color: $color-light;
-      cursor: pointer;
-    }
+  }
+}
 
-    &-create {
-      background: linear-gradient(
-        to right bottom,
-        rgba($color-primary, 0.5),
-        rgba($color-blue-1, 0.5)
-      );
-      border-radius: 0.5rem;
-      transition: all 0.3s;
+.nav__options {
+  display: none;
 
-      &:hover {
-        background: linear-gradient(
-          to right bottom,
-          rgba($color-primary, 0.7),
-          rgba($color-blue-1, 0.7)
-        );
-      }
-    }
+  & > * {
+    display: block;
+  }
 
-    .header__profile {
-      position: relative;
-      &--header {
-        display: flex;
-        width: min-content;
-        padding: 1rem;
-      }
+  & > *:hover {
+    background-color: $color-darker;
+  }
 
-      &:hover {
-        background-color: $color-darker;
-        color: $color-light;
-        cursor: pointer;
-      }
-
-      &--image {
-        width: 2.5rem;
-        margin-right: 1rem;
-
-        img {
-          width: 100%;
-        }
-      }
-
-      &--options {
-        display: none;
-      }
-
-      &:hover .header__profile--options {
-        display: block;
-        width: 100%;
-        position: absolute;
-        top: 5rem;
-        left: 0;
-        background-color: darken($color: $color-light, $amount: 50);
-      }
-
-      .header__profile--options > * {
-        padding: 1rem;
-        display: block;
-      }
-
-      .header__profile--options > *:hover {
-        background-color: $color-darker;
-      }
-
-      .header__profile--options i {
-        margin-right: 1rem;
-      }
-    }
+  & i {
+    margin-right: 1rem;
   }
 }
 

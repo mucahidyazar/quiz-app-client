@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import RegistrationContext from "../../context/registration/registrationContext";
 import defaultUser from "../../public/png/default-user.png";
 
@@ -10,48 +10,69 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header__left">
-        <i className="fas fa-feather-alt header__left-icon"></i>
+        <i className="fas fa-sun"></i>
         <div className="header__left-brand">
           <Link to="/">Trillo App</Link>
         </div>
       </div>
       <ul className="header__right">
-        <Link className="header__right-create" to="/create-quiz">
+        <NavLink
+          to="/create-quiz"
+          exact
+          activeClassName="header__right--active"
+        >
           Create Quiz
-        </Link>
-        <Link to="/quizes">Quizes</Link>
-        <Link to="/">Leaderboard</Link>
+        </NavLink>
+        <NavLink to="/quizes" activeClassName="header__right--active">
+          Quizes
+        </NavLink>
+        <NavLink
+          to="/leaderboard"
+          exact
+          activeClassName="header__right--active"
+        >
+          Leaderboard
+        </NavLink>
         {user ? (
-          <div className="header__profile">
-            <Link to={user.username} className="header__profile--header">
-              <div className="header__profile--image">
-                <img src={defaultUser} alt="" />
+          <div className="nav__profile">
+            <div className="nav__profile--left">
+              <Link to={user.username} className="nav__header">
+                <div className="nav__header--image">
+                  <img src={defaultUser} alt="" />
+                </div>
+                <div className="nav__header--name">
+                  {user.username ? user.username : "Username"}
+                </div>
+              </Link>
+
+              <div className="nav__options">
+                <Link to={user.username} className="nav__options--profile">
+                  <i className="fas fa-user"></i>Profile
+                </Link>
+                <Link to="/settings" className="nav__options--settings">
+                  <i className="fas fa-cog"></i>Settings
+                </Link>
+                <Link
+                  to="/"
+                  className="nav__options--logout"
+                  onClick={() => logoutHandler()}
+                >
+                  <i className="fas fa-sign-out-alt"></i>Logout
+                </Link>
               </div>
-              <div className="header__profile--name">
-                {user.username ? user.username : "Username"}
-              </div>
-            </Link>
-            <div className="header__profile--options">
-              <Link to={user.username} className="header__profile--profile">
-                <i className="fas fa-user"></i>Profile
-              </Link>
-              <Link to="/settings" className="header__profile--settings">
-                <i className="fas fa-cog"></i>Settings
-              </Link>
-              <Link
-                to="/"
-                className="header__profile--logout"
-                onClick={() => logoutHandler()}
-              >
-                <i className="fas fa-sign-out-alt"></i>Logout
-              </Link>
             </div>
+
+            <Link
+              to="/"
+              className="nav__profile--right"
+              onClick={() => logoutHandler()}
+            >
+              <i className="fas fa-sign-out-alt"></i>
+            </Link>
           </div>
         ) : (
           <Link to="/registration">Login</Link>
         )}
-
-        <i className="fas fa-sun"></i>
       </ul>
     </header>
   );

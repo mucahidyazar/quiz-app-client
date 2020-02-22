@@ -112,7 +112,6 @@ export default (state, action) => {
 
     //GET YOU QUIZES
     case GET_YOUR_QUIZES:
-      console.log(action.yourQuizes);
       return {
         ...state,
         yourQuizes: action.yourQuizes
@@ -120,7 +119,6 @@ export default (state, action) => {
 
     //GET TRAVIAS QUIZES
     case GET_TRAVIAS_QUIZES:
-      console.log(action.payload);
       return {
         ...state,
         traviasQuizes: action.traviasQuizes,
