@@ -14,7 +14,7 @@
 
 .leaderboard__nav {
   display: grid;
-  grid-template-columns: 5rem repeat(auto-fit, minmax(10rem, 1fr));
+  grid-template-columns: 5rem repeat(auto-fit, minmax(8rem, 1fr));
   text-align: center;
   text-transform: uppercase;
   font-size: 1.7rem;
@@ -31,7 +31,7 @@
 
 .leaderboard__board {
   display: grid;
-  grid-template-columns: 5rem repeat(auto-fit, minmax(10rem, 1fr));
+  grid-template-columns: 5rem repeat(auto-fit, minmax(8rem, 1fr));
   align-items: center;
   text-align: center;
   font-size: 1.4rem;
