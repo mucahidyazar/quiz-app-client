@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import moment from "moment";
 import imgQuizTime from "../../public/img/quiz-time.jpg";
 import QuizesContext from "../../context/quizes/quizesContext";
 import { Link } from "react-router-dom";
@@ -50,7 +51,11 @@ const Home = props => {
       </div>
       <div className={`quiz quiz--${randomQuiz.quizDifficulty}`}>
         <div className="quiz__header">
-          <div className="quiz__header--date">{randomQuiz.quizDate}</div>
+          <div className="quiz__header--date">
+            {moment(randomQuiz.quizDate)
+              .startOf("day")
+              .fromNow()}
+          </div>
           <div className="quiz__header--question">
             {randomQuiz.quizQuestions.length} Question
           </div>
