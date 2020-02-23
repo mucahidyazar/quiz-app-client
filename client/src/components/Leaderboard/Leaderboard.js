@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import defaultUser from "../../public/png/default-user.png";
+import UserContext from "../../context/user/userContext";
+import quizImage from "../../public/img/quiz-time.jpg";
 
 const Leaderboard = props => {
+  const userContext = useContext(UserContext);
+  const { users, getUsers } = userContext;
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <section className="leaderboard">
-      <div className="leaderboard__header">Leaderboard</div>
+      <div className="leaderboard__header">
+        <div className="leaderboard__header--search">
+          <input type="text" placeholder="Search" />
+
+          <div className="header__quiz">
+            <img
+              src={quizImage}
+              className={`header__quiz--image header__quiz--easy`}
+              alt=""
+            />
+            <div className="header__quiz--title">Title</div>
+          </div>
+        </div>
+      </div>
+      <div className="leaderboard__title">Leaderboard</div>
       <div className="leaderboard__nav">
         <div className="leaderboard__nav--rank">#</div>
         <div className="leaderboard__nav--avatar">Avatar</div>
@@ -17,22 +40,28 @@ const Leaderboard = props => {
         <div className="leaderboard__nav--false">False</div>
         <div className="leaderboard__nav--total">Total</div>
       </div>
-      <div className="leaderboard__board">
-        <div className="leaderboard__nav--rank">1</div>
-        <div className="leaderboard__nav--avatar">
-          <div className="leaderboard__nav--image">
-            <img src={defaultUser} alt="default user" />
-          </div>
-        </div>
-        <div className="leaderboard__nav--username">mucahidyazar</div>
-        <div className="leaderboard__nav--created">10</div>
-        <div className="leaderboard__nav--completed">25</div>
-        <div className="leaderboard__nav--solved">200</div>
-        <div className="leaderboard__nav--true">156</div>
-        <div className="leaderboard__nav--pass">20</div>
-        <div className="leaderboard__nav--false">24</div>
-        <div className="leaderboard__nav--total">2250</div>
-      </div>
+      {users
+        ? users.map((user, index) => (
+            <div className="leaderboard__board">
+              <div className="leaderboard__nav--rank">{index + 1}</div>
+              <div className="leaderboard__nav--avatar">
+                <div className="leaderboard__nav--image">
+                  <img src={defaultUser} alt="default user" />
+                </div>
+              </div>
+              <div className="leaderboard__nav--username">{user.username}</div>
+              <div className="leaderboard__nav--created">{user.totalQuiz}</div>
+              <div className="leaderboard__nav--completed">
+                {user.totalCompleted}
+              </div>
+              <div className="leaderboard__nav--solved">{user.totalSolved}</div>
+              <div className="leaderboard__nav--true">{user.totalTrue}</div>
+              <div className="leaderboard__nav--pass">{user.totalPass}</div>
+              <div className="leaderboard__nav--false">{user.totalFalse}</div>
+              <div className="leaderboard__nav--total">{user.totalPoint}</div>
+            </div>
+          ))
+        : null}
     </section>
   );
 };

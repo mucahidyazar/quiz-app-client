@@ -14,6 +14,27 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true
+  },
+  totalQuiz: {
+    type: Number
+  },
+  totalCompleted: {
+    type: Number
+  },
+  totalSolved: {
+    type: Number
+  },
+  totalTrue: {
+    type: Number
+  },
+  totalPass: {
+    type: Number
+  },
+  totalFalse: {
+    type: Number
+  },
+  totalPoint: {
+    type: Number
   }
 });
 

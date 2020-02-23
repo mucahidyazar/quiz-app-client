@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Quiz = require("../models/Quizes");
+const User = require("../models/User");
+const auth = require("../middleware/auth");
+
+const mongoose = require("mongoose");
 
 router.get("/quizes", async (req, res) => {
   try {
@@ -12,7 +16,7 @@ router.get("/quizes", async (req, res) => {
   }
 });
 
-router.post("/quiz/add-quiz", async (req, res) => {
+router.post("/quiz/add-quiz", auth, async (req, res) => {
   try {
     const {
       quizTitle,
@@ -30,7 +34,9 @@ router.post("/quiz/add-quiz", async (req, res) => {
       quizType,
       quizDifficulty,
       quizQuestions,
-      quizDate: Date.now()
+      quizDate: Date.now(),
+      quizAuthor: req.user.id,
+      quizScoreboard: []
     });
     await quiz.save();
     res.json(quiz);

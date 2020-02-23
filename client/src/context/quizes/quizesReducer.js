@@ -53,37 +53,36 @@ export default (state, action) => {
       };
 
     case SORT_YOUR_QUIZES_BY_DATE:
+      const newQuizes = [...state.yourQuizes].sort((a, b) => {
+        if (
+          moment(a.quizDate)
+            .utc()
+            .valueOf() <
+          moment(b.quizDate)
+            .utc()
+            .valueOf()
+        ) {
+          return -1;
+        } else if (
+          moment(a.quizDate)
+            .utc()
+            .valueOf() >
+          moment(b.quizDate)
+            .utc()
+            .valueOf()
+        ) {
+          return -1;
+        } else return 0;
+      });
       return {
         ...state,
-        yourQizes: state.yourQuizes.sort((a, b) => {
-          if (
-            moment(a.quizDate)
-              .startOf("day")
-              .fromNow() <
-            moment(b.quizDate)
-              .startOf("day")
-              .fromNow()
-          ) {
-            return 1;
-          }
-          if (
-            moment(a.quizDate)
-              .startOf("day")
-              .fromNow() <
-            moment(b.quizDate)
-              .startOf("day")
-              .fromNow()
-          ) {
-            return 1;
-          }
-          return 0;
-        })
+        yourQuizes: newQuizes
       };
 
     case SORT_YOUR_QUIZES_BY_TITLE:
       return {
         ...state,
-        yourQizes: state.yourQuizes.sort((a, b) => {
+        yourQuizes: state.yourQuizes.sort((a, b) => {
           let titleA = a.quizTitle.toLowerCase();
           let titleB = b.quizTitle.toLowerCase();
           if (titleA < titleB) {
@@ -99,7 +98,7 @@ export default (state, action) => {
     case SORT_YOUR_QUIZES_BY_QUESTION:
       return {
         ...state,
-        yourQizes: state.yourQuizes.sort((a, b) => {
+        yourQuizes: state.yourQuizes.sort((a, b) => {
           if (a.quizQuestions.length < b.quizQuestions.length) {
             return -1;
           }

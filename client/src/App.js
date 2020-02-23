@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import QuizesState from "./context/quizes/QuizesState";
 import CreateQuizState from "./context/createQuiz/CreateQuizState";
 import RegistrationState from "./context/registration/RegistrationState";
+import UserState from "./context/user/UserState";
 import setAuthToken from "./utils/setAuthToken";
 
 if (localStorage.token) {
@@ -15,9 +16,11 @@ function App() {
     <QuizesState>
       <CreateQuizState>
         <RegistrationState>
-          <BrowserRouter>
-            <Layout />
-          </BrowserRouter>
+          <UserState>
+            <BrowserRouter>
+              <Layout />
+            </BrowserRouter>
+          </UserState>
         </RegistrationState>
       </CreateQuizState>
     </QuizesState>

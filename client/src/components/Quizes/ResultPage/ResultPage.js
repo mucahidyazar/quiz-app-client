@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import CreateQuizContext from "../../../context/createQuiz/createQuizContext";
 
 export default function ResultPage(props) {
+  const createQuizContext = useContext(CreateQuizContext);
+  const { saveScores, saveScoreToQuiz } = createQuizContext;
+
   const [trueVal, setTrueVal] = useState(0);
   const [passVal, setPassVal] = useState(0);
   const [falseVal, setFalseVal] = useState(0);
@@ -10,6 +15,10 @@ export default function ResultPage(props) {
     calcFalse();
     calcPass();
   }, []);
+
+  const onSaveScores = () => {
+    saveScores(trueVal, passVal, falseVal);
+  };
 
   const calcTrue = () => {
     props.location.state.answers.filter((answer, index) =>
@@ -43,27 +52,44 @@ export default function ResultPage(props) {
     );
   };
 
+  const calcWidth = value => {
+    return (props.location.state.answers.length / value) * 100 + "%";
+  };
+
+  const onSaveScoreToQuiz = () => {
+    saveScoreToQuiz(trueVal, passVal, falseVal);
+  };
+
   return (
-    <div className="section__resultpage">
-      <div className="section__resultpage-tfp">
-        <div className="tfp__true">
-          <div className="tfp__true-point">{trueVal}</div>
-          <div className="tfp__true-type">TRUE</div>
+    <div className="resultpage">
+      <div className="resultpage-tfp">
+        <div className="tfp__true" style={{ width: calcWidth(trueVal) }}>
+          <div className="tfp__true--point">{trueVal}</div>
+          <div className="tfp__true--type">TRUE</div>
         </div>
-        <div className="tfp__pass">
-          <div className="tfp__pass-point">{passVal}</div>
-          <div className="tfp__pass-type">PASS</div>
+        <div className="tfp__pass" style={{ width: calcWidth(passVal) }}>
+          <div className="tfp__pass--point">{passVal}</div>
+          <div className="tfp__pass--type">PASS</div>
         </div>
-        <div className="tfp__false">
-          <div className="tfp__false-point">{falseVal}</div>
-          <div className="tfp__false-type">FALSE</div>
+        <div className="tfp__false" style={{ width: calcWidth(falseVal) }}>
+          <div className="tfp__false--point">{falseVal}</div>
+          <div className="tfp__false--type">FALSE</div>
         </div>
       </div>
-      <div className="section__resultpage-total">
+      <div className="resultpage-total">
         <div className="tfp__point">
-          {(trueVal * 100) / props.location.state.answers.length} / 100
+          {(trueVal * 100) / props.location.state.answers.length}
         </div>
-        <div className="tfp__type">POINT</div>
+      </div>
+      <div className="resultpage__options">
+        <Link to="/leaderboard" onClick={onSaveScoreToQuiz}>
+          <i className="fas fa-thumbtack"></i>
+          <span>Save Your Score</span>
+        </Link>
+        <Link to="/" onClick={onSaveScores}>
+          <i className="fas fa-home"></i>
+          <span>Home</span>
+        </Link>
       </div>
     </div>
   );

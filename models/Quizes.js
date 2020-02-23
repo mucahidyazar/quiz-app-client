@@ -27,6 +27,13 @@ const QuizSchema = mongoose.Schema({
   },
   quizDate: {
     type: Date
+  },
+  quizAuthor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user"
+  },
+  quizScoreboard: {
+    type: Array
   }
 });
 

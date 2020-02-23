@@ -157,6 +157,13 @@ export default (state, action) => {
         },
         config
       );
+      axios.put(
+        "/users",
+        {
+          totalPoint: state.questions.length
+        },
+        config
+      );
       return {
         ...state,
         quiz: null,

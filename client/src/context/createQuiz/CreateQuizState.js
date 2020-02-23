@@ -258,6 +258,28 @@ const CreateQuizState = props => {
     }, 3000);
   };
 
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const saveScores = (trueVal, passVal, falseVal) => {
+    const data = {
+      totalSolved: trueVal + passVal + falseVal,
+      totalTrue: trueVal,
+      totalPass: passVal,
+      totalFalse: falseVal
+    };
+    try {
+      axios.put("/users", data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const saveScoreToQuiz = () => {};
+
   return (
     <createQuizContext.Provider
       value={{
@@ -287,7 +309,9 @@ const CreateQuizState = props => {
         addNewAnswer,
         trueOrFalseAction,
         setQuestion,
-        setAnswer
+        setAnswer,
+        saveScores,
+        saveScoreToQuiz
       }}
     >
       {props.children}

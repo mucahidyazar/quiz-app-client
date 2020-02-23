@@ -1,10 +1,17 @@
 const express = require("express");
+const auth = require("../middleware/auth");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require("../models/User");
+const Quizes = require("../models/Quizes");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
+
+router.get("/", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
 
 router.post(
   "/",
@@ -33,7 +40,14 @@ router.post(
         user = new User({
           username,
           email,
-          password
+          password,
+          totalQuiz: 0,
+          totalCompleted: 0,
+          totalSolved: 0,
+          totalTrue: 0,
+          totalPass: 0,
+          totalFalse: 0,
+          totalPoint: 0
         });
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
@@ -63,5 +77,39 @@ router.post(
     }
   }
 );
+
+router.put("/", auth, async (req, res) => {
+  res.header(
+    "Accept",
+    "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
+  );
+
+  res.header("Content-Type", "application/json");
+
+  const { totalSolved, totalTrue, totalPass, totalFalse } = req.body;
+  console.log(req.body);
+
+  let totalQuiz;
+
+  Quizes.countDocuments({ quizAuthor: req.user.id }, (err, count) => {
+    if (err) throw err;
+    totalQuiz = count;
+  });
+
+  User.findById(req.user.id, function(err, doc) {
+    if (err) throw err;
+    doc.totalCompleted = doc.totalCompleted + 1;
+    totalSolved && (doc.totalSolved = doc.totalSolved + totalSolved);
+    totalTrue && (doc.totalTrue = doc.totalTrue + totalTrue);
+    totalPass && (doc.totalPass = doc.totalPass + totalPass);
+    totalFalse && (doc.totalFalse = doc.totalFalse + totalFalse);
+    totalTrue && (doc.totalPoint = doc.totalPoint + totalTrue * 10);
+
+    //Calculating Total Quiz
+    doc.totalQuiz = totalQuiz ? totalQuiz : 1;
+
+    doc.save();
+  });
+});
 
 module.exports = router;
