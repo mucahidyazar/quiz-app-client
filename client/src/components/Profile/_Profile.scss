@@ -1,0 +1,163 @@
+.profile {
+  background-color: darken($color: $color-light, $amount: 50);
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr min-content min-content min-content;
+  grid-gap: 1rem;
+  padding: 2rem;
+  margin-top: 5rem;
+}
+
+.info {
+  grid-row: 1 / 4;
+
+  &__photo {
+    height: 25rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__name {
+    background-color: rgba($color-light, 0.5);
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__info {
+    color: $color-hard-1;
+    display: block;
+    font-size: 1rem;
+    font-weight: 100;
+    margin-bottom: 2rem;
+  }
+
+  &__body {
+    background-color: rgba($color-light, 0.5);
+    padding-bottom: 1rem;
+
+    &--title {
+      text-align: center;
+      padding: 1rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      background-color: darken($color: $color-light, $amount: 40);
+      margin-bottom: 3rem;
+    }
+
+    .info__group {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+
+      &--title {
+        background-color: darken($color: $color-light, $amount: 40);
+        width: 80%;
+        margin: auto;
+        text-align: center;
+        padding: 0.2rem;
+      }
+      &--item {
+        padding-left: 10%;
+        font-size: 1.8rem;
+      }
+    }
+  }
+}
+
+.stats {
+  background-color: rgba($color-light, 0.5);
+
+  &__title {
+    text-align: center;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: rgba($color-light, 0.5);
+    margin-bottom: 3rem;
+  }
+
+  &__body {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 3rem;
+
+    &--item {
+      display: flex;
+      flex-direction: column;
+      background-color: darken($color: $color-light, $amount: 40);
+      padding: 3rem;
+      text-align: center;
+    }
+  }
+}
+
+.badges {
+  background-color: rgba($color-light, 0.5);
+
+  &__title {
+    text-align: center;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: rgba($color-light, 0.5);
+    margin-bottom: 3rem;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    grid-gap: 1rem;
+    font-size: 1.5rem;
+    padding: 2rem;
+    margin-top: -3rem;
+
+    &--item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: darken($color: $color-light, $amount: 40);
+      padding: 2rem;
+
+      i {
+        font-size: 5rem;
+      }
+    }
+  }
+}
+
+.profile-quizes {
+  background-color: rgba($color-light, 0.5);
+
+  &__title {
+    text-align: center;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: rgba($color-light, 0.5);
+    margin-bottom: 3rem;
+  }
+
+  &__body {
+    display: grid;
+    grid-gap: 1rem;
+    font-size: 1.5rem;
+    padding: 2rem;
+    margin-top: -3rem;
+
+    &--item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: darken($color: $color-light, $amount: 40);
+      padding: 2rem;
+
+      i {
+        font-size: 5rem;
+      }
+    }
+  }
+}

@@ -11,24 +11,46 @@ const Leaderboard = props => {
   const {
     yourQuizes,
     searchedQuizes,
+    specialQuizScoreboard,
     getYourQuizes,
-    searchQuizes
+    searchQuizes,
+    getQuizScoreboard
   } = quizesContext;
 
-  const [quiz, setQuiz] = useState();
+  const [searchKey, setSearchKey] = useState("");
 
   const onSearchQuizes = e => {
+    setSearchKey(e.target.value);
     searchQuizes(e.target.value);
   };
 
   const onGetQuizScoreboard = quiz => {
-    setQuiz(quiz.quizScoreboard);
+    getQuizScoreboard(quiz.quizScoreboard);
+    console.log(quiz.quizScoreboard);
   };
 
   useEffect(() => {
     getUsers();
     getYourQuizes();
   }, []);
+
+  const quizSB = specialQuizScoreboard
+    ? specialQuizScoreboard.map((score, index) => (
+        <div className="leaderboard__board" key={index}>
+          <div className="leaderboard__nav--rank">{index + 1}</div>
+          <div className="leaderboard__nav--avatar">
+            <div className="leaderboard__nav--image">
+              <img src={defaultUser} alt="default user" />
+            </div>
+          </div>
+          <div className="leaderboard__nav--username">{score.username}</div>
+          <div className="leaderboard__nav--true">{score.totalTrue}</div>
+          <div className="leaderboard__nav--pass">{score.totalPass}</div>
+          <div className="leaderboard__nav--false">{score.totalFalse}</div>
+          <div className="leaderboard__nav--total">{score.totalPoint}</div>
+        </div>
+      ))
+    : null;
 
   return (
     <section className="leaderboard">
@@ -65,21 +87,30 @@ const Leaderboard = props => {
         </div>
       </div>
       <div className="leaderboard__title">Leaderboard</div>
+
       <div className="leaderboard__nav">
         <div className="leaderboard__nav--rank">#</div>
         <div className="leaderboard__nav--avatar">Avatar</div>
         <div className="leaderboard__nav--username">Username</div>
-        <div className="leaderboard__nav--created">Created</div>
-        <div className="leaderboard__nav--completed">Completed</div>
-        <div className="leaderboard__nav--solved">Solved</div>
+        {!quizSB ? (
+          <div className="leaderboard__nav--created">Created</div>
+        ) : null}
+        {!quizSB ? (
+          <div className="leaderboard__nav--completed">Completed</div>
+        ) : null}
+        {!quizSB ? (
+          <div className="leaderboard__nav--solved">Solved</div>
+        ) : null}
         <div className="leaderboard__nav--true">True</div>
         <div className="leaderboard__nav--pass">Pass</div>
         <div className="leaderboard__nav--false">False</div>
         <div className="leaderboard__nav--total">Total</div>
       </div>
-      {users
+      {quizSB !== null && searchKey !== ""
+        ? quizSB
+        : users
         ? users.map((user, index) => (
-            <div className="leaderboard__board">
+            <div className="leaderboard__board" key={index}>
               <div className="leaderboard__nav--rank">{index + 1}</div>
               <div className="leaderboard__nav--avatar">
                 <div className="leaderboard__nav--image">

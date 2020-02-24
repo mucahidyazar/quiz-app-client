@@ -14,7 +14,8 @@ import {
   GET_TRAVIAS_QUIZES,
 
   //GET YOUR QUIZES
-  GET_YOUR_QUIZES
+  GET_YOUR_QUIZES,
+  GET_QUIZ_SCOREBOARD
 } from "../actionTypes";
 
 const QuizesState = props => {
@@ -36,7 +37,9 @@ const QuizesState = props => {
     getQuizesError: null,
 
     //YourQuizes
-    yourQuizes: []
+    yourQuizes: [],
+
+    specialQuizScoreboard: null
   };
 
   const quizLinks = [
@@ -128,6 +131,13 @@ const QuizesState = props => {
     });
   };
 
+  const getQuizScoreboard = quizScoreboard => {
+    dispatch({
+      type: GET_QUIZ_SCOREBOARD,
+      quizScoreboard
+    });
+  };
+
   return (
     <quizesContext.Provider
       value={{
@@ -151,7 +161,10 @@ const QuizesState = props => {
 
         //YourQuizes
         yourQuizes: state.yourQuizes,
-        getYourQuizes
+        getYourQuizes,
+
+        specialQuizScoreboard: state.specialQuizScoreboard,
+        getQuizScoreboard
       }}
     >
       {props.children}

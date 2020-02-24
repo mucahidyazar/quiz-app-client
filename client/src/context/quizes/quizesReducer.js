@@ -17,7 +17,8 @@ import {
   ACTIVE_TRAVIAS_QUIZES,
 
   //GET TRAVIAS QUIZES
-  GET_TRAVIAS_QUIZES
+  GET_TRAVIAS_QUIZES,
+  GET_QUIZ_SCOREBOARD
 } from "../actionTypes";
 
 export default (state, action) => {
@@ -32,7 +33,8 @@ export default (state, action) => {
       if (action.key === "") {
         return {
           ...state,
-          searchedQuizes: null
+          searchedQuizes: null,
+          specialQuizScoreboard: null
         };
       } else {
         return {
@@ -132,6 +134,12 @@ export default (state, action) => {
         traviasQuizes: action.traviasQuizes,
         allQuizes: [...state.yourQuizes, ...action.traviasQuizes],
         quizesLoading: false
+      };
+
+    case GET_QUIZ_SCOREBOARD:
+      return {
+        ...state,
+        specialQuizScoreboard: action.quizScoreboard
       };
 
     /* ######### */

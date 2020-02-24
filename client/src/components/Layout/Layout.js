@@ -37,7 +37,6 @@ const Layout = props => {
         <Route path="/quizes/your-quizes/:id" component={YourQuizPage} />
         <Route path="/result/:id" component={ResultPage} />
         <Route path="/registration" component={Registration} />
-        <Route path="/registration" component={Registration} />
         <Route path="/:id" component={Profile} />
       </Switch>
     </div>
