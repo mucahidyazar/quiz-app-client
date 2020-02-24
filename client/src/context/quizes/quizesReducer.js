@@ -29,28 +29,37 @@ export default (state, action) => {
         validQuizes: action.quizes
       };
     case SEARCH_QUIZES:
-      return {
-        ...state,
-        searchedQuizes: state.yourQuizes.filter(
-          quiz =>
-            (quiz.quizTitle.toLowerCase().includes(action.key.toLowerCase()) &&
-              quiz) ||
-            (quiz.quizDescription
-              .toLowerCase()
-              .includes(action.key.toLowerCase()) &&
-              quiz) ||
-            (quiz.quizCategory
-              .toLowerCase()
-              .includes(action.key.toLowerCase()) &&
-              quiz) ||
-            (quiz.quizType.toLowerCase().includes(action.key.toLowerCase()) &&
-              quiz) ||
-            (quiz.quizDifficulty
-              .toLowerCase()
-              .includes(action.key.toLowerCase()) &&
-              quiz)
-        )
-      };
+      if (action.key === "") {
+        return {
+          ...state,
+          searchedQuizes: null
+        };
+      } else {
+        return {
+          ...state,
+          searchedQuizes: state.yourQuizes.filter(
+            quiz =>
+              (quiz.quizTitle
+                .toLowerCase()
+                .includes(action.key.toLowerCase()) &&
+                quiz) ||
+              (quiz.quizDescription
+                .toLowerCase()
+                .includes(action.key.toLowerCase()) &&
+                quiz) ||
+              (quiz.quizCategory
+                .toLowerCase()
+                .includes(action.key.toLowerCase()) &&
+                quiz) ||
+              (quiz.quizType.toLowerCase().includes(action.key.toLowerCase()) &&
+                quiz) ||
+              (quiz.quizDifficulty
+                .toLowerCase()
+                .includes(action.key.toLowerCase()) &&
+                quiz)
+          )
+        };
+      }
 
     case SORT_YOUR_QUIZES_BY_DATE:
       const newQuizes = [...state.yourQuizes].sort((a, b) => {

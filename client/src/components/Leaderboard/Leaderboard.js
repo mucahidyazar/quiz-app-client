@@ -1,29 +1,66 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import defaultUser from "../../public/png/default-user.png";
 import UserContext from "../../context/user/userContext";
+import QuizesContext from "../../context/quizes/quizesContext";
 import quizImage from "../../public/img/quiz-time.jpg";
 
 const Leaderboard = props => {
   const userContext = useContext(UserContext);
   const { users, getUsers } = userContext;
+  const quizesContext = useContext(QuizesContext);
+  const {
+    yourQuizes,
+    searchedQuizes,
+    getYourQuizes,
+    searchQuizes
+  } = quizesContext;
+
+  const [quiz, setQuiz] = useState();
+
+  const onSearchQuizes = e => {
+    searchQuizes(e.target.value);
+  };
+
+  const onGetQuizScoreboard = quiz => {
+    setQuiz(quiz.quizScoreboard);
+  };
 
   useEffect(() => {
     getUsers();
+    getYourQuizes();
   }, []);
 
   return (
     <section className="leaderboard">
       <div className="leaderboard__header">
         <div className="leaderboard__header--search">
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search a quiz"
+            onChange={onSearchQuizes}
+          />
 
-          <div className="header__quiz">
-            <img
-              src={quizImage}
-              className={`header__quiz--image header__quiz--easy`}
-              alt=""
-            />
-            <div className="header__quiz--title">Title</div>
+          <div className="foundeded__quizes">
+            {searchedQuizes
+              ? searchedQuizes.map(
+                  (quiz, index) =>
+                    index < 5 && (
+                      <div
+                        className="foundeded__quizes--item"
+                        onClick={() => onGetQuizScoreboard(quiz)}
+                      >
+                        <img
+                          src={quizImage}
+                          className={`foundeded__quizes--image foundeded__quizes--easy`}
+                          alt=""
+                        />
+                        <div className="foundeded__quizes--title">
+                          {quiz.quizTitle}
+                        </div>
+                      </div>
+                    )
+                )
+              : null}
           </div>
         </div>
       </div>

@@ -84,8 +84,6 @@ router.put("/", auth, async (req, res) => {
     "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
   );
 
-  res.header("Content-Type", "application/json");
-
   const { totalSolved, totalTrue, totalPass, totalFalse } = req.body;
   console.log(req.body);
 

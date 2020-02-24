@@ -278,7 +278,19 @@ const CreateQuizState = props => {
     }
   };
 
-  const saveScoreToQuiz = () => {};
+  const saveScoreToQuiz = (id, trueVal, passVal, falseVal) => {
+    const score = {
+      totalTrue: trueVal,
+      totalPass: passVal,
+      totalFalse: falseVal,
+      totalPoint: trueVal * 10
+    };
+    try {
+      axios.put(`/quiz/${id}`, score);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <createQuizContext.Provider

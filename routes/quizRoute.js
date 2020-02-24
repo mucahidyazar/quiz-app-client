@@ -45,4 +45,22 @@ router.post("/quiz/add-quiz", auth, async (req, res) => {
   }
 });
 
+router.put("/quiz/:id", auth, async (req, res) => {
+  res.header(
+    "Accept",
+    "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
+  );
+  const score = req.body;
+  const userID = req.user.id;
+  const user = await User.findById(userID);
+
+  console.log(req.params.id);
+  console.log(req.body);
+  console.log(user);
+  Quiz.findById(req.params.id, (err, quiz) => {
+    quiz.quizScoreboard.push([score, user]);
+    quiz.save();
+  });
+});
+
 module.exports = router;

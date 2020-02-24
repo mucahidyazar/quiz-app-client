@@ -1,5 +1,6 @@
 .leaderboard {
-  margin-top: 10rem;
+  margin: 5rem 0;
+  padding-bottom: 4rem;
   background-color: darken($color: $color-light, $amount: 50);
   width: 100%;
 }
@@ -24,16 +25,29 @@
     }
   }
 
-  .header__quiz {
+  .foundeded__quizes {
     position: absolute;
     top: 4.5rem;
     left: 0;
-    display: flex;
-    align-items: center;
-    background: rgba($color-light, 0.4);
-    opacity: 0.6;
     width: 100%;
-    overflow: hidden;
+    z-index: 10;
+
+    &--item {
+      display: flex;
+      align-items: center;
+      background: rgba($color-light, 0.4);
+      opacity: 0.6;
+      overflow: hidden;
+
+      &:not(:last-child) {
+        margin-bottom: 0.1rem;
+      }
+
+      &:hover {
+        cursor: pointer;
+        opacity: 1;
+      }
+    }
 
     &--title {
       font-size: 1.5rem;
@@ -44,11 +58,6 @@
       width: 4rem;
       height: 4rem;
       margin-right: 1rem;
-    }
-
-    &:hover {
-      cursor: pointer;
-      opacity: 1;
     }
   }
 }

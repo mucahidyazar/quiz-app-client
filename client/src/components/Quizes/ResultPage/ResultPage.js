@@ -57,7 +57,7 @@ export default function ResultPage(props) {
   };
 
   const onSaveScoreToQuiz = () => {
-    saveScoreToQuiz(trueVal, passVal, falseVal);
+    saveScoreToQuiz(props.location.state.id, trueVal, passVal, falseVal);
   };
 
   return (

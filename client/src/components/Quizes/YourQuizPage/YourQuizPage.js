@@ -132,7 +132,6 @@ const YourQuizPage = props => {
   };
 
   const onClickNext = () => {
-    console.log(quiz);
     if (!answers[question]) {
       setAnswers([...answers, "PASS"]);
     }
@@ -141,7 +140,8 @@ const YourQuizPage = props => {
         pathname: `/result/${props.match.params.id}`,
         state: {
           answers,
-          correctAnswers
+          correctAnswers,
+          id: yourQuizes[props.match.params.id - 1]._id
         }
       });
     } else {
