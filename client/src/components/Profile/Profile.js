@@ -11,9 +11,11 @@ export default function Profile() {
             <input
               type="file"
               className="info__photo--file"
-              name="info__photo--file"
+              id="info__photo--file"
             />
-            <i class="fas fa-camera-retro" htmlFor="info__photo--file"></i>
+            <label htmlFor="info__photo--file">
+              <i class="fas fa-camera-retro"></i>
+            </label>
           </div>
         </div>
         <div className="info__name">Mucahid</div>
@@ -22,25 +24,27 @@ export default function Profile() {
         </span>
         <div className="info__body">
           <div className="info__body--title">Profile Info</div>
-          <div className="info__group">
-            <div className="info__group--title">Firstname</div>
-            <div className="info__group--item">Mucahid</div>
-          </div>
-          <div className="info__group">
-            <div className="info__group--title">Lastname</div>
-            <div className="info__group--item">Yazar</div>
-          </div>
-          <div className="info__group">
-            <div className="info__group--title">Email</div>
-            <div className="info__group--item">test@test.com</div>
-          </div>
-          <div className="info__group">
-            <div className="info__group--title">Gender</div>
-            <div className="info__group--item">Male</div>
-          </div>
-          <div className="info__group">
-            <div className="info__group--title">Birthday</div>
-            <div className="info__group--item">31.10.1991</div>
+          <div className="info__body--body">
+            <div className="info__group">
+              <div className="info__group--title">Firstname</div>
+              <div className="info__group--item">Mucahid</div>
+            </div>
+            <div className="info__group">
+              <div className="info__group--title">Lastname</div>
+              <div className="info__group--item">Yazar</div>
+            </div>
+            <div className="info__group">
+              <div className="info__group--title">Email</div>
+              <div className="info__group--item">test@test.com</div>
+            </div>
+            <div className="info__group">
+              <div className="info__group--title">Gender</div>
+              <div className="info__group--item">Male</div>
+            </div>
+            <div className="info__group">
+              <div className="info__group--title">Birthday</div>
+              <div className="info__group--item">31.10.1991</div>
+            </div>
           </div>
         </div>
       </div>
@@ -49,15 +53,15 @@ export default function Profile() {
         <div className="stats__body">
           <div className="stats__body--item">
             <span>200</span>
-            <span>Point</span>
+            <span>True</span>
           </div>
           <div className="stats__body--item">
             <span>200</span>
-            <span>Point</span>
+            <span>Quiz</span>
           </div>
           <div className="stats__body--item">
             <span>200</span>
-            <span>Point</span>
+            <span>Solved</span>
           </div>
           <div className="stats__body--item">
             <span>200</span>

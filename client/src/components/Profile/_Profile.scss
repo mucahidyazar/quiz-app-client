@@ -1,9 +1,9 @@
 .profile {
   background-color: darken($color: $color-light, $amount: 50);
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 2fr 5fr;
   grid-template-rows: 1fr min-content min-content min-content;
-  grid-gap: 1rem;
+  grid-gap: 2rem;
   padding: 2rem;
   margin-top: 5rem;
 }
@@ -12,12 +12,34 @@
   grid-row: 1 / 4;
 
   &__photo {
+    position: relative;
     height: 25rem;
     overflow: hidden;
 
     img {
       width: 100%;
       object-fit: cover;
+    }
+
+    &--upload {
+      position: absolute;
+      bottom: 0;
+      right: 1rem;
+      width: min-content;
+      color: rgba($color-white, 0.8);
+      font-size: 4rem;
+
+      input {
+        display: none;
+      }
+
+      i:hover {
+        cursor: pointer;
+      }
+
+      &:hover {
+        color: rgba($color-white, 1);
+      }
     }
   }
 
@@ -38,7 +60,6 @@
 
   &__body {
     background-color: rgba($color-light, 0.5);
-    padding-bottom: 1rem;
 
     &--title {
       text-align: center;
@@ -49,20 +70,22 @@
       margin-bottom: 3rem;
     }
 
-    .info__group {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+    &--body {
+      padding: 0 1.5rem 2rem 1.5rem;
+      .info__group {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
 
-      &--title {
-        background-color: darken($color: $color-light, $amount: 40);
-        width: 80%;
-        margin: auto;
-        text-align: center;
-        padding: 0.2rem;
-      }
-      &--item {
-        padding-left: 10%;
-        font-size: 1.8rem;
+        &--title {
+          background-color: darken($color: $color-light, $amount: 40);
+          margin: auto;
+          text-align: center;
+          padding: 0.2rem;
+          margin-bottom: 1rem;
+        }
+        &--item {
+          font-size: 1.8rem;
+        }
       }
     }
   }
@@ -76,21 +99,38 @@
     padding: 1rem;
     text-transform: uppercase;
     font-weight: 700;
-    background-color: rgba($color-light, 0.5);
+    background-color: darken($color: $color-light, $amount: 40);
     margin-bottom: 3rem;
   }
 
   &__body {
-    display: flex;
-    justify-content: space-evenly;
-    padding-bottom: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-gap: 1rem;
+    padding: 0 2rem 3rem 2rem;
 
     &--item {
+      position: relative;
       display: flex;
       flex-direction: column;
       background-color: darken($color: $color-light, $amount: 40);
-      padding: 3rem;
+      padding: 5rem;
       text-align: center;
+      transition: all 0.3s;
+
+      & span:last-child {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        margin: auto;
+        font-size: 1.5rem;
+        background-color: darken($color: $color-light, $amount: 30);
+      }
+
+      &:hover {
+        background-color: darken($color: $color-light, $amount: 35);
+      }
     }
   }
 }
@@ -103,7 +143,7 @@
     padding: 1rem;
     text-transform: uppercase;
     font-weight: 700;
-    background-color: rgba($color-light, 0.5);
+    background-color: darken($color: $color-light, $amount: 40);
     margin-bottom: 3rem;
   }
 
@@ -116,14 +156,31 @@
     margin-top: -3rem;
 
     &--item {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       background-color: darken($color: $color-light, $amount: 40);
-      padding: 2rem;
+      padding: 2rem 2rem 4rem 2rem;
+      transition: all 0.3s;
 
       i {
         font-size: 5rem;
+      }
+
+      span {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        margin: auto;
+        font-size: 1.5rem;
+        background-color: darken($color: $color-light, $amount: 30);
+        text-align: center;
+      }
+
+      &:hover {
+        background-color: darken($color: $color-light, $amount: 35);
       }
     }
   }
@@ -137,7 +194,7 @@
     padding: 1rem;
     text-transform: uppercase;
     font-weight: 700;
-    background-color: rgba($color-light, 0.5);
+    background-color: darken($color: $color-light, $amount: 40);
     margin-bottom: 3rem;
   }
 
@@ -154,9 +211,15 @@
       align-items: center;
       background-color: darken($color: $color-light, $amount: 40);
       padding: 2rem;
+      transition: all 0.3s;
 
       i {
         font-size: 5rem;
+      }
+
+      &:hover {
+        background-color: darken($color: $color-light, $amount: 35);
+        cursor: pointer;
       }
     }
   }
