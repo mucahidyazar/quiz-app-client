@@ -110,4 +110,41 @@ router.put("/", auth, async (req, res) => {
   });
 });
 
+router.put("/:id", auth, async function(req, res) {
+  res.header(
+    "Accept",
+    "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
+  );
+
+  const {
+    username,
+    firstName,
+    lastName,
+    email,
+    password,
+    birthday,
+    checkbox
+  } = req.body;
+
+  try {
+    User.findById(req.user.id, async (err, user) => {
+      username && username !== "" && (user.username = username);
+      firstName && firstName !== "" && (user.firstName = firstName);
+      lastName && lastName !== "" && (user.lastName = lastName);
+      email && email !== "" && (user.email = email);
+      birthday && (user.birthday = birthday);
+      checkbox === true ? (user.checkbox = true) : (user.checkbox = false);
+
+      if (password && password !== "") {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+      }
+
+      user.save();
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 module.exports = router;

@@ -102,6 +102,14 @@ const RegistrationState = props => {
     });
   };
 
+  const userUpdate = updatedUser => {
+    try {
+      axios.put(`/users/${updatedUser.id}`, updatedUser);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <registrationContext.Provider
       value={{
@@ -117,7 +125,8 @@ const RegistrationState = props => {
         loginHandler,
         registerHandler,
         logoutHandler,
-        clearErrors
+        clearErrors,
+        userUpdate
       }}
     >
       {props.children}

@@ -2,17 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import imgQuizTime from "../../public/img/quiz-time.jpg";
 import QuizesContext from "../../context/quizes/quizesContext";
+import RegistrationContext from "../../context/registration/registrationContext";
 import { Link } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 
 const Home = props => {
   const quizesContext = useContext(QuizesContext);
-  const {
-    traviasQuizes,
-    yourQuizes,
-    getTraviasQuizes,
-    getYourQuizes
-  } = quizesContext;
+  const { yourQuizes, getTraviasQuizes, getYourQuizes } = quizesContext;
 
   const [randomQuiz, setRandomQuiz] = useState(null);
   const [randomQuizNumber, setRandomQuizNumber] = useState(null);

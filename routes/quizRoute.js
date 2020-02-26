@@ -66,4 +66,14 @@ router.put("/quiz/:id", auth, async (req, res) => {
   });
 });
 
+router.get("/quizes/:id", async (req, res) => {
+  try {
+    const quizes = await Quiz.find({ quizAuthor: req.params.id });
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(quizes);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 module.exports = router;

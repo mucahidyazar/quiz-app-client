@@ -15,7 +15,10 @@ import {
 
   //GET YOUR QUIZES
   GET_YOUR_QUIZES,
-  GET_QUIZ_SCOREBOARD
+  GET_QUIZ_SCOREBOARD,
+
+  //GET_USER_QUIZES
+  GET_USER_QUIZES
 } from "../actionTypes";
 
 const QuizesState = props => {
@@ -38,6 +41,9 @@ const QuizesState = props => {
 
     //YourQuizes
     yourQuizes: [],
+
+    //UserQuizes
+    userQuizes: [],
 
     specialQuizScoreboard: null
   };
@@ -106,6 +112,19 @@ const QuizesState = props => {
     }
   };
 
+  //getUserQuizes
+  const getUserQuizes = async id => {
+    try {
+      const userQuizes = await axios.get(`/quizes/${id}`);
+      dispatch({
+        type: GET_USER_QUIZES,
+        userQuizes: userQuizes.data
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const searchQuizes = key => {
     dispatch({
       type: SEARCH_QUIZES,
@@ -164,7 +183,11 @@ const QuizesState = props => {
         getYourQuizes,
 
         specialQuizScoreboard: state.specialQuizScoreboard,
-        getQuizScoreboard
+        getQuizScoreboard,
+
+        //UserQuizes
+        userQuizes: state.userQuizes,
+        getUserQuizes
       }}
     >
       {props.children}

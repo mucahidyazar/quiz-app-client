@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Quiz from "./Quiz/Quiz";
 import QuizesContext from "../../context/quizes/quizesContext";
 import Spinner from "../Spinner/Spinner";
+import InputSelect from "../Layout/InputSelect/InputSelect";
 import moment from "moment";
 
 const Quizes = props => {
@@ -186,37 +187,31 @@ const Quizes = props => {
             onClick={() => setSortVisibility(!sortVisibility)}
           >
             <span className="sort__span">Sort by</span>
-            <div
-              className={`sort__select ${
-                sortVisibility ? "sort__select--show" : ""
-              }`}
+            <InputSelect
+              selectedSort={selectedSort}
+              sortVisibility={sortVisibility}
             >
-              <div value="Date" className="sort__select--example">
-                {selectedSort}
+              <div
+                className="sort__options--item"
+                onClick={onSortYourQuizesByDate}
+              >
+                Date
               </div>
-              <div className="sort__options">
-                <div
-                  className="sort__options--date"
-                  onClick={onSortYourQuizesByDate}
-                >
-                  Date
-                </div>
 
-                <div
-                  className="sort__options--title"
-                  onClick={onSortYourQuizesByTitle}
-                >
-                  Title
-                </div>
-
-                <div
-                  className="sort__options--question"
-                  onClick={onSortYourQuizesByQuestion}
-                >
-                  Question
-                </div>
+              <div
+                className="sort__options--item"
+                onClick={onSortYourQuizesByTitle}
+              >
+                Title
               </div>
-            </div>
+
+              <div
+                className="sort__options--item"
+                onClick={onSortYourQuizesByQuestion}
+              >
+                Question
+              </div>
+            </InputSelect>
           </div>
         </div>
       </div>

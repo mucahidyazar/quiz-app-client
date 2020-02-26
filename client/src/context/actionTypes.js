@@ -51,5 +51,6 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
 //USERS
 export const GET_USERS = "GET_USERS";
+export const GET_USER_QUIZES = "GET_USER_QUIZES";
 
 export const GET_QUIZ_SCOREBOARD = "GET_QUIZ_SCOREBOARD";

@@ -16,6 +16,10 @@
 @import "./components/Header/Header";
 @import "./components/Leaderboard/Leaderboard";
 @import "./components/Profile/Profile";
+@import "./components/Profile/ProfileBadges/ProfileBadges";
+@import "./components/Profile/ProfileInfo/ProfileInfo";
+@import "./components/Profile/ProfileQuizes/ProfileQuizes";
+@import "./components/Profile/ProfileStats/ProfileStats";
 @import "./components/Quizes/Quizes";
 @import "./components/Quizes/TraviasQuizPage/TraviasQuizPage";
 @import "./components/Quizes/YourQuizPage/YourQuizPage";
@@ -26,3 +30,6 @@
 @import "./components/Registration/Login/Login";
 @import "./components/Registration/Register/Register";
 @import "./components/Settings/Settings";
+
+//Layouts
+@import "./components/Layout/InputSelect/InputSelect";

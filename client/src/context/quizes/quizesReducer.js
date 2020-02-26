@@ -18,7 +18,8 @@ import {
 
   //GET TRAVIAS QUIZES
   GET_TRAVIAS_QUIZES,
-  GET_QUIZ_SCOREBOARD
+  GET_QUIZ_SCOREBOARD,
+  GET_USER_QUIZES
 } from "../actionTypes";
 
 export default (state, action) => {
@@ -140,6 +141,12 @@ export default (state, action) => {
       return {
         ...state,
         specialQuizScoreboard: action.quizScoreboard
+      };
+
+    case GET_USER_QUIZES:
+      return {
+        ...state,
+        userQuizes: action.userQuizes
       };
 
     /* ######### */

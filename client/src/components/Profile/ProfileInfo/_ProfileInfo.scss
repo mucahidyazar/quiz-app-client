@@ -1,0 +1,82 @@
+.info {
+  grid-row: 1 / 4;
+
+  &__photo {
+    position: relative;
+    height: 25rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    &--upload {
+      position: absolute;
+      bottom: 0;
+      right: 1rem;
+      width: min-content;
+      color: rgba($color-white, 0.8);
+      font-size: 4rem;
+
+      input {
+        display: none;
+      }
+
+      i:hover {
+        cursor: pointer;
+      }
+
+      &:hover {
+        color: rgba($color-white, 1);
+      }
+    }
+  }
+
+  &__name {
+    background-color: rgba($color-light, 0.5);
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__info {
+    color: $color-hard-1;
+    display: block;
+    font-size: 1rem;
+    font-weight: 100;
+    margin-bottom: 2rem;
+  }
+
+  &__body {
+    background-color: rgba($color-light, 0.5);
+
+    &--title {
+      text-align: center;
+      padding: 1rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      background-color: darken($color: $color-light, $amount: 40);
+      margin-bottom: 3rem;
+    }
+
+    &--body {
+      padding: 0 1.5rem 2rem 1.5rem;
+      .info__group {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+
+        &--title {
+          background-color: darken($color: $color-light, $amount: 40);
+          margin: auto;
+          text-align: center;
+          padding: 0.2rem;
+          margin-bottom: 1rem;
+        }
+        &--item {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}

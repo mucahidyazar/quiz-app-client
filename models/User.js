@@ -6,9 +6,21 @@ const UserSchema = mongoose.Schema({
     required: true,
     unique: true
   },
+  firstName: {
+    type: String
+  },
+  lastName: {
+    type: String
+  },
   password: {
     type: String,
     required: true
+  },
+  birthday: {
+    type: Date
+  },
+  checkbox: {
+    type: Boolean
   },
   email: {
     type: String,

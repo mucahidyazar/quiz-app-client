@@ -17,10 +17,7 @@ const Leaderboard = props => {
     getQuizScoreboard
   } = quizesContext;
 
-  const [searchKey, setSearchKey] = useState("");
-
   const onSearchQuizes = e => {
-    setSearchKey(e.target.value);
     searchQuizes(e.target.value);
   };
 
@@ -106,7 +103,7 @@ const Leaderboard = props => {
         <div className="leaderboard__nav--false">False</div>
         <div className="leaderboard__nav--total">Total</div>
       </div>
-      {quizSB !== null && searchKey !== ""
+      {quizSB !== null
         ? quizSB
         : users
         ? users.map((user, index) => (
