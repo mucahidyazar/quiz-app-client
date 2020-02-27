@@ -111,7 +111,10 @@ const Leaderboard = props => {
               <div className="leaderboard__nav--rank">{index + 1}</div>
               <div className="leaderboard__nav--avatar">
                 <div className="leaderboard__nav--image">
-                  <img src={defaultUser} alt="default user" />
+                  <img
+                    src={`./img/${user.profilePhoto.filename}`}
+                    alt="default user"
+                  />
                 </div>
               </div>
               <div className="leaderboard__nav--username">{user.username}</div>

@@ -38,7 +38,7 @@ const Header = () => {
             <div className="nav__profile--left">
               <Link to={user.username} className="nav__header">
                 <div className="nav__header--image">
-                  <img src={defaultUser} alt="" />
+                  <img src={`./img/${user.profilePhoto.filename}`} alt="" />
                 </div>
                 <div className="nav__header--name">
                   {user.username ? user.username : "Username"}
