@@ -1,4 +1,5 @@
 .information__image {
+  position: relative;
   width: 23rem;
   height: 23rem;
   display: flex;
@@ -18,6 +19,14 @@
     background: $color-darker;
     outline: none;
     cursor: pointer;
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   i {

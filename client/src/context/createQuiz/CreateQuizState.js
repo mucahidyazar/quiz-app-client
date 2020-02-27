@@ -5,6 +5,7 @@ import createQuizContext from "./createQuizContext";
 import {
   ADD_QUIZ_QUESTION,
   ADD_QUIZ_INFORMATION,
+  GET_IMAGE_INFORMATION,
   SAVE_QUIZ,
   CHANGE_CREATE_QUIZ_TITLE,
   CHANGE_CREATE_QUIZ_DESCRIPTION,
@@ -27,6 +28,7 @@ const CreateQuizState = props => {
   const initialState = {
     quizes: [],
     quiz: null,
+    imageInformation: null,
     quiz_title: "",
     quiz_description: "",
     quiz_category: "General",
@@ -185,12 +187,28 @@ const CreateQuizState = props => {
         answers,
         correct
       });
-      console.log("Corre" + correct);
       clearValues();
     }
   };
 
+  const addImage = async (data, photoType) => {
+    const datas = await axios.post("/upload-image", data, photoType, {});
+    getImageInformation(datas.data);
+
+    if (photoType === "profile-photo") {
+      axios.post("/users/image", datas.data, {});
+    }
+  };
+
+  const getImageInformation = imageData => {
+    dispatch({
+      type: GET_IMAGE_INFORMATION,
+      imageData
+    });
+  };
+
   const addQuizInformation = (
+    imageInformation,
     title,
     description,
     category,
@@ -219,6 +237,7 @@ const CreateQuizState = props => {
   };
 
   const saveQuiz = (
+    imageInformation,
     quiz_title,
     quiz_description,
     quiz_category,
@@ -229,6 +248,7 @@ const CreateQuizState = props => {
     try {
       dispatch({
         type: SAVE_QUIZ,
+        imageInformation,
         quiz_title,
         quiz_description,
         quiz_category,
@@ -297,6 +317,7 @@ const CreateQuizState = props => {
       value={{
         quizes: state.quizes,
         quiz: state.quiz,
+        imageInformation: state.imageInformation,
         quiz_title: state.quiz_title,
         quiz_description: state.quiz_description,
         quiz_category: state.quiz_category,
@@ -311,6 +332,7 @@ const CreateQuizState = props => {
         previousQuestion,
         setClearCreateQuiz,
         addQuizInformation,
+        addImage,
         addQuizQuestion,
         saveQuiz,
         changeCreateQuizTitle,

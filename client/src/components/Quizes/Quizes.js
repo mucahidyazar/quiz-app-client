@@ -37,6 +37,7 @@ const Quizes = props => {
             quiz={quiz.quizQuestions}
             isComingFrom={isComingFrom}
             infoY={{
+              imageInformation: quiz.imageInformation,
               title: quiz.quizTitle,
               description: quiz.quizDescription,
               category: quiz.quizCategory,

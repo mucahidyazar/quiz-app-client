@@ -17,7 +17,14 @@ const Quiz = props => {
           {props.quiz.length} Question
         </div>
         <div className="quiz__header--img">
-          <img src={imgQuizTime} alt="Quiz Time" />
+          {props.infoY.imageInformation ? (
+            <img
+              src={`./img/${props.infoY.imageInformation.filename}`}
+              alt=""
+            ></img>
+          ) : (
+            <img src={imgQuizTime} alt="Quiz Time" />
+          )}
         </div>
       </div>
 

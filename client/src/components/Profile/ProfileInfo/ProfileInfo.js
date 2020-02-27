@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import moment from "moment";
 import profileImage from "../../../public/img//profile-image.jpg";
+import CreateQuizContext from "../../../context/createQuiz/createQuizContext";
 
 export default function ProfileInfo(props) {
+  const createQuizContext = useContext(CreateQuizContext);
+  const { imageInformation, addImage } = createQuizContext;
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loaded, setLoaded] = useState(0);
+
+  const onAddImage = e => {
+    setSelectedFile(e.target.files[0]);
+    setLoaded(0);
+
+    const data = new FormData();
+    data.append("file", e.target.files[0]);
+    addImage(data, "profile-photo");
+  };
+
   return (
     <div className="info">
       <div className="info__photo">
-        <img src={profileImage} alt="Profile Photo" />
+        <img src={`./img/${props.user.profilePhoto.filename}`} alt=""></img>
         <div className="info__photo--upload">
           <input
             type="file"
             className="info__photo--file"
             id="info__photo--file"
+            onChange={onAddImage}
           />
           <label htmlFor="info__photo--file">
             <i className="fas fa-camera-retro"></i>
@@ -51,7 +69,9 @@ export default function ProfileInfo(props) {
           <div className="info__group">
             <div className="info__group--title">Birthday</div>
             <div className="info__group--item">
-              {props.user.birthday ? props.user.birthday : "01.01.2000"}
+              {props.user.birthday
+                ? moment(props.user.birthday).format("LL")
+                : "01.01.2000"}
             </div>
           </div>
         </div>

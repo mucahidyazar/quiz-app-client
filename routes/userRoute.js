@@ -26,6 +26,10 @@ router.post(
     ).isLength({ min: 6 })
   ],
   async (req, res) => {
+    res.header(
+      "Accept",
+      "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
+    );
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array() });
@@ -145,6 +149,17 @@ router.put("/:id", auth, async function(req, res) {
   } catch (err) {
     console.error(err);
   }
+});
+
+router.post("/image", auth, async (req, res) => {
+  res.header(
+    "Accept",
+    "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
+  );
+  User.findById(req.user.id, (err, user) => {
+    user.profilePhoto = req.body;
+    user.save();
+  });
 });
 
 module.exports = router;

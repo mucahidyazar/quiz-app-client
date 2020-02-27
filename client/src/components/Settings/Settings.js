@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import RegistrationContext from "../../context/registration/registrationContext";
 import InputSelect from "../Layout/InputSelect/InputSelect";
 import moment from "moment";
+import { useEffect } from "react";
 
 export default function Settings(props) {
   const registrationContext = useContext(RegistrationContext);
@@ -15,16 +16,46 @@ export default function Settings(props) {
     e.preventDefault();
     userUpdate({
       id: user._id,
-      username: e.target.username.value,
-      firstName: e.target.firstName.value,
-      lastName: e.target.lastName.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-      birthday: e.target.birthday.value,
-      checkbox: e.target.checkbox.checked
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      birthday: birthday,
+      checkbox: checkbox
+    });
+    console.log({
+      id: user._id,
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      birthday: birthday,
+      checkbox: checkbox
     });
     props.history.push("/");
   };
+
+  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.username);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setEmail(user.email);
+      setPassword(user.password);
+      setBirthday(moment(user.birthday).format(moment.HTML5_FMT.DATE));
+      setCheckbox(user.checkbox);
+    }
+  }, []);
 
   return user ? (
     <div className="settings">
@@ -34,47 +65,54 @@ export default function Settings(props) {
           placeholder="Username"
           name="username"
           autoComplete="off"
-          value={user.username}
+          value={username}
+          onChange={e => setUsername(e.target.value)}
         />
         <input
           type="text"
           placeholder="Firstname"
           name="firstName"
           autoComplete="off"
-          value={user.firstName ? user.firstName : null}
+          value={firstName}
+          onChange={e => setFirstName(e.target.value)}
         />
         <input
           type="text"
           placeholder="Lastname"
           name="lastName"
           autoComplete="off"
-          value={user.lastName ? user.lastName : null}
+          value={lastName}
+          onChange={e => setLastName(e.target.value)}
         />
         <input
           type="text"
           placeholder="Email"
           name="email"
           autoComplete="off"
-          value={user.email}
+          value={email}
+          onChange={e => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
           name="password"
           autoComplete="off"
-          value={user.password}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
         />
         <input
           type="date"
           name="birthday"
-          value={moment(user.birthday).format("MMMM Do YYYY")}
+          value={birthday}
+          onChange={e => setBirthday(e.target.value)}
         />
         <label htmlFor="checkbox">
           <input
             type="checkbox"
             id="checkbox"
             name="checkbox"
-            checked={user.checkbox}
+            checked={checkbox}
+            onChange={e => setCheckbox(!checkbox)}
           />
           Subscribe to Newsletter
         </label>

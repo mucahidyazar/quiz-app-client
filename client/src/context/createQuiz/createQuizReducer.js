@@ -1,5 +1,6 @@
 import {
   ADD_QUIZ_INFORMATION,
+  GET_IMAGE_INFORMATION,
   ADD_QUIZ_QUESTION,
   SAVE_QUIZ,
   CHANGE_CREATE_QUIZ_TITLE,
@@ -136,6 +137,12 @@ export default (state, action) => {
         ...state,
         quiz: "Active"
       };
+
+    case GET_IMAGE_INFORMATION:
+      return {
+        ...state,
+        imageInformation: action.imageData
+      };
     case SAVE_QUIZ:
       // const quiz = {
       //   quiz_title: action.quiz_title,
@@ -148,6 +155,7 @@ export default (state, action) => {
       axios.post(
         "/quiz/add-quiz",
         {
+          imageInformation: action.imageInformation,
           quizTitle: action.quiz_title,
           quizDescription: action.quiz_description,
           quizCategory: action.quiz_category,
@@ -167,6 +175,7 @@ export default (state, action) => {
       return {
         ...state,
         quiz: null,
+        imageInformation: null,
         questions: [],
         quiz_title: "",
         quiz_description: "",

@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+const moment = require("moment");
 const router = express.Router();
 const Quiz = require("../models/Quizes");
 const User = require("../models/User");
@@ -17,8 +19,13 @@ router.get("/quizes", async (req, res) => {
 });
 
 router.post("/quiz/add-quiz", auth, async (req, res) => {
+  res.header(
+    "Accept",
+    "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
+  );
   try {
     const {
+      imageInformation,
       quizTitle,
       quizDescription,
       quizCategory,
@@ -28,6 +35,7 @@ router.post("/quiz/add-quiz", auth, async (req, res) => {
     } = req.body;
 
     const quiz = new Quiz({
+      imageInformation,
       quizTitle,
       quizDescription,
       quizCategory,
@@ -62,6 +70,7 @@ router.put("/quiz/:id", auth, async (req, res) => {
       totalFalse,
       totalPoint
     });
+
     quiz.save();
   });
 });
@@ -74,6 +83,37 @@ router.get("/quizes/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
   }
+});
+
+let storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "client/public/img");
+  },
+  filename: (req, file, callback) => {
+    let filename = "image"; //Original isimi file.originalname ile alabilirsiniz
+    let extension = {
+      "image/jpeg": ".jpg",
+      "image/png": ".png",
+      "image/gif": ".gif"
+    };
+    callback(null, filename + "-" + Date.now() + extension[file.mimetype]);
+  }
+});
+let upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1 * 1024 * 1024 //1MB
+  }
+}).single("file");
+router.post("/upload-image", (req, res) => {
+  upload(req, res, function(err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+    return res.status(200).json(req.file);
+  });
 });
 
 module.exports = router;

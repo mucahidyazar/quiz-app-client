@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const QuizSchema = mongoose.Schema({
+  imageInformation: {
+    type: Object
+  },
   quizTitle: {
     type: String,
     required: true
