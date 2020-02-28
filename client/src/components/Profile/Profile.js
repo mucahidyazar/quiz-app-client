@@ -17,6 +17,7 @@ export default function Profile() {
     if (user) {
       getUserQuizes(user._id);
     }
+    // eslint-disable-next-line
   }, [user]);
 
   return user ? (

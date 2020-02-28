@@ -14,6 +14,7 @@ export default function ResultPage(props) {
     calcTrue();
     calcFalse();
     calcPass();
+    // eslint-disable-next-line
   }, []);
 
   const onSaveScores = () => {

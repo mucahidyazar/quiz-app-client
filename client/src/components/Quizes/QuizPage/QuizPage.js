@@ -1,16 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import QuizesContext from "../../../context/quizes/quizesContext";
 
-const TraviasQuizPage = props => {
+const QuizPage = props => {
+  // CONTEXTs
   const quizesContext = useContext(QuizesContext);
-  const { traviasQuizes } = quizesContext;
+  const { quizes } = quizesContext;
 
   useEffect(() => {
-    if (traviasQuizes === null) {
+    if (quizes === null) {
       props.history.push("/quizes");
     } else {
       setCorrectAnswers(
-        traviasQuizes[props.match.params.id - 1].map(que => {
+        quizes[props.match.params.id - 1].quizQuestions.map(que => {
           return que.correct_answer;
         })
       );
@@ -19,8 +20,15 @@ const TraviasQuizPage = props => {
     setInterval(() => {
       setCountdown(prevSetCountDown => prevSetCountDown - 1);
     }, 1000);
+
+    return () => {
+      clearInterval();
+    };
+
+    // eslint-disable-next-line
   }, []);
 
+  // USESTATEs
   const [question, setQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
@@ -29,18 +37,25 @@ const TraviasQuizPage = props => {
   const [disabledTime, setDisabledTime] = useState(false);
   const [chosenAnswer, setChosenAnswer] = useState([]);
 
+  // SOME SETTINGs
   let quiz = null;
   let answersArray = null;
-  if (traviasQuizes === null && answersArray === null) {
+  if (
+    quizes === null &&
+    answersArray === null &&
+    quiz[question].incorrect_answers === null
+  ) {
     props.history.push("/quizes");
   } else {
-    quiz = traviasQuizes[props.match.params.id - 1];
+    quiz = quizes[props.match.params.id - 1].quizQuestions;
+
     answersArray = [
       ...quiz[question].incorrect_answers,
       quiz[question].correct_answer
     ];
   }
 
+  // CORRECTS AND INCORRECTS
   const corIncor = (quiz, answers) => {
     if (answers === quiz.correct_answer) {
       return "correct";
@@ -49,8 +64,38 @@ const TraviasQuizPage = props => {
     }
   };
 
+  // SETTING ANSWER
+  const setAnswer = (value, index) => {
+    if (answers[index]) {
+      setAnswers(answers.filter((answer, i) => i !== index).concat(value));
+    } else {
+      setAnswers([...answers, value]);
+    }
+  };
+
+  // SETTING CHOSEN
+  const setChosen = (index, answer) => {
+    if (answers[index] === answer) {
+      return "chosen";
+    } else {
+      return "";
+    }
+  };
+
+  // PUSH RESULT PAGE
+  if (countdown < 1) {
+    props.history.push({
+      pathname: `/result/${props.match.params.id}`,
+      state: {
+        answers,
+        correctAnswers
+      }
+    });
+  }
+
+  // JOKERS
   const twoOut = () => {
-    quiz = traviasQuizes[props.match.params.id - 1];
+    quiz = quizes[props.match.params.id - 1].quizQuestions;
     answersArray = [
       quiz[question].incorrect_answers[
         Math.floor(Math.random() * quiz[question].incorrect_answers.length)
@@ -60,31 +105,38 @@ const TraviasQuizPage = props => {
     setChosenAnswer(answersArray);
   };
 
-  const setAnswer = (value, index) => {
-    if (answers[index]) {
-      setAnswers(answers.filter((answer, i) => i !== index).concat(value));
-    } else {
-      setAnswers([...answers, value]);
-    }
+  const onClickTwoOut = () => {
+    twoOut();
+    setDisabledTwoOff(true);
   };
-  const setChosen = (index, answer) => {
-    if (answers[index] === answer) {
-      return "chosen";
+
+  const onClickPlus15Seconds = () => {
+    setCountdown(countdown + 15);
+    setDisabledTime(true);
+  };
+
+  // NEXT QUESTION
+  const onClickNext = () => {
+    if (!answers[question]) {
+      setAnswers([...answers, "PASS"]);
+    }
+    if (question > quiz.length - 2) {
+      props.history.push({
+        pathname: `/result/${props.match.params.id}`,
+        state: {
+          answers,
+          correctAnswers,
+          id: quizes[props.match.params.id - 1]._id
+        }
+      });
     } else {
-      return "";
+      setQuestion(question + 1);
+      setCountdown(countdown + 15);
+      setChosenAnswer([]);
     }
   };
 
-  if (countdown < 1) {
-    props.history.push({
-      pathname: `/result/${props.match.params.id - 1}`,
-      state: {
-        answers,
-        correctAnswers
-      }
-    });
-  }
-
+  // ANSWER SECTION
   const answerSection = () => {
     if (chosenAnswer.length > 1) {
       return chosenAnswer.map((answerArray, index) => (
@@ -115,7 +167,7 @@ const TraviasQuizPage = props => {
     }
   };
 
-  return traviasQuizes ? (
+  return quizes ? (
     <div className="section__quizpage">
       <div className="section__information">
         <div className="section__information-countdown">{countdown}</div>
@@ -127,20 +179,14 @@ const TraviasQuizPage = props => {
           <button
             className={`jokers__half ${disabledTwoOff ? "disabled" : ""}`}
             disabled={disabledTwoOff}
-            onClick={() => {
-              twoOut();
-              setDisabledTwoOff(true);
-            }}
+            onClick={onClickTwoOut}
           >
             <i className="fas fa-hands-helping"></i> 2 OUT
           </button>
           <button
             className={`jokers__time ${disabledTime ? "disabled" : ""}`}
             disabled={disabledTime}
-            onClick={() => {
-              setCountdown(countdown + 15);
-              setDisabledTime(true);
-            }}
+            onClick={onClickPlus15Seconds}
           >
             <i className="far fa-clock"></i> +15
           </button>
@@ -149,27 +195,7 @@ const TraviasQuizPage = props => {
           <div className="section__buttons-finish">
             <i className="fas fa-times-circle"></i> FINISH
           </div>
-          <div
-            className="section__buttons-next"
-            onClick={() => {
-              if (!answers[question]) {
-                setAnswers([...answers, "PASS"]);
-              }
-              if (question > 8) {
-                props.history.push({
-                  pathname: `/result/${props.match.params.id - 1}`,
-                  state: {
-                    answers,
-                    correctAnswers
-                  }
-                });
-              } else {
-                setQuestion(question + 1);
-                setCountdown(countdown + 15);
-                setChosenAnswer([]);
-              }
-            }}
-          >
+          <div className="section__buttons-next" onClick={onClickNext}>
             <i className="fas fa-arrow-circle-right"></i> NEXT
           </div>
         </div>
@@ -178,29 +204,4 @@ const TraviasQuizPage = props => {
   ) : null;
 };
 
-export default TraviasQuizPage;
-
-// const validQuizes = () => {
-//   if (props.match.url === `/quizes/all/${props.match.params.id - 1}`) {
-//     return all_quizes;
-//   } else if (
-//     props.match.url === `/quizes/your-quizes/${props.match.params.id - 1}`
-//   ) {
-//     return your_quizes.map((qui, indexQui) => [
-//       qui.quizQuestions.map((que, indexQue) => ({
-//         title: qui.quizTitle,
-//         description: qui.quizDescription,
-//         category: qui.quizCategory,
-//         type: qui.quizType,
-//         difficulty: qui.quizDifficulty,
-//         question: que.question,
-//         correct_answer: que.correct_answer,
-//         incorrect_answers: que.incorrect_answers
-//       }))
-//     ]);
-//   } else if (
-//     props.match.url === `/quizes/travias-quizes/${props.match.params.id - 1}`
-//   ) {
-//     return quizes;
-//   }
-// };
+export default QuizPage;

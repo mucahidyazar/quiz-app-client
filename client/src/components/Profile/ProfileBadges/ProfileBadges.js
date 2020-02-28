@@ -6,35 +6,35 @@ export default function ProfileBadges() {
       <div className="badges__title">Badges</div>
       <div className="badges__body">
         <div className="badges__body--item">
-          <i class="fas fa-ribbon"></i>
+          <i className="fas fa-ribbon"></i>
           <span>Ribbon Hunter</span>
         </div>
         <div className="badges__body--item">
-          <i class="fas fa-allergies"></i>
+          <i className="fas fa-allergies"></i>
           <span>Allergy Man</span>
         </div>
         <div className="badges__body--item">
-          <i class="fab fa-angellist"></i>
+          <i className="fab fa-angellist"></i>
           <span>Angellist</span>
         </div>
         <div className="badges__body--item">
-          <i class="far fa-angry"></i>
+          <i className="far fa-angry"></i>
           <span>Angry Quizer</span>
         </div>
         <div className="badges__body--item">
-          <i class="fas fa-at"></i>
+          <i className="fas fa-at"></i>
           <span>Postman</span>
         </div>
         <div className="badges__body--item">
-          <i class="fas fa-baby-carriage"></i>
+          <i className="fas fa-baby-carriage"></i>
           <span>Baby Baby</span>
         </div>
         <div className="badges__body--item">
-          <i class="fas fa-binoculars"></i>
+          <i className="fas fa-binoculars"></i>
           <span>Scoper</span>
         </div>
         <div className="badges__body--item">
-          <i class="fab fa-black-tie"></i>
+          <i className="fab fa-black-tie"></i>
           <span>Gentlemen</span>
         </div>
       </div>

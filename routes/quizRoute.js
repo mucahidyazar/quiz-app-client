@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
-const moment = require("moment");
+const path = require("path");
+const fs = require("fs");
 const router = express.Router();
 const Quiz = require("../models/Quizes");
 const User = require("../models/User");
@@ -50,6 +51,18 @@ router.post("/quiz/add-quiz", auth, async (req, res) => {
     res.json(quiz);
   } catch (err) {
     res.send(err);
+  }
+});
+
+router.put("/quiz/delete-image", auth, async (req, res) => {
+  if (req.body.filename) {
+    fs.unlink(
+      path.join(__dirname, `../client/public/img/${req.body.filename}`),
+      err => {
+        console.error(err);
+      }
+    );
+    console.log("Old quiz cover image was deleted");
   }
 });
 

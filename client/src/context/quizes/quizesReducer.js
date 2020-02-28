@@ -1,35 +1,35 @@
 import moment from "moment";
 import {
-  //COMMON
-  SET_VALID_QUIZES,
-  SEARCH_QUIZES,
-  SORT_YOUR_QUIZES_BY_DATE,
-  SORT_YOUR_QUIZES_BY_TITLE,
-  SORT_YOUR_QUIZES_BY_QUESTION,
-
-  //GET_ALL_QUIZES
-  GET_ALL_QUIZES,
-
-  //GET YOUR QUIZES
-  GET_YOUR_QUIZES,
-  ACTIVE_ALL_QUIZES,
-  ACTIVE_YOUR_QUIZES,
-  ACTIVE_TRAVIAS_QUIZES,
-
-  //GET TRAVIAS QUIZES
-  GET_TRAVIAS_QUIZES,
   GET_QUIZ_SCOREBOARD,
-  GET_USER_QUIZES
+  GET_QUIZES,
+  GET_USER_QUIZES,
+  SEARCH_QUIZES,
+  SET_VALID_QUIZES,
+  SORT_QUIZES_BY_DATE,
+  SORT_QUIZES_BY_QUESTION,
+  SORT_QUIZES_BY_TITLE
 } from "../actionTypes";
 
 export default (state, action) => {
   switch (action.type) {
-    //COMMON
-    case SET_VALID_QUIZES:
+    case GET_QUIZ_SCOREBOARD:
       return {
         ...state,
-        validQuizes: action.quizes
+        specialQuizScoreboard: action.quizScoreboard
       };
+
+    case GET_QUIZES:
+      return {
+        ...state,
+        quizes: action.quizes
+      };
+
+    case GET_USER_QUIZES:
+      return {
+        ...state,
+        userQuizes: action.userQuizes
+      };
+
     case SEARCH_QUIZES:
       if (action.key === "") {
         return {
@@ -40,7 +40,7 @@ export default (state, action) => {
       } else {
         return {
           ...state,
-          searchedQuizes: state.yourQuizes.filter(
+          searchedQuizes: state.quizes.filter(
             quiz =>
               (quiz.quizTitle
                 .toLowerCase()
@@ -64,8 +64,14 @@ export default (state, action) => {
         };
       }
 
-    case SORT_YOUR_QUIZES_BY_DATE:
-      const newQuizes = [...state.yourQuizes].sort((a, b) => {
+    case SET_VALID_QUIZES:
+      return {
+        ...state,
+        validQuizes: action.quizes
+      };
+
+    case SORT_QUIZES_BY_DATE:
+      const newQuizes = [...state.quizes].sort((a, b) => {
         if (
           moment(a.quizDate)
             .utc()
@@ -88,13 +94,27 @@ export default (state, action) => {
       });
       return {
         ...state,
-        yourQuizes: newQuizes
+        quizes: newQuizes
       };
 
-    case SORT_YOUR_QUIZES_BY_TITLE:
+    case SORT_QUIZES_BY_QUESTION:
       return {
         ...state,
-        yourQuizes: state.yourQuizes.sort((a, b) => {
+        quizes: state.quizes.sort((a, b) => {
+          if (a.quizQuestions.length < b.quizQuestions.length) {
+            return -1;
+          }
+          if (a.quizQuestions.length > b.quizQuestions.length) {
+            return -1;
+          }
+          return 0;
+        })
+      };
+
+    case SORT_QUIZES_BY_TITLE:
+      return {
+        ...state,
+        quizes: state.quizes.sort((a, b) => {
           let titleA = a.quizTitle.toLowerCase();
           let titleB = b.quizTitle.toLowerCase();
           if (titleA < titleB) {
@@ -107,55 +127,8 @@ export default (state, action) => {
         })
       };
 
-    case SORT_YOUR_QUIZES_BY_QUESTION:
-      return {
-        ...state,
-        yourQuizes: state.yourQuizes.sort((a, b) => {
-          if (a.quizQuestions.length < b.quizQuestions.length) {
-            return -1;
-          }
-          if (a.quizQuestions.length > b.quizQuestions.length) {
-            return -1;
-          }
-          return 0;
-        })
-      };
-
-    //GET YOU QUIZES
-    case GET_YOUR_QUIZES:
-      return {
-        ...state,
-        yourQuizes: action.yourQuizes
-      };
-
-    //GET TRAVIAS QUIZES
-    case GET_TRAVIAS_QUIZES:
-      return {
-        ...state,
-        traviasQuizes: action.traviasQuizes,
-        allQuizes: [...state.yourQuizes, ...action.traviasQuizes],
-        quizesLoading: false
-      };
-
-    case GET_QUIZ_SCOREBOARD:
-      return {
-        ...state,
-        specialQuizScoreboard: action.quizScoreboard
-      };
-
-    case GET_USER_QUIZES:
-      return {
-        ...state,
-        userQuizes: action.userQuizes
-      };
-
-    /* ######### */
+    /* DEFAULT */
     default:
       return state;
   }
 };
-
-// activeQuizNav,
-// activeAllQuizes,
-// activeYourQuizes,
-// activeTraviasQuizes

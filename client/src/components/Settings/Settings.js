@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import RegistrationContext from "../../context/registration/registrationContext";
-import InputSelect from "../Layout/InputSelect/InputSelect";
 import moment from "moment";
 import { useEffect } from "react";
 
@@ -55,6 +54,8 @@ export default function Settings(props) {
       setBirthday(moment(user.birthday).format(moment.HTML5_FMT.DATE));
       setCheckbox(user.checkbox);
     }
+
+    // eslint-disable-next-line
   }, []);
 
   return user ? (
@@ -97,7 +98,6 @@ export default function Settings(props) {
           placeholder="Password"
           name="password"
           autoComplete="off"
-          value={password}
           onChange={e => setPassword(e.target.value)}
         />
         <input

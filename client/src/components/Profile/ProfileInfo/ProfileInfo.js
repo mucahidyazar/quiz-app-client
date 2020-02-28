@@ -1,19 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import moment from "moment";
-import profileImage from "../../../public/img//profile-image.jpg";
 import CreateQuizContext from "../../../context/createQuiz/createQuizContext";
 
 export default function ProfileInfo(props) {
   const createQuizContext = useContext(CreateQuizContext);
-  const { imageInformation, addImage } = createQuizContext;
-
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [loaded, setLoaded] = useState(0);
+  const { addImage } = createQuizContext;
 
   const onAddImage = e => {
-    setSelectedFile(e.target.files[0]);
-    setLoaded(0);
-
     const data = new FormData();
     data.append("file", e.target.files[0]);
     addImage(data, "profile-photo");

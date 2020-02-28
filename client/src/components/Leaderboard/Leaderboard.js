@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import defaultUser from "../../public/png/default-user.png";
 import UserContext from "../../context/user/userContext";
 import QuizesContext from "../../context/quizes/quizesContext";
@@ -9,10 +9,9 @@ const Leaderboard = props => {
   const { users, getUsers } = userContext;
   const quizesContext = useContext(QuizesContext);
   const {
-    yourQuizes,
     searchedQuizes,
     specialQuizScoreboard,
-    getYourQuizes,
+    getQuizes,
     searchQuizes,
     getQuizScoreboard
   } = quizesContext;
@@ -28,7 +27,9 @@ const Leaderboard = props => {
 
   useEffect(() => {
     getUsers();
-    getYourQuizes();
+    getQuizes();
+
+    // eslint-disable-next-line
   }, []);
 
   const quizSB = specialQuizScoreboard

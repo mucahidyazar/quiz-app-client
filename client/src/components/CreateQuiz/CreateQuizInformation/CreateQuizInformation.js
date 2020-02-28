@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import CreateQuizContext from "../../../context/createQuiz/createQuizContext";
-import { urlencoded } from "body-parser";
 
 const CreateQuizInformation = () => {
   const createQuizContext = useContext(CreateQuizContext);
@@ -16,7 +15,8 @@ const CreateQuizInformation = () => {
     changeCreateQuizCategory,
     changeCreateQuizType,
     changeCreateQuizDifficulty,
-    addImage
+    addImage,
+    removeAndAddImage
   } = createQuizContext;
 
   const onChangeCreateQuizTitle = e => {
@@ -35,29 +35,16 @@ const CreateQuizInformation = () => {
     changeCreateQuizDifficulty(e.target.value);
   };
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [loaded, setLoaded] = useState(0);
-
   const onAddImage = e => {
-    setSelectedFile(e.target.files[0]);
-    setLoaded(0);
-
+    if (imageInformation === null) {
+      const data = new FormData();
+      data.append("file", e.target.files[0]);
+      addImage(data, "quiz-cover-image");
+    }
     const data = new FormData();
     data.append("file", e.target.files[0]);
-    addImage(data, "quiz-cover-image");
+    removeAndAddImage(data);
   };
-
-  // let image = null;
-  // useEffect(() => {
-  //   if (imageInformation) {
-  //     image = (
-  //       <img
-  //         src={require(`../../../public/img/${imageInformation.filename}`)}
-  //         alt=""
-  //       />
-  //     );
-  //   }
-  // }, [imageInformation]);
 
   return (
     <div className="information">
@@ -69,7 +56,7 @@ const CreateQuizInformation = () => {
         <input
           id="file"
           type="file"
-          class="form-control"
+          className="form-control"
           name="file"
           onChange={onAddImage}
         />

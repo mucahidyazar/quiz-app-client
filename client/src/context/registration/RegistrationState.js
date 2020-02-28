@@ -3,16 +3,16 @@ import axios from "axios";
 import registrationContext from "./registrationContext";
 import registrationReducer from "./registrationReducer";
 import {
+  AUTH_ERROR,
+  CLEAR_ERRORS,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
   SET_LOGIN_ACTIVE,
   SET_REGISTER_ACTIVE,
-  USER_LOADED,
-  LOGIN_SUCCESS,
-  REGISTER_SUCCESS,
-  AUTH_ERROR,
-  LOGIN_FAIL,
-  REGISTER_FAIL,
-  LOGOUT,
-  CLEAR_ERRORS
+  USER_LOADED
 } from "../actionTypes";
 import setAuthToken from "../../utils/setAuthToken";
 
@@ -29,19 +29,7 @@ const RegistrationState = props => {
 
   const [state, dispatch] = useReducer(registrationReducer, initialState);
 
-  const setLoginRegisterActive = section => {
-    if (section === "login") {
-      dispatch({
-        type: SET_LOGIN_ACTIVE
-      });
-    } else if (section === "register") {
-      dispatch({
-        type: SET_REGISTER_ACTIVE
-      });
-    }
-  };
-
-  // Load User
+  // AUTH_ERROR
   const loadUser = async () => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -58,6 +46,13 @@ const RegistrationState = props => {
     }
   };
 
+  const clearErrors = () => {
+    dispatch({
+      type: CLEAR_ERRORS
+    });
+  };
+
+  // LOGIN_FAIL && LOGIN_SUCCESS
   const loginHandler = async formData => {
     try {
       const res = await axios.post("/auth", formData);
@@ -72,6 +67,12 @@ const RegistrationState = props => {
         payload: err.response.data.msg
       });
     }
+  };
+
+  const logoutHandler = () => {
+    dispatch({
+      type: LOGOUT
+    });
   };
 
   const registerHandler = async registerObject => {
@@ -90,16 +91,17 @@ const RegistrationState = props => {
     }
   };
 
-  const logoutHandler = () => {
-    dispatch({
-      type: LOGOUT
-    });
-  };
-
-  const clearErrors = () => {
-    dispatch({
-      type: CLEAR_ERRORS
-    });
+  // SET_LOGIN_ACTIVE && SET_REGISTER_ACTIVE
+  const setLoginRegisterActive = section => {
+    if (section === "login") {
+      dispatch({
+        type: SET_LOGIN_ACTIVE
+      });
+    } else if (section === "register") {
+      dispatch({
+        type: SET_REGISTER_ACTIVE
+      });
+    }
   };
 
   const userUpdate = updatedUser => {

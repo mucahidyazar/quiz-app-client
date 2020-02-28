@@ -1,88 +1,110 @@
 import React, { useContext, useEffect, useState } from "react";
-import Quiz from "./Quiz/Quiz";
+import moment from "moment";
+
+//Components
+import QuizCard from "./QuizCard/QuizCard";
 import QuizesContext from "../../context/quizes/quizesContext";
 import Spinner from "../Spinner/Spinner";
 import InputSelect from "../Layout/InputSelect/InputSelect";
-import moment from "moment";
 
 const Quizes = props => {
   const quizesContext = useContext(QuizesContext);
   const {
-    setValidQuizes,
+    quizes,
     searchedQuizes,
-    sortedQuizes,
-    allQuizes,
-    yourQuizes,
-    traviasQuizes,
     quizesLoading,
-
+    getQuizes,
     searchQuizes,
-    sortYourQuizesByDate,
-    sortYourQuizesByTitle,
-    sortYourQuizesByQuestion,
-    getTraviasQuizes,
-    getYourQuizes,
-    activeAllQuizes,
-    activeYourQuizes,
-    activeTraviasQuizes
+    sortQuizesByDate,
+    sortQuizesByTitle,
+    sortQuizesByQuestion
   } = quizesContext;
 
   const activeQuizNav = () => {
-    if (yourQuizNav === "active-quiz-nav") {
-      return (searchedQuizes ? searchedQuizes : yourQuizes).map(
-        (quiz, index) => (
-          <Quiz
-            key={index + 1}
-            index={index + 1}
-            quiz={quiz.quizQuestions}
-            isComingFrom={isComingFrom}
-            infoY={{
-              imageInformation: quiz.imageInformation,
-              title: quiz.quizTitle,
-              description: quiz.quizDescription,
-              category: quiz.quizCategory,
-              type: quiz.quizType,
-              difficulty: quiz.quizDifficulty,
-              date: moment(quiz.quizDate)
-                .startOf("day")
-                .fromNow()
-            }}
-          />
-        )
-      );
-    } else if (traviasQuizNav === "active-quiz-nav") {
-      return traviasQuizes.map((quiz, index) => (
-        <Quiz
+    if (allQuizNav === "active-quiz-nav") {
+      return (searchedQuizes ? searchedQuizes : quizes).map((quiz, index) => (
+        <QuizCard
           key={index + 1}
-          isComingFrom={isComingFrom}
           index={index + 1}
-          quiz={quiz}
-          info={quiz[0]}
+          quiz={quiz.quizQuestions}
+          info={{
+            imageInformation: quiz.imageInformation,
+            title: quiz.quizTitle,
+            description: quiz.quizDescription,
+            category: quiz.quizCategory,
+            type: quiz.quizType,
+            difficulty: quiz.quizDifficulty,
+            date: moment(quiz.quizDate)
+              .startOf("day")
+              .fromNow()
+          }}
         />
       ));
-    } else if (allQuizNav === "active-quiz-nav") {
-      return (searchKey !== "" ? searchedQuizes : allQuizes).map(
-        (quiz, index) => (
-          <Quiz
-            key={index + 1}
-            isComingFrom={() => (quiz[0] ? "travias-quizes" : "your-quizes")}
-            index={index}
-            quiz={quiz}
-            info={quiz[0]}
-            infoY={{
-              title: quiz.quizTitle ? quiz.quizTitle : "Travias Quize",
-              description: quiz.quizDescription
-                ? quiz.quizDescription
-                : "Enjoy by solving",
-              category: quiz.quizCategory,
-              type: quiz.quizType,
-              difficulty: quiz.quizDifficulty,
-              date: moment(quiz.quizDate)
-                .startOf("day")
-                .fromNow()
-            }}
-          />
-        )
+    } else if (easyQuizNav === "active-quiz-nav") {
+      return (searchedQuizes ? searchedQuizes : quizes).map(
+        (quiz, index) =>
+          quiz.quizDifficulty === "easy" && (
+            <QuizCard
+              key={index + 1}
+              index={index + 1}
+              quiz={quiz.quizQuestions}
+              info={{
+                imageInformation: quiz.imageInformation,
+                title: quiz.quizTitle,
+                description: quiz.quizDescription,
+                category: quiz.quizCategory,
+                type: quiz.quizType,
+                difficulty: quiz.quizDifficulty,
+                date: moment(quiz.quizDate)
+                  .startOf("day")
+                  .fromNow()
+              }}
+            />
+          )
+      );
+    } else if (mediumQuizNav === "active-quiz-nav") {
+      return (searchedQuizes ? searchedQuizes : quizes).map(
+        (quiz, index) =>
+          quiz.quizDifficulty === "medium" && (
+            <QuizCard
+              key={index + 1}
+              index={index + 1}
+              quiz={quiz.quizQuestions}
+              info={{
+                imageInformation: quiz.imageInformation,
+                title: quiz.quizTitle,
+                description: quiz.quizDescription,
+                category: quiz.quizCategory,
+                type: quiz.quizType,
+                difficulty: quiz.quizDifficulty,
+                date: moment(quiz.quizDate)
+                  .startOf("day")
+                  .fromNow()
+              }}
+            />
+          )
+      );
+    } else if (hardQuizNav === "active-quiz-nav") {
+      return (searchedQuizes ? searchedQuizes : quizes).map(
+        (quiz, index) =>
+          quiz.quizDifficulty === "hard" && (
+            <QuizCard
+              key={index + 1}
+              index={index + 1}
+              quiz={quiz.quizQuestions}
+              info={{
+                imageInformation: quiz.imageInformation,
+                title: quiz.quizTitle,
+                description: quiz.quizDescription,
+                category: quiz.quizCategory,
+                type: quiz.quizType,
+                difficulty: quiz.quizDifficulty,
+                date: moment(quiz.quizDate)
+                  .startOf("day")
+                  .fromNow()
+              }}
+            />
+          )
       );
     } else {
       return <Spinner />;
@@ -90,68 +112,68 @@ const Quizes = props => {
   };
 
   const [allQuizNav, setAllQuizNav] = useState("");
-  const [yourQuizNav, setYourQuizNav] = useState("");
-  const [traviasQuizNav, setTraviasQuizNav] = useState("");
+  const [easyQuizNav, setEasyQuizNav] = useState("");
+  const [mediumQuizNav, setMediumQuizNav] = useState("");
+  const [hardQuizNav, setHardQuizNav] = useState("");
 
   const onActiveAllQuizes = () => {
     setAllQuizNav("active-quiz-nav");
-    setYourQuizNav("");
-    setTraviasQuizNav("");
-    //activeAllQuizes();
+    setEasyQuizNav("");
+    setMediumQuizNav("");
+    setHardQuizNav("");
   };
-  const onActiveYourQuizes = () => {
-    setYourQuizNav("active-quiz-nav");
+  const onActiveEasyQuizes = () => {
     setAllQuizNav("");
-    setTraviasQuizNav("");
-    //activeYourQuizes();
+    setEasyQuizNav("active-quiz-nav");
+    setMediumQuizNav("");
+    setHardQuizNav("");
   };
-  const onActiveTraviasQuizes = () => {
-    setTraviasQuizNav("active-quiz-nav");
+  const onActiveMediumQuizes = () => {
     setAllQuizNav("");
-    setYourQuizNav("");
-    //activeTraviasQuizes();
+    setEasyQuizNav("");
+    setMediumQuizNav("active-quiz-nav");
+    setHardQuizNav("");
+  };
+  const onActiveHardQuizes = () => {
+    setAllQuizNav("");
+    setEasyQuizNav("");
+    setMediumQuizNav("");
+    setHardQuizNav("active-quiz-nav");
   };
 
-  const isComingFrom = () => {
-    if (yourQuizNav !== "") {
-      return "your-quizes";
-    } else if (traviasQuizNav !== "") {
-      return "travias-quizes";
-    }
-  };
-
-  const [searchKey, setSearchKey] = useState("");
   const [sortVisibility, setSortVisibility] = useState(false);
   const [selectedSort, setSelectedSort] = useState("");
   const onSearchQuizes = e => {
-    setSearchKey(e.target.value.trim());
-    searchQuizes(e.target.value.trim());
+    searchQuizes(e.target.value);
   };
 
   const onSortYourQuizesByDate = () => {
-    sortYourQuizesByDate();
+    sortQuizesByDate();
     setSelectedSort("Date");
   };
 
   const onSortYourQuizesByTitle = () => {
-    sortYourQuizesByTitle();
+    sortQuizesByTitle();
     setSelectedSort("Title");
   };
 
   const onSortYourQuizesByQuestion = () => {
-    sortYourQuizesByQuestion();
+    sortQuizesByQuestion();
     setSelectedSort("Question");
   };
 
   useEffect(() => {
-    if (!traviasQuizes) {
-      getTraviasQuizes();
+    getQuizes();
+    setAllQuizNav("active-quiz-nav");
+
+    if (searchedQuizes === null && quizes === null) {
+      props.history.push("/");
     }
-    getYourQuizes();
-    setYourQuizNav("active-quiz-nav");
+
+    // eslint-disable-next-line
   }, []);
 
-  return traviasQuizes === null && quizesLoading ? (
+  return quizesLoading ? (
     <Spinner />
   ) : (
     <div className="quizes">
@@ -164,16 +186,22 @@ const Quizes = props => {
             All
           </div>
           <div
-            className={`your-quizes ${yourQuizNav}`}
-            onClick={onActiveYourQuizes}
+            className={`easy-quizes ${easyQuizNav}`}
+            onClick={onActiveEasyQuizes}
           >
-            Your Quizes
+            Easy
           </div>
           <div
-            className={`travias-quizes ${traviasQuizNav}`}
-            onClick={onActiveTraviasQuizes}
+            className={`medium-quizes ${mediumQuizNav}`}
+            onClick={onActiveMediumQuizes}
           >
-            Travia's Quizes
+            Medium
+          </div>
+          <div
+            className={`hard-quizes ${hardQuizNav}`}
+            onClick={onActiveHardQuizes}
+          >
+            Hard
           </div>
         </div>
         <div className="quizes__nav--bottom">

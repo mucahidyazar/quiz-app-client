@@ -3,6 +3,8 @@ const auth = require("../middleware/auth");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const fs = require("fs");
+const path = require("path");
 const User = require("../models/User");
 const Quizes = require("../models/Quizes");
 const { check, validationResult } = require("express-validator");
@@ -157,6 +159,18 @@ router.post("/image", auth, async (req, res) => {
     "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
   );
   User.findById(req.user.id, (err, user) => {
+    if (user.profilePhoto !== null) {
+      fs.unlink(
+        path.join(
+          __dirname,
+          `../client/public/img/${user.profilePhoto.filename}`
+        ),
+        err => {
+          console.error(err);
+        }
+      );
+      console.log("Old profile image was deleted");
+    }
     user.profilePhoto = req.body;
     user.save();
   });

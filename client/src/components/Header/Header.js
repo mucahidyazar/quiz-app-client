@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import RegistrationContext from "../../context/registration/registrationContext";
-import defaultUser from "../../public/png/default-user.png";
 
 const Header = () => {
   const registrationContext = useContext(RegistrationContext);

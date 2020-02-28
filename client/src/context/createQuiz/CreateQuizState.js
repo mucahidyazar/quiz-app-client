@@ -3,50 +3,120 @@ import axios from "axios";
 import createQuizReducer from "./createQuizReducer";
 import createQuizContext from "./createQuizContext";
 import {
-  ADD_QUIZ_QUESTION,
-  ADD_QUIZ_INFORMATION,
-  GET_IMAGE_INFORMATION,
-  SAVE_QUIZ,
-  CHANGE_CREATE_QUIZ_TITLE,
-  CHANGE_CREATE_QUIZ_DESCRIPTION,
-  CHANGE_CREATE_QUIZ_CATEGORY,
-  CHANGE_CREATE_QUIZ_TYPE,
-  CHANGE_CREATE_QUIZ_DIFFICULTY,
   ADD_NEW_ANSWER,
-  TRUE_OR_FALSE_ACTION,
-  SET_QUESTION,
-  SET_ANSWER,
-  CLEAR_VALUES,
-  SEND_ERROR,
+  ADD_QUIZ_INFORMATION,
+  ADD_QUIZ_QUESTION,
+  CHANGE_CREATE_QUIZ_CATEGORY,
+  CHANGE_CREATE_QUIZ_DESCRIPTION,
+  CHANGE_CREATE_QUIZ_DIFFICULTY,
+  CHANGE_CREATE_QUIZ_TITLE,
+  CHANGE_CREATE_QUIZ_TYPE,
   CLEAR_ERROR,
+  CLEAR_VALUES,
+  GET_IMAGE_INFORMATION,
   PREVIOUS_QUESTION,
   PREVIOUS_QUIZ_INFORMATION,
-  SET_CLEAR_CREATE_QUIZ
+  SAVE_QUIZ,
+  SEND_ERROR,
+  SET_ANSWER,
+  SET_CLEAR_CREATE_QUIZ,
+  SET_QUESTION,
+  TRUE_OR_FALSE_ACTION
 } from "../actionTypes";
 
 const CreateQuizState = props => {
   const initialState = {
+    answers: [],
+    correct_answer: null,
+    error: "",
+    imageInformation: null,
+    incorrect_answers: [],
+    question: "",
+    questions: [],
     quizes: [],
     quiz: null,
-    imageInformation: null,
-    quiz_title: "",
-    quiz_description: "",
     quiz_category: "General",
-    quiz_type: "Multiple",
+    quiz_description: "",
     quiz_difficulty: "easy",
-    questions: [],
-    question: "",
-    correct_answer: null,
-    incorrect_answers: [],
-    answers: [],
-    error: ""
+    quiz_title: "",
+    quiz_type: "Multiple"
   };
   const [state, dispatch] = useReducer(createQuizReducer, initialState);
 
-  const changeCreateQuizTitle = value => {
+  const addImage = async (data, photoType) => {
+    const datas = await axios.post("/upload-image", data, photoType, {});
+    getImageInformation(datas.data);
+
+    if (photoType === "profile-photo") {
+      axios.post("/users/image", datas.data, {});
+    }
+  };
+
+  const addNewAnswer = () => {
     try {
       dispatch({
-        type: CHANGE_CREATE_QUIZ_TITLE,
+        type: ADD_NEW_ANSWER
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const addQuizInformation = (
+    title,
+    description,
+    category,
+    type,
+    difficulty
+  ) => {
+    try {
+      if (
+        title === "" ||
+        description === "" ||
+        category === "" ||
+        type === "" ||
+        difficulty === ""
+      ) {
+        sendError(
+          "Plese don't leave empty and add something for the requirement places"
+        );
+      } else {
+        dispatch({
+          type: ADD_QUIZ_INFORMATION
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const isAnswerCorrect = () => state.answers.some(answer => answer === "");
+  const addQuizQuestion = (question, answers, correct) => {
+    if (
+      question === "" ||
+      question === null ||
+      answers.length === 0 ||
+      correct === null ||
+      isAnswerCorrect() === true
+    ) {
+      sendError(
+        "Plese don't leave empty and add something for the requirement places"
+      );
+    } else {
+      dispatch({
+        type: ADD_QUIZ_QUESTION,
+        question,
+        answers,
+        correct
+      });
+      clearValues();
+    }
+  };
+
+  const changeCreateQuizCategory = value => {
+    try {
+      dispatch({
+        type: CHANGE_CREATE_QUIZ_CATEGORY,
         value
       });
     } catch (err) {
@@ -63,10 +133,20 @@ const CreateQuizState = props => {
       console.log(err);
     }
   };
-  const changeCreateQuizCategory = value => {
+  const changeCreateQuizDifficulty = value => {
     try {
       dispatch({
-        type: CHANGE_CREATE_QUIZ_CATEGORY,
+        type: CHANGE_CREATE_QUIZ_DIFFICULTY,
+        value
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const changeCreateQuizTitle = value => {
+    try {
+      dispatch({
+        type: CHANGE_CREATE_QUIZ_TITLE,
         value
       });
     } catch (err) {
@@ -83,49 +163,34 @@ const CreateQuizState = props => {
       console.log(err);
     }
   };
-  const changeCreateQuizDifficulty = value => {
-    try {
+
+  //CLEAR_ERROR
+  const sendError = error => {
+    dispatch({
+      type: SEND_ERROR,
+      error
+    });
+    setTimeout(() => {
       dispatch({
-        type: CHANGE_CREATE_QUIZ_DIFFICULTY,
-        value
+        type: CLEAR_ERROR
       });
-    } catch (err) {
-      console.log(err);
-    }
+    }, 3000);
   };
 
-  const addNewAnswer = () => {
-    try {
-      dispatch({
-        type: ADD_NEW_ANSWER
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const trueOrFalseAction = index => {
+  const clearValues = () => {
     dispatch({
-      type: TRUE_OR_FALSE_ACTION,
-      payload: index
+      type: CLEAR_VALUES
     });
   };
 
-  const setQuestion = question => {
+  const getImageInformation = imageData => {
     dispatch({
-      type: SET_QUESTION,
-      question
+      type: GET_IMAGE_INFORMATION,
+      imageData
     });
   };
 
-  const setAnswer = (value, index) => {
-    dispatch({
-      type: SET_ANSWER,
-      value,
-      index
-    });
-  };
-
+  //PREVIOUS_QUESTION && PREVIOUS_QUIZ_INFORMATION
   const previousQuestion = () => {
     if (state.questions.length > 0) {
       const prevQuestionObject = state.questions[state.questions.length - 1];
@@ -161,79 +226,11 @@ const CreateQuizState = props => {
     }
   };
 
-  const setClearCreateQuiz = () => {
-    dispatch({
-      type: SET_CLEAR_CREATE_QUIZ
-    });
-  };
-
-  const isAnswerCorrect = () => state.answers.some(answer => answer === "");
-
-  const addQuizQuestion = (question, answers, correct) => {
-    if (
-      question === "" ||
-      question === null ||
-      answers.length === 0 ||
-      correct === null ||
-      isAnswerCorrect() === true
-    ) {
-      sendError(
-        "Plese don't leave empty and add something for the requirement places"
-      );
-    } else {
-      dispatch({
-        type: ADD_QUIZ_QUESTION,
-        question,
-        answers,
-        correct
-      });
-      clearValues();
-    }
-  };
-
-  const addImage = async (data, photoType) => {
-    const datas = await axios.post("/upload-image", data, photoType, {});
+  const removeAndAddImage = async data => {
+    const datas = await axios.post("/upload-image", data, {});
     getImageInformation(datas.data);
 
-    if (photoType === "profile-photo") {
-      axios.post("/users/image", datas.data, {});
-    }
-  };
-
-  const getImageInformation = imageData => {
-    dispatch({
-      type: GET_IMAGE_INFORMATION,
-      imageData
-    });
-  };
-
-  const addQuizInformation = (
-    imageInformation,
-    title,
-    description,
-    category,
-    type,
-    difficulty
-  ) => {
-    try {
-      if (
-        title === "" ||
-        description === "" ||
-        category === "" ||
-        type === "" ||
-        difficulty === ""
-      ) {
-        sendError(
-          "Plese don't leave empty and add something for the requirement places"
-        );
-      } else {
-        dispatch({
-          type: ADD_QUIZ_INFORMATION
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    axios.put("/quiz/delete-image", datas.data, {});
   };
 
   const saveQuiz = (
@@ -257,30 +254,6 @@ const CreateQuizState = props => {
       });
     } catch (err) {
       console.error(err);
-    }
-  };
-
-  const clearValues = () => {
-    dispatch({
-      type: CLEAR_VALUES
-    });
-  };
-
-  const sendError = error => {
-    dispatch({
-      type: SEND_ERROR,
-      error
-    });
-    setTimeout(() => {
-      dispatch({
-        type: CLEAR_ERROR
-      });
-    }, 3000);
-  };
-
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
     }
   };
 
@@ -312,40 +285,69 @@ const CreateQuizState = props => {
     }
   };
 
+  const setAnswer = (value, index) => {
+    dispatch({
+      type: SET_ANSWER,
+      value,
+      index
+    });
+  };
+
+  const setClearCreateQuiz = () => {
+    dispatch({
+      type: SET_CLEAR_CREATE_QUIZ
+    });
+  };
+
+  const setQuestion = question => {
+    dispatch({
+      type: SET_QUESTION,
+      question
+    });
+  };
+
+  const trueOrFalseAction = index => {
+    dispatch({
+      type: TRUE_OR_FALSE_ACTION,
+      payload: index
+    });
+  };
+
   return (
     <createQuizContext.Provider
       value={{
-        quizes: state.quizes,
-        quiz: state.quiz,
-        imageInformation: state.imageInformation,
-        quiz_title: state.quiz_title,
-        quiz_description: state.quiz_description,
-        quiz_category: state.quiz_category,
-        quiz_type: state.quiz_type,
-        quiz_difficulty: state.quiz_difficulty,
-        correct_answer: state.correct_answer,
-        incorrect_answers: state.incorrect_answers,
         answers: state.answers,
+        correct_answer: state.correct_answer,
+        error: state.error,
+        imageInformation: state.imageInformation,
+        incorrect_answers: state.incorrect_answers,
         question: state.question,
         questions: state.questions,
-        error: state.error,
-        previousQuestion,
-        setClearCreateQuiz,
-        addQuizInformation,
+        quiz: state.quiz,
+        quizes: state.quizes,
+        quiz_category: state.quiz_category,
+        quiz_description: state.quiz_description,
+        quiz_difficulty: state.quiz_difficulty,
+        quiz_title: state.quiz_title,
+        quiz_type: state.quiz_type,
         addImage,
-        addQuizQuestion,
-        saveQuiz,
-        changeCreateQuizTitle,
-        changeCreateQuizDescription,
-        changeCreateQuizCategory,
-        changeCreateQuizType,
-        changeCreateQuizDifficulty,
         addNewAnswer,
-        trueOrFalseAction,
-        setQuestion,
-        setAnswer,
+        addQuizInformation,
+        addQuizQuestion,
+        changeCreateQuizCategory,
+        changeCreateQuizDescription,
+        changeCreateQuizDifficulty,
+        changeCreateQuizTitle,
+        changeCreateQuizType,
+        previousQuestion,
+        removeAndAddImage,
+        saveQuiz,
         saveScores,
-        saveScoreToQuiz
+        saveScoreToQuiz,
+        setAnswer,
+        setClearCreateQuiz,
+        setQuestion,
+        trueOrFalseAction
       }}
     >
       {props.children}

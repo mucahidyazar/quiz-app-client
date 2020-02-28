@@ -7,13 +7,12 @@ import CreateQuiz from "../CreateQuiz/CreateQuiz";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import Profile from "../Profile/Profile";
 import Settings from "../Settings/Settings";
-import TraviasQuizPage from "../Quizes/TraviasQuizPage/TraviasQuizPage";
-import YourQuizPage from "../Quizes/YourQuizPage/YourQuizPage";
+import QuizPage from "../Quizes/QuizPage/QuizPage";
 import ResultPage from "../Quizes/ResultPage/ResultPage";
 import Registration from "../Registration/Registration";
 import RegistrationContext from "../../context/registration/registrationContext";
 
-const Layout = props => {
+const Layout = () => {
   const registrationContext = useContext(RegistrationContext);
   const { loadUser } = registrationContext;
 
@@ -21,6 +20,7 @@ const Layout = props => {
     if (localStorage.token) {
       loadUser();
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -32,9 +32,7 @@ const Layout = props => {
         <Route path="/leaderboard" exact component={Leaderboard} />
         <Route path="/create-quiz" component={CreateQuiz} />
         <Route path="/settings" component={Settings} />
-        <Route path="/quizes/all/:id" component={TraviasQuizPage} />
-        <Route path="/quizes/travias-quizes/:id" component={TraviasQuizPage} />
-        <Route path="/quizes/your-quizes/:id" component={YourQuizPage} />
+        <Route path="/quizes/:id" component={QuizPage} />
         <Route path="/result/:id" component={ResultPage} />
         <Route path="/registration" component={Registration} />
         <Route path="/:id" component={Profile} />

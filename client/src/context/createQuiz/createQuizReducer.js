@@ -1,22 +1,22 @@
 import {
-  ADD_QUIZ_INFORMATION,
-  GET_IMAGE_INFORMATION,
-  ADD_QUIZ_QUESTION,
-  SAVE_QUIZ,
-  CHANGE_CREATE_QUIZ_TITLE,
-  CHANGE_CREATE_QUIZ_DESCRIPTION,
-  CHANGE_CREATE_QUIZ_CATEGORY,
-  CHANGE_CREATE_QUIZ_TYPE,
-  CHANGE_CREATE_QUIZ_DIFFICULTY,
   ADD_NEW_ANSWER,
-  TRUE_OR_FALSE_ACTION,
-  SET_ANSWER,
-  SET_QUESTION,
-  SEND_ERROR,
+  ADD_QUIZ_INFORMATION,
+  ADD_QUIZ_QUESTION,
+  CHANGE_CREATE_QUIZ_CATEGORY,
+  CHANGE_CREATE_QUIZ_DESCRIPTION,
+  CHANGE_CREATE_QUIZ_DIFFICULTY,
+  CHANGE_CREATE_QUIZ_TITLE,
+  CHANGE_CREATE_QUIZ_TYPE,
   CLEAR_ERROR,
+  GET_IMAGE_INFORMATION,
   PREVIOUS_QUESTION,
   PREVIOUS_QUIZ_INFORMATION,
-  SET_CLEAR_CREATE_QUIZ
+  SAVE_QUIZ,
+  SEND_ERROR,
+  SET_ANSWER,
+  SET_CLEAR_CREATE_QUIZ,
+  SET_QUESTION,
+  TRUE_OR_FALSE_ACTION
 } from "../actionTypes";
 import axios from "axios";
 
@@ -28,89 +28,18 @@ const config = {
 
 export default (state, action) => {
   switch (action.type) {
-    case CHANGE_CREATE_QUIZ_TITLE:
-      return {
-        ...state,
-        quiz_title: action.value
-      };
-    case CHANGE_CREATE_QUIZ_DESCRIPTION:
-      return {
-        ...state,
-        quiz_description: action.value
-      };
-    case CHANGE_CREATE_QUIZ_CATEGORY:
-      return {
-        ...state,
-        quiz_category: action.value
-      };
-    case CHANGE_CREATE_QUIZ_TYPE:
-      return {
-        ...state,
-        quiz_type: action.value
-      };
-    case CHANGE_CREATE_QUIZ_DIFFICULTY:
-      return {
-        ...state,
-        quiz_difficulty: action.value
-      };
-
     case ADD_NEW_ANSWER:
       return {
         ...state,
         answers: [...state.answers, ""]
       };
-    case TRUE_OR_FALSE_ACTION:
+
+    case ADD_QUIZ_INFORMATION:
       return {
         ...state,
-        correct_answer: action.payload
+        quiz: "Active"
       };
-    case SET_QUESTION:
-      return {
-        ...state,
-        question: action.question
-      };
-    case SET_ANSWER:
-      let ans = state.answers;
-      ans[action.index] = action.value;
-      return {
-        ...state,
-        answers: ans
-      };
-    case PREVIOUS_QUESTION:
-      return {
-        ...state,
-        question: action.question,
-        answers: action.answers,
-        correct_answer: action.correct,
-        questions: state.questions.filter(
-          question => question.question !== action.question
-        )
-      };
-    case PREVIOUS_QUIZ_INFORMATION:
-      console.log("a111111111111");
-      return {
-        ...state,
-        quiz: null,
-        quiz_title: action.quiz_title,
-        quiz_desription: action.quiz_desription,
-        quiz_category: action.quiz_category,
-        quiz_type: action.quiz_type,
-        quiz_difficulty: action.quiz_difficulty
-      };
-    case SET_CLEAR_CREATE_QUIZ:
-      return {
-        ...state,
-        quiz: null,
-        quiz_title: "",
-        quiz_description: "",
-        quiz_category: "General",
-        quiz_type: "Multiple",
-        quiz_difficulty: "easy",
-        question: "",
-        correct_answer: null,
-        incorrect_answers: [],
-        answers: []
-      };
+
     case ADD_QUIZ_QUESTION:
       let correct_answer = state.answers[action.correct];
       let incorrect_answers = state.answers.filter(
@@ -132,10 +61,41 @@ export default (state, action) => {
         incorrect_answers: [],
         answers: []
       };
-    case ADD_QUIZ_INFORMATION:
+
+    case CHANGE_CREATE_QUIZ_CATEGORY:
       return {
         ...state,
-        quiz: "Active"
+        quiz_category: action.value
+      };
+
+    case CHANGE_CREATE_QUIZ_DESCRIPTION:
+      return {
+        ...state,
+        quiz_description: action.value
+      };
+
+    case CHANGE_CREATE_QUIZ_DIFFICULTY:
+      return {
+        ...state,
+        quiz_difficulty: action.value
+      };
+
+    case CHANGE_CREATE_QUIZ_TITLE:
+      return {
+        ...state,
+        quiz_title: action.value
+      };
+
+    case CHANGE_CREATE_QUIZ_TYPE:
+      return {
+        ...state,
+        quiz_type: action.value
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: ""
       };
 
     case GET_IMAGE_INFORMATION:
@@ -143,15 +103,30 @@ export default (state, action) => {
         ...state,
         imageInformation: action.imageData
       };
+
+    case PREVIOUS_QUESTION:
+      return {
+        ...state,
+        question: action.question,
+        answers: action.answers,
+        correct_answer: action.correct,
+        questions: state.questions.filter(
+          question => question.question !== action.question
+        )
+      };
+
+    case PREVIOUS_QUIZ_INFORMATION:
+      return {
+        ...state,
+        quiz: null,
+        quiz_title: action.quiz_title,
+        quiz_desription: action.quiz_desription,
+        quiz_category: action.quiz_category,
+        quiz_type: action.quiz_type,
+        quiz_difficulty: action.quiz_difficulty
+      };
+
     case SAVE_QUIZ:
-      // const quiz = {
-      //   quiz_title: action.quiz_title,
-      //   quiz_description: action.quiz_description,
-      //   quiz_category: action.quiz_category,
-      //   quiz_type: action.quiz_type,
-      //   quiz_difficulty: action.quiz_difficulty,
-      //   questions: state.questions
-      // };
       axios.post(
         "/quiz/add-quiz",
         {
@@ -183,16 +158,48 @@ export default (state, action) => {
         quiz_type: "Multiple",
         quiz_difficulty: "easy"
       };
+
     case SEND_ERROR:
       return {
         ...state,
         error: action.error
       };
-    case CLEAR_ERROR:
+
+    case SET_ANSWER:
+      let ans = state.answers;
+      ans[action.index] = action.value;
       return {
         ...state,
-        error: ""
+        answers: ans
       };
+
+    case SET_CLEAR_CREATE_QUIZ:
+      return {
+        ...state,
+        quiz: null,
+        quiz_title: "",
+        quiz_description: "",
+        quiz_category: "General",
+        quiz_type: "Multiple",
+        quiz_difficulty: "easy",
+        question: "",
+        correct_answer: null,
+        incorrect_answers: [],
+        answers: []
+      };
+
+    case SET_QUESTION:
+      return {
+        ...state,
+        question: action.question
+      };
+
+    case TRUE_OR_FALSE_ACTION:
+      return {
+        ...state,
+        correct_answer: action.payload
+      };
+
     default:
       return state;
   }

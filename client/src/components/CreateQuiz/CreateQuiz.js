@@ -80,6 +80,8 @@ const CreateQuizPage = props => {
     return () => {
       setClearCreateQuiz();
     };
+
+    // eslint-disable-next-line
   }, []);
 
   return (

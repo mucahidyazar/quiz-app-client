@@ -2,37 +2,41 @@ import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import imgQuizTime from "../../public/img/quiz-time.jpg";
 import QuizesContext from "../../context/quizes/quizesContext";
-import RegistrationContext from "../../context/registration/registrationContext";
 import { Link } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 
-const Home = props => {
+const Home = () => {
   const quizesContext = useContext(QuizesContext);
-  const { yourQuizes, getTraviasQuizes, getYourQuizes } = quizesContext;
+  const { quizes, getQuizes } = quizesContext;
 
   const [randomQuiz, setRandomQuiz] = useState(null);
   const [randomQuizNumber, setRandomQuizNumber] = useState(null);
 
   useEffect(() => {
-    getTraviasQuizes();
-    getYourQuizes();
+    getQuizes();
+
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (yourQuizes && yourQuizes.length > 0) {
-      setRandomQuizNumber(Math.floor(Math.random() * yourQuizes.length));
+    if (quizes && quizes.length > 0) {
+      setRandomQuizNumber(Math.floor(Math.random() * quizes.length));
     }
-  }, [yourQuizes]);
+
+    // eslint-disable-next-line
+  }, [quizes]);
 
   useEffect(() => {
     const randomQuizLink = () => {
       if (randomQuizNumber) {
-        return setRandomQuiz(yourQuizes[randomQuizNumber]);
+        return setRandomQuiz(quizes[randomQuizNumber]);
       } else {
         return "!#";
       }
     };
     randomQuizLink();
+
+    // eslint-disable-next-line
   }, [randomQuizNumber]);
 
   return randomQuiz ? (

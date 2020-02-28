@@ -16,6 +16,7 @@ const Registration = props => {
     if (user !== null) {
       props.history.push("/");
     }
+    // eslint-disable-next-line
   }, [user]);
 
   return (
