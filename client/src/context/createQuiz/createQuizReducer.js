@@ -184,6 +184,7 @@ export default (state, action) => {
         quiz_difficulty: "easy",
         question: "",
         correct_answer: null,
+        imageInformation: null,
         incorrect_answers: [],
         answers: []
       };

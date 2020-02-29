@@ -29,6 +29,15 @@ const QuizesState = props => {
 
   const [state, dispatch] = useReducer(quizesReducer, initialState);
 
+  const deleteQuiz = id => {
+    try {
+      axios.delete(`/quiz/${id}`);
+      getQuizes();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   //getQuizes
   const getQuizes = async () => {
     try {
@@ -110,6 +119,7 @@ const QuizesState = props => {
         specialQuizScoreboard: state.specialQuizScoreboard,
         userQuizes: state.userQuizes,
         validQuizes: state.validQuizes,
+        deleteQuiz,
         getQuizes,
         getQuizScoreboard,
         getUserQuizes,

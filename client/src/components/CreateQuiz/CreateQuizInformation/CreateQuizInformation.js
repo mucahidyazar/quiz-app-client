@@ -40,10 +40,12 @@ const CreateQuizInformation = () => {
       const data = new FormData();
       data.append("file", e.target.files[0]);
       addImage(data, "quiz-cover-image");
+    } else {
+      removeAndAddImage(imageInformation);
+      const data = new FormData();
+      data.append("file", e.target.files[0]);
+      addImage(data, "quiz-cover-image");
     }
-    const data = new FormData();
-    data.append("file", e.target.files[0]);
-    removeAndAddImage(data);
   };
 
   return (

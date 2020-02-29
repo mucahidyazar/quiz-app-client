@@ -85,7 +85,7 @@ const Home = () => {
         </div>
 
         <Link
-          to={`/quizes/your-quizes/${randomQuizNumber}`}
+          to={`/quizes/${randomQuizNumber}`}
           className={`quiz__button quiz__button--${randomQuiz.quizDifficulty}`}
         >
           Start

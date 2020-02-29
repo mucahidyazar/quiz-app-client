@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import imgQuizTime from "../../../public/img/quiz-time.jpg";
 import { Link } from "react-router-dom";
+import QuizesContext from "../../../context/quizes/quizesContext";
+import RegistrationContext from "../../../context/registration/registrationContext";
 
 const QuizCard = props => {
+  const quizesContext = useContext(QuizesContext);
+  const { deleteQuiz } = quizesContext;
+
+  const registrationContext = useContext(RegistrationContext);
+  const { user } = registrationContext;
+
   return props.info && props.quiz ? (
     <div className={`quiz quiz--${props.info.difficulty}`}>
       <div className="quiz__header">
@@ -19,6 +27,14 @@ const QuizCard = props => {
           ) : (
             <img src={imgQuizTime} alt="Quiz Time" />
           )}
+          {user._id === props.info.quizAuthor ? (
+            <div
+              className="quiz__header--delete-button"
+              onClick={() => deleteQuiz(props.info.id)}
+            >
+              <i className="far fa-trash-alt"></i>
+            </div>
+          ) : null}
         </div>
       </div>
 

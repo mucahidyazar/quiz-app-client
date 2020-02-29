@@ -45,10 +45,11 @@ const CreateQuizState = props => {
 
   const addImage = async (data, photoType) => {
     const datas = await axios.post("/upload-image", data, photoType, {});
-    getImageInformation(datas.data);
 
     if (photoType === "profile-photo") {
-      axios.post("/users/image", datas.data, {});
+      await axios.post("/users/image", datas.data, {});
+    } else {
+      getImageInformation(datas.data);
     }
   };
 
@@ -227,10 +228,7 @@ const CreateQuizState = props => {
   };
 
   const removeAndAddImage = async data => {
-    const datas = await axios.post("/upload-image", data, {});
-    getImageInformation(datas.data);
-
-    axios.put("/quiz/delete-image", datas.data, {});
+    axios.put("/quiz/delete-image", data, {});
   };
 
   const saveQuiz = (

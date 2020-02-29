@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import defaultUser from "../../public/png/default-user.png";
 import UserContext from "../../context/user/userContext";
 import QuizesContext from "../../context/quizes/quizesContext";
@@ -18,11 +18,15 @@ const Leaderboard = props => {
 
   const onSearchQuizes = e => {
     searchQuizes(e.target.value);
+    if (e.target.value === "") {
+      setScoreboardHeader("Leaderboard");
+    }
   };
 
+  const [scoreboardHeader, setScoreboardHeader] = useState("Leaderboard");
   const onGetQuizScoreboard = quiz => {
     getQuizScoreboard(quiz.quizScoreboard);
-    console.log(quiz.quizScoreboard);
+    setScoreboardHeader(quiz.quizTitle);
   };
 
   useEffect(() => {
@@ -84,7 +88,7 @@ const Leaderboard = props => {
           </div>
         </div>
       </div>
-      <div className="leaderboard__title">Leaderboard</div>
+      <div className="leaderboard__title">{scoreboardHeader}</div>
 
       <div className="leaderboard__nav">
         <div className="leaderboard__nav--rank">#</div>

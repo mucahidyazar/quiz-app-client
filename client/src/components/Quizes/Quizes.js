@@ -28,6 +28,8 @@ const Quizes = props => {
           index={index + 1}
           quiz={quiz.quizQuestions}
           info={{
+            id: quiz._id,
+            quizAuthor: quiz.quizAuthor,
             imageInformation: quiz.imageInformation,
             title: quiz.quizTitle,
             description: quiz.quizDescription,
@@ -49,6 +51,8 @@ const Quizes = props => {
               index={index + 1}
               quiz={quiz.quizQuestions}
               info={{
+                id: quiz._id,
+                quizAuthor: quiz.quizAuthor,
                 imageInformation: quiz.imageInformation,
                 title: quiz.quizTitle,
                 description: quiz.quizDescription,
@@ -71,6 +75,8 @@ const Quizes = props => {
               index={index + 1}
               quiz={quiz.quizQuestions}
               info={{
+                id: quiz._id,
+                quizAuthor: quiz.quizAuthor,
                 imageInformation: quiz.imageInformation,
                 title: quiz.quizTitle,
                 description: quiz.quizDescription,
@@ -93,6 +99,8 @@ const Quizes = props => {
               index={index + 1}
               quiz={quiz.quizQuestions}
               info={{
+                id: quiz._id,
+                quizAuthor: quiz.quizAuthor,
                 imageInformation: quiz.imageInformation,
                 title: quiz.quizTitle,
                 description: quiz.quizDescription,

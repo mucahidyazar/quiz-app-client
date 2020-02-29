@@ -153,12 +153,12 @@ router.put("/:id", auth, async function(req, res) {
   }
 });
 
-router.post("/image", auth, async (req, res) => {
+router.post("/image", auth, (req, res) => {
   res.header(
     "Accept",
     "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
   );
-  User.findById(req.user.id, (err, user) => {
+  User.findById(req.user.id, async (err, user) => {
     if (user.profilePhoto !== null) {
       fs.unlink(
         path.join(
@@ -172,7 +172,8 @@ router.post("/image", auth, async (req, res) => {
       console.log("Old profile image was deleted");
     }
     user.profilePhoto = req.body;
-    user.save();
+    const userData = await user.save();
+    res.json(userData);
   });
 });
 

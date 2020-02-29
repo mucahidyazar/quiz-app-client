@@ -7,8 +7,6 @@ const Quiz = require("../models/Quizes");
 const User = require("../models/User");
 const auth = require("../middleware/auth");
 
-const mongoose = require("mongoose");
-
 router.get("/quizes", async (req, res) => {
   try {
     const quizes = await Quiz.find();
@@ -51,6 +49,17 @@ router.post("/quiz/add-quiz", auth, async (req, res) => {
     res.json(quiz);
   } catch (err) {
     res.send(err);
+  }
+});
+
+router.delete("/quiz/:id", async (req, res) => {
+  try {
+    const delteQuiz = await Quiz.findByIdAndDelete(req.params.id);
+    console.log(delteQuiz.data);
+    res.json(delteQuiz.data);
+  } catch (err) {
+    console.log("Hata");
+    console.error(err);
   }
 });
 

@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 export default function Profile() {
   const registrationContext = useContext(RegistrationContext);
-  const { user } = registrationContext;
+  const { user, loadUser } = registrationContext;
   const quizesContext = useContext(QuizesContext);
   const { userQuizes, getUserQuizes } = quizesContext;
 
@@ -17,6 +17,8 @@ export default function Profile() {
     if (user) {
       getUserQuizes(user._id);
     }
+
+    loadUser();
     // eslint-disable-next-line
   }, [user]);
 
