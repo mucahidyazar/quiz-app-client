@@ -27,7 +27,7 @@ const QuizCard = props => {
           ) : (
             <img src={imgQuizTime} alt="Quiz Time" />
           )}
-          {user._id === props.info.quizAuthor ? (
+          {user && user._id === props.info.quizAuthor ? (
             <div
               className="quiz__header--delete-button"
               onClick={() => deleteQuiz(props.info.id)}
