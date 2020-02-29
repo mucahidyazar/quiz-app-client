@@ -1,6 +1,7 @@
 .create {
   padding: 10rem;
-  box-shadow: 0 2rem 3rem rgba($color-light, 0.1);
+  margin-top: 5rem;
+  box-shadow: 0 2rem 5rem 1rem rgba($color-light, 0.1);
   position: relative;
 
   .create__error {
@@ -80,9 +81,35 @@
   }
 }
 
+@media only screen and (max-width: 45em) {
+  .create__buttons {
+    flex-direction: column;
+
+    &--back,
+    &--next {
+      background-color: $color-darker;
+      width: 100% !important;
+    }
+
+    &--back {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
 @media only screen and (max-width: 37.5em) {
   .section__quizpage {
     margin-top: 1vh;
     padding: 5vh;
+  }
+
+  .create {
+    padding: 5rem;
+  }
+}
+
+@media only screen and (max-width: 23.75em) {
+  .create {
+    padding: 2rem;
   }
 }

@@ -25,7 +25,6 @@ const CreateQuizPage = props => {
     setClearCreateQuiz,
     addQuizQuestion,
     addQuizInformation,
-    removeAndAddImage,
     saveQuiz
   } = createQuizContext;
 

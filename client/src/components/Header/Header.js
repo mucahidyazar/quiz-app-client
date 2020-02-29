@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import RegistrationContext from "../../context/registration/registrationContext";
 
@@ -6,8 +6,18 @@ const Header = () => {
   const registrationContext = useContext(RegistrationContext);
   const { user, logoutHandler } = registrationContext;
 
+  const [headerHead, setHeaderHead] = useState("");
+
+  const onHeaderHead = () => {
+    if (headerHead === "") {
+      setHeaderHead("header-head");
+    } else if (headerHead === "header-head") {
+      setHeaderHead("");
+    }
+  };
+
   return (
-    <header className="header">
+    <header className={`header ${headerHead}`}>
       <div className="header__left">
         <i className="fas fa-sun"></i>
         <div className="header__left-brand">
@@ -20,55 +30,84 @@ const Header = () => {
           exact
           activeClassName="header__right--active"
         >
-          Create Quiz
+          <i className="far fa-edit"></i>Create Quiz
         </NavLink>
         <NavLink to="/quizes" activeClassName="header__right--active">
-          Quizes
+          <i className="far fa-file-alt"></i>Quizes
         </NavLink>
         <NavLink
           to="/leaderboard"
           exact
           activeClassName="header__right--active"
         >
-          Leaderboard
+          <i className="fas fa-stream"></i>Leaderboard
         </NavLink>
         {user ? (
-          <div className="nav__profile">
-            <div className="nav__profile--left">
-              <Link to={user.username} className="nav__header">
-                <div className="nav__header--image">
-                  <img src={`./img/${user.profilePhoto.filename}`} alt="" />
-                </div>
-                <div className="nav__header--name">
-                  {user.username ? user.username : "Username"}
-                </div>
-              </Link>
-
-              <div className="nav__options">
-                <Link to={user.username} className="nav__options--profile">
-                  <i className="fas fa-user"></i>Profile
-                </Link>
-                <Link to="/settings" className="nav__options--settings">
-                  <i className="fas fa-cog"></i>Settings
-                </Link>
-                <Link
-                  to="/"
-                  className="nav__options--logout"
-                  onClick={() => logoutHandler()}
-                >
-                  <i className="fas fa-sign-out-alt"></i>Logout
-                </Link>
-              </div>
-            </div>
-
-            <Link
+          <React.Fragment>
+            <NavLink
+              to={user.username}
+              activeClassName="header__right--active"
+              className="header__right--display"
+            >
+              <i className="fas fa-user"></i>Profile
+            </NavLink>
+            <NavLink
+              to="/settings"
+              className="header__right--display"
+              activeClassName="header__right--active"
+            >
+              <i className="fas fa-cog"></i>Settings
+            </NavLink>
+            <NavLink
               to="/"
-              className="nav__profile--right"
+              activeClassName="header__right--active"
+              className="header__right--display"
               onClick={() => logoutHandler()}
             >
-              <i className="fas fa-sign-out-alt"></i>
-            </Link>
-          </div>
+              <i className="fas fa-sign-out-alt"></i>Logout
+            </NavLink>
+
+            <div className="nav__profile">
+              <div className="nav__profile--left">
+                <Link
+                  to={user.username}
+                  className="nav__header"
+                  onClick={onHeaderHead}
+                >
+                  <div className="nav__header--image">
+                    <img src={`./img/${user.profilePhoto.filename}`} alt="" />
+                  </div>
+                  <div className="nav__header--name">
+                    {user.username ? user.username : "Username"}
+                  </div>
+                </Link>
+
+                <div className="nav__options">
+                  <Link to={user.username} className="nav__options--profile">
+                    <i className="fas fa-user"></i>Profile
+                  </Link>
+                  <Link to="/settings" className="nav__options--settings">
+                    <i className="fas fa-cog"></i>Settings
+                  </Link>
+                  <Link
+                    to="/home"
+                    className="nav__options--logout"
+                    onClick={() => logoutHandler()}
+                  >
+                    <i className="fas fa-sign-out-alt"></i>Logout
+                  </Link>
+                </div>
+              </div>
+
+              <Link
+                to="/"
+                className="nav__profile--right"
+                onClick={() => logoutHandler()}
+              >
+                <i className="fas fa-sign-out-alt"></i>
+              </Link>
+            </div>
+          </React.Fragment>
         ) : (
           <Link to="/registration">Login</Link>
         )}

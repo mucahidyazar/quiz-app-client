@@ -1,5 +1,5 @@
 .quizes {
-  padding: 10rem 0;
+  padding: 5rem 0;
 
   &__nav {
     &--top {
@@ -60,5 +60,50 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
     grid-gap: 3rem;
+  }
+}
+
+@media only screen and (max-width: 37.5em) {
+  .quizes {
+    padding: 5rem 0;
+
+    &__nav {
+      &--bottom {
+        flex-direction: column;
+
+        input {
+          margin-bottom: 2rem;
+        }
+
+        & > div {
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 25em) {
+  .quizes {
+    padding: 5rem 0;
+
+    &__nav {
+      &--top {
+        flex-direction: column;
+        border-radius: 0;
+        width: 100%;
+
+        & > * {
+          width: 100%;
+        }
+
+        & .all-quizes {
+          border-radius: 0;
+        }
+
+        & .hard-quizes {
+          border-radius: 0;
+        }
+      }
+    }
   }
 }

@@ -16,20 +16,22 @@ export default function ProfileInfo(props) {
     <div className="info">
       <div className="info__photo">
         <img src={`./img/${props.user.profilePhoto.filename}`} alt=""></img>
-        <div className="info__photo--upload">
-          <input
-            type="file"
-            className="info__photo--file"
-            id="info__photo--file"
-            onChange={onAddImage}
-          />
-          <label htmlFor="info__photo--file">
-            <i className="fas fa-camera-retro"></i>
-          </label>
+        <div className="info__photo--group">
+          <div className="info__photo--name">
+            @{props.user.username ? props.user.username : "Username"}
+          </div>
+          <div className="info__photo--upload">
+            <input
+              type="file"
+              className="info__photo--file"
+              id="info__photo--file"
+              onChange={onAddImage}
+            />
+            <label htmlFor="info__photo--file">
+              <i className="fas fa-camera-retro"></i>
+            </label>
+          </div>
         </div>
-      </div>
-      <div className="info__name">
-        {props.user.username ? props.user.username : "Username"}
       </div>
       <span className="info__info">Registered on April 26(Add Last Login)</span>
       <div className="info__body">

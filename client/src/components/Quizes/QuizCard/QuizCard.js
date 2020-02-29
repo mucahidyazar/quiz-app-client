@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import imgQuizTime from "../../../public/img/quiz-time.jpg";
 import { Link } from "react-router-dom";
 import QuizesContext from "../../../context/quizes/quizesContext";
