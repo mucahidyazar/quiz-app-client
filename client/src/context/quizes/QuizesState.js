@@ -40,14 +40,8 @@ const QuizesState = props => {
 
   //getQuizes
   const getQuizes = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json"
-      }
-    };
     try {
-      const quizes = await axios.get("/quizes", config);
+      const quizes = await axios.get("/quizes");
       dispatch({
         type: GET_QUIZES,
         quizes: quizes.data
