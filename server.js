@@ -17,10 +17,6 @@ app.use("/auth", require("./routes/authRoute"));
 
 // Every other API or similar routes should be before this catch-all
 if (process.env.NODE_ENV === "production") {
-  app.use("/", require("./routes/quizRoute"));
-  app.use("/users", require("./routes/userRoute"));
-  app.use("/auth", require("./routes/authRoute"));
-
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
