@@ -47,7 +47,7 @@ const QuizesState = props => {
       }
     };
     try {
-      const quizes = await axios.get("/quizes");
+      const quizes = await axios.get("/quizes", config);
       dispatch({
         type: GET_QUIZES,
         quizes: quizes.data
