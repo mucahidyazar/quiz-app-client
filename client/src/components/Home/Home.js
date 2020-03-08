@@ -14,30 +14,23 @@ const Home = () => {
 
   useEffect(() => {
     getQuizes();
-
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (quizes && quizes.length > 0) {
-      setRandomQuizNumber(Math.floor(Math.random() * quizes.length));
+    if (quizes !== null) {
+      setRandomQuiz(quizes[Math.floor(Math.random() * quizes.length)]);
     }
-
     // eslint-disable-next-line
   }, [quizes]);
-
   useEffect(() => {
-    const randomQuizLink = () => {
-      if (randomQuizNumber) {
-        return setRandomQuiz(quizes[randomQuizNumber]);
-      } else {
-        return "!#";
-      }
-    };
-    randomQuizLink();
-
+    if (randomQuiz !== null) {
+      quizes.filter((quiz, index) =>
+        quiz._id === randomQuiz._id ? setRandomQuizNumber(index) : null
+      );
+    }
     // eslint-disable-next-line
-  }, [randomQuizNumber]);
+  }, [randomQuiz]);
 
   return randomQuiz ? (
     <section className="section__main">
