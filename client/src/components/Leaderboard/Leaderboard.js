@@ -4,7 +4,7 @@ import UserContext from "../../context/user/userContext";
 import QuizesContext from "../../context/quizes/quizesContext";
 import quizImage from "../../public/img/quiz-time.jpg";
 
-const Leaderboard = props => {
+const Leaderboard = (props) => {
   const userContext = useContext(UserContext);
   const { users, getUsers } = userContext;
   const quizesContext = useContext(QuizesContext);
@@ -13,10 +13,10 @@ const Leaderboard = props => {
     specialQuizScoreboard,
     getQuizes,
     searchQuizes,
-    getQuizScoreboard
+    getQuizScoreboard,
   } = quizesContext;
 
-  const onSearchQuizes = e => {
+  const onSearchQuizes = (e) => {
     searchQuizes(e.target.value);
     if (e.target.value === "") {
       setScoreboardHeader("Leaderboard");
@@ -24,7 +24,7 @@ const Leaderboard = props => {
   };
 
   const [scoreboardHeader, setScoreboardHeader] = useState("Leaderboard");
-  const onGetQuizScoreboard = quiz => {
+  const onGetQuizScoreboard = (quiz) => {
     getQuizScoreboard(quiz.quizScoreboard);
     setScoreboardHeader(quiz.quizTitle);
   };
@@ -116,10 +116,14 @@ const Leaderboard = props => {
               <div className="leaderboard__nav--rank">{index + 1}</div>
               <div className="leaderboard__nav--avatar">
                 <div className="leaderboard__nav--image">
-                  <img
-                    src={`./img/${user.profilePhoto.filename}`}
-                    alt="default user"
-                  />
+                  {user?.profilePhoto?.filename ? (
+                    <img
+                      src={`./img/${user.profilePhoto.filename}`}
+                      alt="default user"
+                    />
+                  ) : (
+                    <img src={`./img/profile.jpg`} alt="default user" />
+                  )}
                 </div>
               </div>
               <div className="leaderboard__nav--username">{user.username}</div>

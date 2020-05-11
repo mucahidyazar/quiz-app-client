@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import axios from "axios";
+import axios from "../../axios-orders";
 import createQuizReducer from "./createQuizReducer";
 import createQuizContext from "./createQuizContext";
 import {
@@ -21,10 +21,10 @@ import {
   SET_ANSWER,
   SET_CLEAR_CREATE_QUIZ,
   SET_QUESTION,
-  TRUE_OR_FALSE_ACTION
+  TRUE_OR_FALSE_ACTION,
 } from "../actionTypes";
 
-const CreateQuizState = props => {
+const CreateQuizState = (props) => {
   const initialState = {
     answers: [],
     correct_answer: null,
@@ -39,7 +39,7 @@ const CreateQuizState = props => {
     quiz_description: "",
     quiz_difficulty: "easy",
     quiz_title: "",
-    quiz_type: "Multiple"
+    quiz_type: "Multiple",
   };
   const [state, dispatch] = useReducer(createQuizReducer, initialState);
 
@@ -56,7 +56,7 @@ const CreateQuizState = props => {
   const addNewAnswer = () => {
     try {
       dispatch({
-        type: ADD_NEW_ANSWER
+        type: ADD_NEW_ANSWER,
       });
     } catch (err) {
       console.error(err);
@@ -83,7 +83,7 @@ const CreateQuizState = props => {
         );
       } else {
         dispatch({
-          type: ADD_QUIZ_INFORMATION
+          type: ADD_QUIZ_INFORMATION,
         });
       }
     } catch (err) {
@@ -91,7 +91,7 @@ const CreateQuizState = props => {
     }
   };
 
-  const isAnswerCorrect = () => state.answers.some(answer => answer === "");
+  const isAnswerCorrect = () => state.answers.some((answer) => answer === "");
   const addQuizQuestion = (question, answers, correct) => {
     if (
       question === "" ||
@@ -108,57 +108,57 @@ const CreateQuizState = props => {
         type: ADD_QUIZ_QUESTION,
         question,
         answers,
-        correct
+        correct,
       });
       clearValues();
     }
   };
 
-  const changeCreateQuizCategory = value => {
+  const changeCreateQuizCategory = (value) => {
     try {
       dispatch({
         type: CHANGE_CREATE_QUIZ_CATEGORY,
-        value
+        value,
       });
     } catch (err) {
       console.log(err);
     }
   };
-  const changeCreateQuizDescription = value => {
+  const changeCreateQuizDescription = (value) => {
     try {
       dispatch({
         type: CHANGE_CREATE_QUIZ_DESCRIPTION,
-        value
+        value,
       });
     } catch (err) {
       console.log(err);
     }
   };
-  const changeCreateQuizDifficulty = value => {
+  const changeCreateQuizDifficulty = (value) => {
     try {
       dispatch({
         type: CHANGE_CREATE_QUIZ_DIFFICULTY,
-        value
+        value,
       });
     } catch (err) {
       console.log(err);
     }
   };
-  const changeCreateQuizTitle = value => {
+  const changeCreateQuizTitle = (value) => {
     try {
       dispatch({
         type: CHANGE_CREATE_QUIZ_TITLE,
-        value
+        value,
       });
     } catch (err) {
       console.log(err);
     }
   };
-  const changeCreateQuizType = value => {
+  const changeCreateQuizType = (value) => {
     try {
       dispatch({
         type: CHANGE_CREATE_QUIZ_TYPE,
-        value
+        value,
       });
     } catch (err) {
       console.log(err);
@@ -166,28 +166,28 @@ const CreateQuizState = props => {
   };
 
   //CLEAR_ERROR
-  const sendError = error => {
+  const sendError = (error) => {
     dispatch({
       type: SEND_ERROR,
-      error
+      error,
     });
     setTimeout(() => {
       dispatch({
-        type: CLEAR_ERROR
+        type: CLEAR_ERROR,
       });
     }, 3000);
   };
 
   const clearValues = () => {
     dispatch({
-      type: CLEAR_VALUES
+      type: CLEAR_VALUES,
     });
   };
 
-  const getImageInformation = imageData => {
+  const getImageInformation = (imageData) => {
     dispatch({
       type: GET_IMAGE_INFORMATION,
-      imageData
+      imageData,
     });
   };
 
@@ -206,7 +206,7 @@ const CreateQuizState = props => {
           type: PREVIOUS_QUESTION,
           question: prevQuestion,
           answers: prevAnswersArray,
-          correct: prevCorrect
+          correct: prevCorrect,
         });
       } catch (err) {
         console.error(err);
@@ -219,7 +219,7 @@ const CreateQuizState = props => {
           quiz_description: state.quiz_description,
           quiz_category: state.quiz_category,
           quiz_type: state.quiz_type,
-          quiz_difficulty: state.quiz_difficulty
+          quiz_difficulty: state.quiz_difficulty,
         });
       } catch (err) {
         console.error(err);
@@ -227,7 +227,7 @@ const CreateQuizState = props => {
     }
   };
 
-  const removeAndAddImage = async data => {
+  const removeAndAddImage = async (data) => {
     axios.put("/quiz/delete-image", data, {});
   };
 
@@ -248,7 +248,7 @@ const CreateQuizState = props => {
         quiz_description,
         quiz_category,
         quiz_type,
-        quiz_difficulty
+        quiz_difficulty,
       });
     } catch (err) {
       console.error(err);
@@ -260,7 +260,7 @@ const CreateQuizState = props => {
       totalSolved: trueVal + passVal + falseVal,
       totalTrue: trueVal,
       totalPass: passVal,
-      totalFalse: falseVal
+      totalFalse: falseVal,
     };
     try {
       axios.put("/users", data);
@@ -274,7 +274,7 @@ const CreateQuizState = props => {
       totalTrue: trueVal,
       totalPass: passVal,
       totalFalse: falseVal,
-      totalPoint: trueVal * 10
+      totalPoint: trueVal * 10,
     };
     try {
       axios.put(`/quiz/${id}`, score);
@@ -287,27 +287,27 @@ const CreateQuizState = props => {
     dispatch({
       type: SET_ANSWER,
       value,
-      index
+      index,
     });
   };
 
   const setClearCreateQuiz = () => {
     dispatch({
-      type: SET_CLEAR_CREATE_QUIZ
+      type: SET_CLEAR_CREATE_QUIZ,
     });
   };
 
-  const setQuestion = question => {
+  const setQuestion = (question) => {
     dispatch({
       type: SET_QUESTION,
-      question
+      question,
     });
   };
 
-  const trueOrFalseAction = index => {
+  const trueOrFalseAction = (index) => {
     dispatch({
       type: TRUE_OR_FALSE_ACTION,
-      payload: index
+      payload: index,
     });
   };
 
@@ -345,7 +345,7 @@ const CreateQuizState = props => {
         setAnswer,
         setClearCreateQuiz,
         setQuestion,
-        trueOrFalseAction
+        trueOrFalseAction,
       }}
     >
       {props.children}

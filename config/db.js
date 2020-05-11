@@ -1,14 +1,14 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
-const config = require("config");
-const db = config.get("mongoURI");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db, {
+    const dbAdress = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/travia-quiz-app?retryWrites=true&w=majority`;
+    await mongoose.connect(dbAdress, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
-      useFindAndModify: false
+      useFindAndModify: false,
     });
     console.log("MongoDB Connected");
   } catch (err) {

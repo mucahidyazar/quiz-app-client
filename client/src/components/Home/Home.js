@@ -22,6 +22,7 @@ const Home = () => {
       setRandomQuiz(quizes[Math.floor(Math.random() * quizes.length)]);
     }
     // eslint-disable-next-line
+    console.log(quizes);
   }, [quizes]);
   useEffect(() => {
     if (randomQuiz !== null) {
@@ -45,9 +46,7 @@ const Home = () => {
       <div className={`quiz quiz--${randomQuiz.quizDifficulty}`}>
         <div className="quiz__header">
           <div className="quiz__header--date">
-            {moment(randomQuiz.quizDate)
-              .startOf("day")
-              .fromNow()}
+            {moment(randomQuiz.quizDate).startOf("day").fromNow()}
           </div>
           <div className="quiz__header--question">
             {randomQuiz.quizQuestions.length} Question

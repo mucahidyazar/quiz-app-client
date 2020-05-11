@@ -10,10 +10,10 @@ import {
   SET_VALID_QUIZES,
   SORT_QUIZES_BY_DATE,
   SORT_QUIZES_BY_QUESTION,
-  SORT_QUIZES_BY_TITLE
+  SORT_QUIZES_BY_TITLE,
 } from "../actionTypes";
 
-const QuizesState = props => {
+const QuizesState = (props) => {
   const initialState = {
     countdown: 60,
     disabledTime: false,
@@ -24,12 +24,12 @@ const QuizesState = props => {
     sortedQuizes: null,
     specialQuizScoreboard: null,
     userQuizes: null,
-    validQuizes: null
+    validQuizes: null,
   };
 
   const [state, dispatch] = useReducer(quizesReducer, initialState);
 
-  const deleteQuiz = id => {
+  const deleteQuiz = (id) => {
     try {
       axios.delete(`/quiz/${id}`);
       getQuizes();
@@ -44,7 +44,7 @@ const QuizesState = props => {
       const quizes = await axios.get("/quizes");
       dispatch({
         type: GET_QUIZES,
-        quizes: quizes.data
+        quizes: quizes.data,
       });
     } catch (err) {
       console.error(err);
@@ -52,12 +52,12 @@ const QuizesState = props => {
   };
 
   //getUserQuizes
-  const getUserQuizes = async id => {
+  const getUserQuizes = async (id) => {
     try {
       const userQuizes = await axios.get(`/quizes/${id}`);
       dispatch({
         type: GET_USER_QUIZES,
-        userQuizes: userQuizes.data
+        userQuizes: userQuizes.data,
       });
     } catch (err) {
       console.error(err);
@@ -65,47 +65,47 @@ const QuizesState = props => {
   };
 
   //getQuizScoreBoard
-  const getQuizScoreboard = quizScoreboard => {
+  const getQuizScoreboard = (quizScoreboard) => {
     dispatch({
       type: GET_QUIZ_SCOREBOARD,
-      quizScoreboard
+      quizScoreboard,
     });
   };
 
   //searchQuizes
-  const searchQuizes = key => {
+  const searchQuizes = (key) => {
     dispatch({
       type: SEARCH_QUIZES,
-      key
+      key,
     });
   };
 
   //setValidQuizes
-  const setValidQuizes = quizes => {
+  const setValidQuizes = (quizes) => {
     dispatch({
       type: SET_VALID_QUIZES,
-      quizes
+      quizes,
     });
   };
 
   //sortQuizesByDate
   const sortQuizesByDate = () => {
     dispatch({
-      type: SORT_QUIZES_BY_DATE
+      type: SORT_QUIZES_BY_DATE,
     });
   };
 
   //sortQuizesByQuestion
   const sortQuizesByQuestion = () => {
     dispatch({
-      type: SORT_QUIZES_BY_QUESTION
+      type: SORT_QUIZES_BY_QUESTION,
     });
   };
 
   //sortQuizesByTitle
   const sortQuizesByTitle = () => {
     dispatch({
-      type: SORT_QUIZES_BY_TITLE
+      type: SORT_QUIZES_BY_TITLE,
     });
   };
 
@@ -127,7 +127,7 @@ const QuizesState = props => {
         searchQuizes,
         sortQuizesByDate,
         sortQuizesByQuestion,
-        sortQuizesByTitle
+        sortQuizesByTitle,
       }}
     >
       {props.children}

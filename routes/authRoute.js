@@ -18,7 +18,7 @@ router.get("/", auth, async (req, res) => {
     res.header("Content-Type", "application/json");
     res
       .set({
-        "content-type": "application/json"
+        "content-type": "application/json",
       })
       .json(user);
   } catch (err) {
@@ -30,7 +30,7 @@ router.post(
   "/",
   [
     check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").exists()
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -50,14 +50,14 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id
-        }
+          id: user.id,
+        },
       };
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
+        process.env.SECRET_KEY,
         {
-          expiresIn: 3600
+          expiresIn: 3600,
         },
         (err, token) => {
           if (err) throw err;

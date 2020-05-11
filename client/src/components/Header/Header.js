@@ -75,7 +75,11 @@ const Header = () => {
                   onClick={onHeaderHead}
                 >
                   <div className="nav__header--image">
-                    <img src={`./img/${user.profilePhoto.filename}`} alt="" />
+                    {user?.profilePhoto?.filename ? (
+                      <img src={`./img/${user.profilePhoto.filename}`} alt="" />
+                    ) : (
+                      <img src={`./img/profile.jpg`} alt="" />
+                    )}
                   </div>
                   <div className="nav__header--name">
                     {user.username ? user.username : "Username"}

@@ -8,7 +8,7 @@ import {
   REGISTER_SUCCESS,
   SET_LOGIN_ACTIVE,
   SET_REGISTER_ACTIVE,
-  USER_LOADED
+  USER_LOADED,
 } from "../actionTypes";
 
 const registrationReducer = (state, action) => {
@@ -24,13 +24,13 @@ const registrationReducer = (state, action) => {
         isAuthenticated: false,
         loading: false,
         user: null,
-        error: action.payload
+        error: action.payload,
       };
 
     case CLEAR_ERRORS:
       return {
         ...state,
-        error: null
+        error: null,
       };
 
     case REGISTER_SUCCESS:
@@ -40,21 +40,21 @@ const registrationReducer = (state, action) => {
         ...state,
         ...action.payload,
         isAuthenticated: true,
-        loading: false
+        loading: false,
       };
 
     case SET_LOGIN_ACTIVE:
       return {
         ...state,
         sectionLogin: "active",
-        sectionRegister: ""
+        sectionRegister: "",
       };
 
     case SET_REGISTER_ACTIVE:
       return {
         ...state,
         sectionRegister: "active",
-        sectionLogin: ""
+        sectionLogin: "",
       };
 
     case USER_LOADED:
@@ -62,7 +62,7 @@ const registrationReducer = (state, action) => {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: action.payload
+        user: action.payload,
       };
 
     default:

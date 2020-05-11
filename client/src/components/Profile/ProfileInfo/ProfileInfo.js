@@ -6,7 +6,7 @@ export default function ProfileInfo(props) {
   const createQuizContext = useContext(CreateQuizContext);
   const { addImage } = createQuizContext;
 
-  const onAddImage = e => {
+  const onAddImage = (e) => {
     const data = new FormData();
     data.append("file", e.target.files[0]);
     addImage(data, "profile-photo");
@@ -15,7 +15,11 @@ export default function ProfileInfo(props) {
   return (
     <div className="info">
       <div className="info__photo">
-        <img src={`./img/${props.user.profilePhoto.filename}`} alt=""></img>
+        {props.user && props.user.profilePhoto ? (
+          <img src={`./img/${props.user.profilePhoto.filename}`} alt=""></img>
+        ) : (
+          <img src={`./img/profile.jpg`} alt=""></img>
+        )}
         <div className="info__photo--group">
           <div className="info__photo--name">
             @{props.user.username ? props.user.username : "Username"}

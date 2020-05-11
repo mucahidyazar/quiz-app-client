@@ -29,7 +29,7 @@ router.post("/quiz/add-quiz", auth, async (req, res) => {
       quizCategory,
       quizType,
       quizDifficulty,
-      quizQuestions
+      quizQuestions,
     } = req.body;
 
     const quiz = new Quiz({
@@ -42,7 +42,7 @@ router.post("/quiz/add-quiz", auth, async (req, res) => {
       quizQuestions,
       quizDate: Date.now(),
       quizAuthor: req.user.id,
-      quizScoreboard: []
+      quizScoreboard: [],
     });
     await quiz.save();
     res.json(quiz);
@@ -66,7 +66,7 @@ router.put("/quiz/delete-image", auth, async (req, res) => {
   if (req.body.filename) {
     fs.unlink(
       path.join(__dirname, `../client/public/img/${req.body.filename}`),
-      err => {
+      (err) => {
         console.error(err);
       }
     );
@@ -89,7 +89,7 @@ router.put("/quiz/:id", auth, async (req, res) => {
       totalTrue,
       totalPass,
       totalFalse,
-      totalPoint
+      totalPoint,
     });
 
     quiz.save();
@@ -115,19 +115,19 @@ let storage = multer.diskStorage({
     let extension = {
       "image/jpeg": ".jpg",
       "image/png": ".png",
-      "image/gif": ".gif"
+      "image/gif": ".gif",
     };
     callback(null, filename + "-" + Date.now() + extension[file.mimetype]);
-  }
+  },
 });
 let upload = multer({
   storage: storage,
   limits: {
-    fileSize: 3 * 1024 * 1024 //1MB
-  }
+    fileSize: 3 * 1024 * 1024, //1MB
+  },
 }).single("file");
 router.post("/upload-image", (req, res) => {
-  upload(req, res, function(err) {
+  upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       return res.status(500).json(err);
     } else if (err) {

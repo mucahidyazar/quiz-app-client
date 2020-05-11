@@ -1,12 +1,12 @@
 import React, { useReducer } from "react";
-import axios from "axios";
+import axios from "../../axios-orders";
 import userContext from "./userContext";
 import userReducer from "./userReducer";
 import { GET_USERS } from "../actionTypes";
 
-const UserState = props => {
+const UserState = (props) => {
   const initialState = {
-    users: null
+    users: null,
   };
   const [state, dispatch] = useReducer(userReducer, initialState);
 
@@ -15,7 +15,7 @@ const UserState = props => {
       const users = await axios.get("/users");
       dispatch({
         type: GET_USERS,
-        users: users.data
+        users: users.data,
       });
     } catch (err) {
       console.error(err);
@@ -26,7 +26,7 @@ const UserState = props => {
     <userContext.Provider
       value={{
         users: state.users,
-        getUsers
+        getUsers,
       }}
     >
       {props.children}
