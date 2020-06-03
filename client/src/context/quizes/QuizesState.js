@@ -30,6 +30,7 @@ const QuizesState = (props) => {
   const [state, dispatch] = useReducer(quizesReducer, initialState);
 
   const deleteQuiz = (id) => {
+    //
     try {
       axios.delete(`/quiz/${id}`);
       getQuizes();

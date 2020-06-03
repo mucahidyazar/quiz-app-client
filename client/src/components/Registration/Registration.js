@@ -3,22 +3,18 @@ import RegistrationContext from "../../context/registration/registrationContext"
 import Login from "./Login/Login";
 import Register from "./Register/Register";
 
-const Registration = props => {
-  const registrationContext = useContext(RegistrationContext);
-  const {
-    sectionLogin,
-    sectionRegister,
-    user,
-    setLoginRegisterActive
-  } = registrationContext;
+//REDUX
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import { setLoginRegisterActive } from "../../redux/actions";
 
-  useEffect(() => {
-    if (user !== null) {
-      props.history.push("/");
-    }
-    // eslint-disable-next-line
-  }, [user]);
-
+const Registration = ({
+  dispatch,
+  user,
+  sectionLogin,
+  sectionRegister,
+  history,
+}) => {
   return (
     <div className="section__registration">
       <div className="registration">
@@ -40,6 +36,14 @@ const Registration = props => {
       </div>
     </div>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+    sectionLogin: state.user.sectionLogin,
+    sectionRegister: state.user.sectionRegister,
+  };
 };
 
 export default Registration;

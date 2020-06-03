@@ -10,16 +10,19 @@ import Settings from "../Settings/Settings";
 import QuizPage from "../Quizes/QuizPage/QuizPage";
 import ResultPage from "../Quizes/ResultPage/ResultPage";
 import Registration from "../Registration/Registration";
-import RegistrationContext from "../../context/registration/registrationContext";
 
-const Layout = () => {
-  const registrationContext = useContext(RegistrationContext);
-  const { loadUser } = registrationContext;
+//REDUX CONNECTION
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import { loadUser, getQuizes, getUsers } from "../../redux/actions";
 
+const Layout = ({ dispatch, quizes }) => {
   useEffect(() => {
     if (localStorage.token) {
-      loadUser();
+      dispatch(loadUser());
     }
+    dispatch(getQuizes());
+    dispatch(getUsers());
     // eslint-disable-next-line
   }, []);
 
@@ -41,6 +44,11 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+const mapStateToProps = (state) => ({
+  quizes: state.quiz.quizes,
+  users: state.user.users,
+});
+
+export default connect(mapStateToProps)(Layout);
 
 //Dark Mode Moon => <i class="fas fa-moon"></i>

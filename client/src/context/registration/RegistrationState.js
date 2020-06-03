@@ -29,7 +29,7 @@ const RegistrationState = (props) => {
 
   const [state, dispatch] = useReducer(registrationReducer, initialState);
 
-  // AUTH_ERROR
+  //
   const loadUser = async () => {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
@@ -46,13 +46,14 @@ const RegistrationState = (props) => {
     }
   };
 
+  //
   const clearErrors = () => {
     dispatch({
       type: CLEAR_ERRORS,
     });
   };
 
-  // LOGIN_FAIL && LOGIN_SUCCESS
+  //
   const loginHandler = async (formData) => {
     try {
       const res = await axios.post("/auth", formData);
@@ -69,12 +70,14 @@ const RegistrationState = (props) => {
     }
   };
 
+  //
   const logoutHandler = () => {
     dispatch({
       type: LOGOUT,
     });
   };
 
+  //
   const registerHandler = async (registerObject) => {
     try {
       const newUser = await axios.post("/users", registerObject);
@@ -91,7 +94,7 @@ const RegistrationState = (props) => {
     }
   };
 
-  // SET_LOGIN_ACTIVE && SET_REGISTER_ACTIVE
+  //
   const setLoginRegisterActive = (section) => {
     if (section === "login") {
       dispatch({
@@ -104,6 +107,7 @@ const RegistrationState = (props) => {
     }
   };
 
+  //
   const userUpdate = (updatedUser) => {
     try {
       axios.put(`/users/${updatedUser.id}`, updatedUser);

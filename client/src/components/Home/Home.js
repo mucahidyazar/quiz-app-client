@@ -1,39 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import imgQuizTime from "../../public/img/quiz-time.jpg";
-import QuizesContext from "../../context/quizes/quizesContext";
 import { Link } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 
-const Home = () => {
-  const quizesContext = useContext(QuizesContext);
-  const { quizes, getQuizes } = quizesContext;
+//REDUX CONNECTION
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import {} from "../../redux/actions";
 
-  const [randomQuiz, setRandomQuiz] = useState(null);
-  const [randomQuizNumber, setRandomQuizNumber] = useState(null);
-
-  useEffect(() => {
-    getQuizes();
-    // eslint-disable-next-line
-  }, []);
+const Home = ({ quizes }) => {
+  const [randomQuiz, setRandomQuiz] = useState(quizes[0]);
+  const [randomQuizNumber, setRandomQuizNumber] = useState(0);
 
   useEffect(() => {
-    if (quizes !== null) {
-      setRandomQuiz(quizes[Math.floor(Math.random() * quizes.length)]);
-    }
-    // eslint-disable-next-line
-    console.log(quizes);
+    setRandomQuiz(quizes[0]);
   }, [quizes]);
-  useEffect(() => {
-    if (randomQuiz !== null) {
-      quizes.filter((quiz, index) =>
-        quiz._id === randomQuiz._id ? setRandomQuizNumber(index) : null
-      );
-    }
-    // eslint-disable-next-line
-  }, [randomQuiz]);
 
-  return randomQuiz ? (
+  if (!randomQuiz) return <Spinner />;
+  return (
     <section className="section__main">
       <div className="section__left">
         <h2 className="section__left-header">Hey I'm Travia Quiz App</h2>
@@ -84,11 +69,13 @@ const Home = () => {
         </Link>
       </div>
     </section>
-  ) : (
-    <Spinner />
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => ({
+  quizes: state.quiz.quizes,
+});
+
+export default connect(mapStateToProps)(Home);
 
 //Dark Mode Moon => <i class="fas fa-moon"></i>

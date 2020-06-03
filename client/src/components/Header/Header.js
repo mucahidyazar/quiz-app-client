@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
-import RegistrationContext from "../../context/registration/registrationContext";
 
-const Header = () => {
-  const registrationContext = useContext(RegistrationContext);
-  const { user, logoutHandler } = registrationContext;
+//REDUX CONNECTION
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import { logoutHandler } from "../../redux/actions";
 
+const Header = ({ dispatch, user }) => {
   const [headerHead, setHeaderHead] = useState("");
 
   const onHeaderHead = () => {
@@ -62,7 +63,7 @@ const Header = () => {
               to="/"
               activeClassName="header__right--active"
               className="header__right--display"
-              onClick={() => logoutHandler()}
+              onClick={() => dispatch(logoutHandler())}
             >
               <i className="fas fa-sign-out-alt"></i>Logout
             </NavLink>
@@ -120,4 +121,10 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+  };
+};
+
+export default connect(mapStateToProps)(Header);

@@ -1,17 +1,19 @@
 import React, { useContext } from "react";
 import RegistrationContext from "../../../context/registration/registrationContext";
 
-export default function Register() {
-  const registrationContext = useContext(RegistrationContext);
-  const { registerHandler } = registrationContext;
+//REDUX
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import { registerHandler } from "../../../redux/actions";
 
-  const onRegisterHandler = e => {
+export default function Register() {
+  const onRegisterHandler = (e) => {
     e.preventDefault();
     registerHandler({
       username: e.target.elements.username.value,
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
-      repassword: e.target.elements.repassword.value
+      repassword: e.target.elements.repassword.value,
     });
   };
 

@@ -13,6 +13,7 @@ import {
 
 const registrationReducer = (state, action) => {
   switch (action.type) {
+    //
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case REGISTER_FAIL:
@@ -27,12 +28,14 @@ const registrationReducer = (state, action) => {
         error: action.payload,
       };
 
+    //
     case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
 
+    //
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
@@ -43,6 +46,7 @@ const registrationReducer = (state, action) => {
         loading: false,
       };
 
+    //
     case SET_LOGIN_ACTIVE:
       return {
         ...state,
@@ -50,6 +54,7 @@ const registrationReducer = (state, action) => {
         sectionRegister: "",
       };
 
+    //
     case SET_REGISTER_ACTIVE:
       return {
         ...state,
@@ -57,6 +62,7 @@ const registrationReducer = (state, action) => {
         sectionLogin: "",
       };
 
+    //
     case USER_LOADED:
       return {
         ...state,

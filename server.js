@@ -15,28 +15,15 @@ app.use("/", require("./routes/quizRoute"));
 app.use("/users", require("./routes/userRoute"));
 app.use("/auth", require("./routes/authRoute"));
 
-const startServer = () => {
-  connectDB();
+connectDB();
 
-  // Every other API or similar routes should be before this catch-all
-  if (process.env.NODE_ENV === "production") {
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-    });
-  }
-
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers: {
-      Query,
-      Mutation,
-    },
+// Every other API or similar routes should be before this catch-all
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
+}
 
-  server.applyMiddleware({ app });
-
-  app.listen(PORT, () => {
-    console.log("Server is started on the port " + PORT);
-  });
-};
-startServer();
+app.listen(PORT, () => {
+  console.log("Server is started on the port " + PORT);
+});

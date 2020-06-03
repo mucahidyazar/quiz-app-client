@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
 import imgQuizTime from "../../../public/img/quiz-time.jpg";
 import { Link } from "react-router-dom";
-import QuizesContext from "../../../context/quizes/quizesContext";
 import RegistrationContext from "../../../context/registration/registrationContext";
 
-const QuizCard = props => {
-  const quizesContext = useContext(QuizesContext);
-  const { deleteQuiz } = quizesContext;
+//REDUX
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import { deleteQuiz } from "../../../redux/actions";
 
-  const registrationContext = useContext(RegistrationContext);
-  const { user } = registrationContext;
-
+const QuizCard = (props) => {
   return props.info && props.quiz ? (
     <div className={`quiz quiz--${props.info.difficulty}`}>
       <div className="quiz__header">
@@ -27,10 +25,10 @@ const QuizCard = props => {
           ) : (
             <img src={imgQuizTime} alt="Quiz Time" />
           )}
-          {user && user._id === props.info.quizAuthor ? (
+          {props.user && props.user._id === props.info.quizAuthor ? (
             <div
               className="quiz__header--delete-button"
-              onClick={() => deleteQuiz(props.info.id)}
+              onClick={() => props.dispatch(deleteQuiz(props.info.id))}
             >
               <i className="far fa-trash-alt"></i>
             </div>
@@ -68,4 +66,10 @@ const QuizCard = props => {
   ) : null;
 };
 
-export default QuizCard;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+  };
+};
+
+export default connect(mapStateToProps)(QuizCard);

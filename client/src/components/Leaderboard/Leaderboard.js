@@ -1,23 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import defaultUser from "../../public/png/default-user.png";
-import UserContext from "../../context/user/userContext";
-import QuizesContext from "../../context/quizes/quizesContext";
 import quizImage from "../../public/img/quiz-time.jpg";
 
-const Leaderboard = (props) => {
-  const userContext = useContext(UserContext);
-  const { users, getUsers } = userContext;
-  const quizesContext = useContext(QuizesContext);
-  const {
-    searchedQuizes,
-    specialQuizScoreboard,
-    getQuizes,
-    searchQuizes,
-    getQuizScoreboard,
-  } = quizesContext;
+//REDUX ACTIONS
+import { getQuizScoreboard, searchQuizes } from "../../redux/actions";
+
+const Leaderboard = ({
+  dispatch,
+  filteredQuizes,
+  quizes,
+  specialQuizScoreboard,
+  users,
+}) => {
+  useEffect(() => {}, [quizes]);
 
   const onSearchQuizes = (e) => {
-    searchQuizes(e.target.value);
+    dispatch(searchQuizes(e.target.value));
     if (e.target.value === "") {
       setScoreboardHeader("Leaderboard");
     }
@@ -25,16 +24,9 @@ const Leaderboard = (props) => {
 
   const [scoreboardHeader, setScoreboardHeader] = useState("Leaderboard");
   const onGetQuizScoreboard = (quiz) => {
-    getQuizScoreboard(quiz.quizScoreboard);
+    dispatch(getQuizScoreboard(quiz.quizScoreboard));
     setScoreboardHeader(quiz.quizTitle);
   };
-
-  useEffect(() => {
-    getUsers();
-    getQuizes();
-
-    // eslint-disable-next-line
-  }, []);
 
   const quizSB = specialQuizScoreboard
     ? specialQuizScoreboard.map((score, index) => (
@@ -65,8 +57,8 @@ const Leaderboard = (props) => {
           />
 
           <div className="foundeded__quizes">
-            {searchedQuizes
-              ? searchedQuizes.map(
+            {filteredQuizes
+              ? filteredQuizes.map(
                   (quiz, index) =>
                     index < 5 && (
                       <div
@@ -143,4 +135,13 @@ const Leaderboard = (props) => {
   );
 };
 
-export default Leaderboard;
+const mapStateToProps = (state) => {
+  return {
+    filteredQuizes: state.quiz.filteredQuizes,
+    quizes: state.quiz.quizes,
+    specialQuizScoreboard: state.quiz.specialQuizScoreboard,
+    users: state.user.users,
+  };
+};
+
+export default connect(mapStateToProps)(Leaderboard);
