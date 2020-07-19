@@ -1,0 +1,55 @@
+{
+  "name": "quiz-app-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+<<<<<<< HEAD:underground/package.json
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.4.0",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.8.11",
+    "multer": "^1.4.2",
+    "node-sass": "^4.13.1"
+=======
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
+    "joi-browser": "^13.4.0",
+    "moment": "^2.26.0",
+    "node-sass": "^4.13.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+>>>>>>> 909b6de4fd19b88766f3468f10a5a560670df923:package.json
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
