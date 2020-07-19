@@ -1,12 +1,11 @@
 import moment from "moment";
 import {
-  ACTION_GET_QUIZES,
-  ACTION_GET_QUIZ_SCOREBOARD,
-  ACTION_GET_USER_QUIZES,
-  ACTION_SEARCH_QUIZES,
-  ACTION_SET_QUIZ_DIFFICUTY,
-  ACTION_SET_VALID_QUIZES,
-  ACTION_SORT_QUIZES,
+  DELETE_QUIZ,
+  GET_QUIZES,
+  GET_QUIZ_SCOREBOARD,
+  SEARCH_QUIZES,
+  SET_DIFFICULTY,
+  SORT_QUIZES,
 } from "../../types";
 
 const initialState = {
@@ -18,7 +17,6 @@ const initialState = {
   quizesLoading: true,
   sortedQuizes: null,
   specialQuizScoreboard: null,
-  userQuizes: null,
   validQuizes: null,
 };
 
@@ -26,25 +24,25 @@ export const quiz = (state = initialState, action) => {
   let quizesData;
 
   switch (action.type) {
-    case ACTION_GET_QUIZES:
+    case GET_QUIZES:
       return {
         ...state,
         quizes: action.quizes,
       };
 
-    case ACTION_GET_QUIZ_SCOREBOARD:
+    case DELETE_QUIZ:
+      return {
+        ...state,
+        quizes: state.quizes.filter((quiz) => quiz._id === action.id),
+      };
+
+    case GET_QUIZ_SCOREBOARD:
       return {
         ...state,
         specialQuizScoreboard: action.quizScoreboard,
       };
 
-    case ACTION_GET_QUIZES:
-      return {
-        ...state,
-        quizes: action.quizes,
-      };
-
-    case ACTION_SEARCH_QUIZES:
+    case SEARCH_QUIZES:
       quizesData = state.filteredQuizes ? state.filteredQuizes : state.quizes;
       if (action.value === "") {
         quizesData = state.quizes;
@@ -64,14 +62,7 @@ export const quiz = (state = initialState, action) => {
         filteredQuizes: quizesData,
       };
 
-    case ACTION_GET_USER_QUIZES:
-      return {
-        ...state,
-        userQuizes: action.userQuizes,
-      };
-
-    case ACTION_SET_QUIZ_DIFFICUTY:
-      console.log(action.difficult);
+    case SET_DIFFICULTY:
       if (action.difficult === "all") {
         quizesData = state.quizes;
       } else {
@@ -84,13 +75,7 @@ export const quiz = (state = initialState, action) => {
         filteredQuizes: quizesData,
       };
 
-    case ACTION_SET_VALID_QUIZES:
-      return {
-        ...state,
-        validQuizes: action.quizes,
-      };
-
-    case ACTION_SORT_QUIZES:
+    case SORT_QUIZES:
       quizesData = state.filteredQuizes ? state.filteredQuizes : state.quizes;
       if (action.by === "date") {
         quizesData = state.quizes.sort((a, b) => {

@@ -1,5 +1,8 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { getCurrentUser } from "../../services/authServices";
+import { getCurrentQuizes } from "../../services/quizServices";
+
 import Header from "../Header/Header";
 import Home from "../Home/Home";
 import Quizes from "../Quizes/Quizes";
@@ -10,20 +13,22 @@ import Settings from "../Settings/Settings";
 import QuizPage from "../Quizes/QuizPage/QuizPage";
 import ResultPage from "../Quizes/ResultPage/ResultPage";
 import Registration from "../Registration/Registration";
+import Spinner from "../Spinner/Spinner";
 
 //REDUX CONNECTION
 import { connect } from "react-redux";
 //REDUX ACTIONS
-import { loadUser, getQuizes, getUsers } from "../../redux/actions";
+import { getUser, getQuizes } from "../../redux/actions";
+import { user } from "../../redux/reducers/user";
 
-const Layout = ({ dispatch, quizes }) => {
+const Layout = ({ dispatch }) => {
   useEffect(() => {
-    if (localStorage.token) {
-      dispatch(loadUser());
-    }
-    dispatch(getQuizes());
-    dispatch(getUsers());
-    // eslint-disable-next-line
+    getCurrentUser().then((res) => {
+      dispatch(getUser(res.data.user));
+    });
+    getCurrentQuizes().then((res) => {
+      dispatch(getQuizes(res.data));
+    });
   }, []);
 
   return (
@@ -45,8 +50,8 @@ const Layout = ({ dispatch, quizes }) => {
 };
 
 const mapStateToProps = (state) => ({
+  user: state.user.user,
   quizes: state.quiz.quizes,
-  users: state.user.users,
 });
 
 export default connect(mapStateToProps)(Layout);

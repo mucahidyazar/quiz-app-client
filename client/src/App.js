@@ -1,22 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Layout from "./components/Layout/Layout";
 import { BrowserRouter } from "react-router-dom";
-import setAuthToken from "./utils/setAuthToken";
 
-import { Provider } from "react-redux";
-import { store } from "./redux";
-
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
-
-function App() {
+function App({ dispatch }) {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
   );
 }
 

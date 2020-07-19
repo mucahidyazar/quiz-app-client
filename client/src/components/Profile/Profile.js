@@ -1,26 +1,34 @@
-import React, { useEffect, useContext, useCallback } from "react";
+import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import ProfileStats from "./ProfileStats/ProfileStats";
 import ProfileBadges from "./ProfileBadges/ProfileBadges";
 import ProfileQuizes from "./ProfileQuizes/ProfileQuizes";
-import RegistrationContext from "../../context/registration/registrationContext";
-import QuizesContext from "../../context/quizes/quizesContext";
+import Spinner from "../Spinner/Spinner";
 
-export default function Profile() {
-  const registrationContext = useContext(RegistrationContext);
-  const { user, loadUser } = registrationContext;
-  const quizesContext = useContext(QuizesContext);
-  const { userQuizes, getUserQuizes } = quizesContext;
+//REDUX CONNECTION
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import {} from "../../redux/actions";
 
+function Profile({ user }) {
   return user ? (
     <div className="profile">
       <ProfileInfo user={user} />
       <ProfileStats user={user} />
       <ProfileBadges />
-      <ProfileQuizes userQuizes={userQuizes} />
+      <ProfileQuizes quizes={user.quizes} />
     </div>
-  ) : null;
+  ) : (
+    <Spinner />
+  );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+  };
+};
+
+export default connect(mapStateToProps)(Profile);
 //Question Mark
 //<i class="fas fa-question-circle"></i>

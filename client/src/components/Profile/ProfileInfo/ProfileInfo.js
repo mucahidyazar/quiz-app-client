@@ -1,37 +1,33 @@
-import React, { useContext } from "react";
+import React from "react";
 import moment from "moment";
-import CreateQuizContext from "../../../context/createQuiz/createQuizContext";
 
-export default function ProfileInfo(props) {
-  const createQuizContext = useContext(CreateQuizContext);
-  const { addImage } = createQuizContext;
+//REDUX CONNECTION
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import { addAvatar } from "../../../redux/actions";
 
-  const onAddImage = (e) => {
+function ProfileInfo({ dispatch, user }) {
+  const handlerAddImage = (e) => {
     const data = new FormData();
-    data.append("file", e.target.files[0]);
-    addImage(data, "profile-photo");
+    data.append("upload-avatar", e.target.files[0]);
+    dispatch(addAvatar(data));
   };
 
   return (
     <div className="info">
       <div className="info__photo">
-        {props.user && props.user.profilePhoto ? (
-          <img src={`./img/${props.user.profilePhoto.filename}`} alt=""></img>
-        ) : (
-          <img src={`./img/profile.jpg`} alt=""></img>
-        )}
+        <img src={`data:image/jpg;base64,${user.avatar}`} alt=""></img>
+
         <div className="info__photo--group">
-          <div className="info__photo--name">
-            @{props.user.username ? props.user.username : "Username"}
-          </div>
+          <div className="info__photo--name">@{user.username}</div>
           <div className="info__photo--upload">
             <input
               type="file"
               className="info__photo--file"
-              id="info__photo--file"
-              onChange={onAddImage}
+              id="upload-avatar"
+              onChange={handlerAddImage}
             />
-            <label htmlFor="info__photo--file">
+            <label htmlFor="upload-avatar">
               <i className="fas fa-camera-retro"></i>
             </label>
           </div>
@@ -43,34 +39,24 @@ export default function ProfileInfo(props) {
         <div className="info__body--body">
           <div className="info__group">
             <div className="info__group--title">Firstname</div>
-            <div className="info__group--item">
-              {props.user.firstName ? props.user.firstName : "First Name"}
-            </div>
+            <div className="info__group--item">{user.firstName}</div>
           </div>
           <div className="info__group">
             <div className="info__group--title">Lastname</div>
-            <div className="info__group--item">
-              {props.user.lastName ? props.user.lastName : "Last Name"}
-            </div>
+            <div className="info__group--item">{user.lastName}</div>
           </div>
           <div className="info__group">
             <div className="info__group--title">Email</div>
-            <div className="info__group--item">
-              {props.user.email ? props.user.email : "Email"}
-            </div>
+            <div className="info__group--item">{user.email}</div>
           </div>
           <div className="info__group">
             <div className="info__group--title">Gender</div>
-            <div className="info__group--item">
-              {props.user.gender ? props.user.gender : "Male"}
-            </div>
+            <div className="info__group--item">{user.gender}</div>
           </div>
           <div className="info__group">
             <div className="info__group--title">Birthday</div>
             <div className="info__group--item">
-              {props.user.birthday
-                ? moment(props.user.birthday).format("LL")
-                : "01.01.2000"}
+              {moment(user.birthday).format("LL")}
             </div>
           </div>
         </div>
@@ -78,3 +64,9 @@ export default function ProfileInfo(props) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {};
+};
+
+export default connect(mapStateToProps)(ProfileInfo);

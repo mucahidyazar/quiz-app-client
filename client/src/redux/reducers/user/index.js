@@ -1,15 +1,15 @@
 import {
-  ACTION_AUTH_ERROR,
-  ACTION_CLEAR_ERRORS,
-  ACTION_GET_USERS,
-  ACTION_LOGIN_FAIL,
-  ACTION_LOGIN_SUCCESS,
-  ACTION_LOGOUT,
-  ACTION_REGISTER_FAIL,
-  ACTION_REGISTER_SUCCESS,
-  ACTION_SET_LOGIN_ACTIVE,
-  ACTION_SET_REGISTER_ACTIVE,
-  ACTION_USER_LOADED,
+  GET_USER,
+  ADD_AVATAR,
+  UPDATE_USER,
+  CLEAR_ERRORS,
+  GET_USERS,
+  GET_USER_QUIZES,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
 } from "../../types";
 
 const initialState = {
@@ -25,10 +25,22 @@ const initialState = {
 
 export const user = (state = initialState, action) => {
   switch (action.type) {
-    case ACTION_AUTH_ERROR: //
-    case ACTION_LOGIN_FAIL:
-    case ACTION_REGISTER_FAIL:
-    case ACTION_LOGOUT:
+    case GET_USER:
+      return {
+        ...state,
+        user: action.user,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.user,
+        },
+      };
+    case LOGIN_FAIL:
+    case REGISTER_FAIL:
+    case LOGOUT:
       localStorage.removeItem("token");
       return {
         ...state,
@@ -39,9 +51,8 @@ export const user = (state = initialState, action) => {
         error: action.payload,
       };
 
-    case ACTION_REGISTER_SUCCESS:
-    case ACTION_LOGIN_SUCCESS:
-      localStorage.setItem("token", action.payload.token);
+    case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         ...action.payload,
@@ -49,38 +60,40 @@ export const user = (state = initialState, action) => {
         loading: false,
       };
 
-    case ACTION_GET_USERS:
+    case ADD_AVATAR:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          user: {
+            ...state.user.user,
+            avatar: action.payload,
+          },
+        },
+      };
+
+    case GET_USERS:
       return {
         ...state,
         users: action.users,
       };
 
-    case ACTION_CLEAR_ERRORS:
+    case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
 
-    case ACTION_SET_LOGIN_ACTIVE:
+    case GET_USER_QUIZES:
       return {
         ...state,
-        sectionLogin: "active",
-        sectionRegister: "",
-      };
-
-    case ACTION_SET_REGISTER_ACTIVE:
-      return {
-        ...state,
-        sectionRegister: "active",
-        sectionLogin: "",
-      };
-
-    case ACTION_USER_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        loading: false,
-        user: action.payload,
+        user: {
+          ...state.user,
+          user: {
+            ...state.user.user,
+            quizes: action.quizes,
+          },
+        },
       };
 
     default:

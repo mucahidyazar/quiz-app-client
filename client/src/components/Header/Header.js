@@ -1,24 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 //REDUX CONNECTION
 import { connect } from "react-redux";
 //REDUX ACTIONS
-import { logoutHandler } from "../../redux/actions";
+import { logout } from "../../redux/actions";
 
 const Header = ({ dispatch, user }) => {
-  const [headerHead, setHeaderHead] = useState("");
-
-  const onHeaderHead = () => {
-    if (headerHead === "") {
-      setHeaderHead("header-head");
-    } else if (headerHead === "header-head") {
-      setHeaderHead("");
-    }
-  };
-
   return (
-    <header className={`header ${headerHead}`}>
+    <header className="header">
       <div className="header__left">
         <i className="fas fa-sun"></i>
         <div className="header__left-brand">
@@ -46,7 +36,7 @@ const Header = ({ dispatch, user }) => {
         {user ? (
           <React.Fragment>
             <NavLink
-              to={user.username}
+              to="/{user.username}"
               activeClassName="header__right--active"
               className="header__right--display"
             >
@@ -63,28 +53,18 @@ const Header = ({ dispatch, user }) => {
               to="/"
               activeClassName="header__right--active"
               className="header__right--display"
-              onClick={() => dispatch(logoutHandler())}
+              onClick={() => dispatch(logout())}
             >
               <i className="fas fa-sign-out-alt"></i>Logout
             </NavLink>
 
             <div className="nav__profile">
               <div className="nav__profile--left">
-                <Link
-                  to={user.username}
-                  className="nav__header"
-                  onClick={onHeaderHead}
-                >
+                <Link to={user.username} className="nav__header">
                   <div className="nav__header--image">
-                    {user?.profilePhoto?.filename ? (
-                      <img src={`./img/${user.profilePhoto.filename}`} alt="" />
-                    ) : (
-                      <img src={`./img/profile.jpg`} alt="" />
-                    )}
+                    <img src={`data:image/jpg;base64,${user.avatar}`} alt="" />
                   </div>
-                  <div className="nav__header--name">
-                    {user.username ? user.username : "Username"}
-                  </div>
+                  <div className="nav__header--name">{user.username}</div>
                 </Link>
 
                 <div className="nav__options">
@@ -97,7 +77,7 @@ const Header = ({ dispatch, user }) => {
                   <Link
                     to="/home"
                     className="nav__options--logout"
-                    onClick={() => logoutHandler()}
+                    onClick={() => logout()}
                   >
                     <i className="fas fa-sign-out-alt"></i>Logout
                   </Link>
@@ -107,7 +87,7 @@ const Header = ({ dispatch, user }) => {
               <Link
                 to="/"
                 className="nav__profile--right"
-                onClick={() => logoutHandler()}
+                onClick={() => dispatch(logout())}
               >
                 <i className="fas fa-sign-out-alt"></i>
               </Link>

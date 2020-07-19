@@ -1,65 +1,130 @@
-// import axios from "../../axios-orders";
-// import {
-//   ACTION_ADD_NEW_ANSWER,
-//   ACTION_ADD_QUIZ_INFORMATION,
-//   ACTION_ADD_QUIZ_QUESTION,
-//   ACTION_CHANGE_CREATE_QUIZ_CATEGORY,
-//   ACTION_CHANGE_CREATE_QUIZ_DESCRIPTION,
-//   ACTION_CHANGE_CREATE_QUIZ_DIFFICULTY,
-//   ACTION_CHANGE_CREATE_QUIZ_TITLE,
-//   ACTION_CHANGE_CREATE_QUIZ_TYPE,
-//   ACTION_CLEAR_ERROR,
-//   ACTION_CLEAR_VALUES,
-//   ACTION_GET_IMAGE_INFORMATION,
-//   ACTION_PREVIOUS_QUESTION,
-//   ACTION_PREVIOUS_QUIZ_INFORMATION,
-//   ACTION_SAVE_QUIZ,
-//   ACTION_SEND_ERROR,
-//   ACTION_SET_ANSWER,
-//   ACTION_SET_CLEAR_CREATE_QUIZ,
-//   ACTION_SET_QUESTION,
-//   ACTION_TRUE_OR_FALSE_ACTION,
-// } from "../../types";
+import axios from "../../../services/axios";
+import {
+  ADD_INFORMATION,
+  SET_STEP,
+  TEMPLATE_QUESTION,
+  TEMPLATE_ANSWERS,
+  NEW_ANSWER,
+  CHOOSE_ANSWER,
+  SAVE_QUIZ,
+  GET_QUIZ,
+  ////
+  ADD_IMAGE,
+  CLEAR_ERROR,
+  SEND_ERROR,
+  SHOW_ERROR,
+  //
+  ACTION_ADD_NEW_ANSWER,
+  ACTION_ADD_QUIZ_QUESTION,
+  ACTION_CHANGE_CREATE_QUIZ_CATEGORY,
+  ACTION_CHANGE_CREATE_QUIZ_DESCRIPTION,
+  ACTION_CHANGE_CREATE_QUIZ_DIFFICULTY,
+  ACTION_CHANGE_CREATE_QUIZ_TITLE,
+  ACTION_CHANGE_CREATE_QUIZ_TYPE,
+  ACTION_CLEAR_VALUES,
+  ACTION_PREVIOUS_QUESTION,
+  ACTION_PREVIOUS_QUIZ_INFORMATION,
+  ACTION_SAVE_QUIZ,
+  ACTION_SET_ANSWER,
+  ACTION_SET_CLEAR_CREATE_QUIZ,
+  ACTION_SET_QUESTION,
+  ACTION_TRUE_OR_FALSE_ACTION,
+} from "../../types";
 
-// export const addImage = async (data, photoType) => {
-//   const datas = await axios.post("/upload-image", data, photoType, {});
+export const addImage = (data, photoType) => {
+  return async (dispatch) => {
+    const datas = await axios.post("/upload-image", data, photoType, {});
+    dispatch({
+      type: ADD_IMAGE,
+      imageData: datas.data,
+    });
+  };
+};
 
-//   if (photoType === "profile-photo") {
-//     await axios.post("/users/image", datas.data, {});
-//   } else {
-//     getImageInformation(datas.data);
-//   }
-// };
+export const clearError = (dispatch) => {
+  dispatch({
+    type: CLEAR_ERROR,
+  });
+};
 
 // export const addNewAnswer = () => ({
 //   type: ACTION_ADD_NEW_ANSWER,
 // });
 
-// export const addQuizInformation = (
-//   title,
-//   description,
-//   category,
-//   type,
-//   difficulty
-// ) => {
-//   (dispatch) => {
-//     if (
-//       title === "" ||
-//       description === "" ||
-//       category === "" ||
-//       type === "" ||
-//       difficulty === ""
-//     ) {
-//       sendError(
-//         "Plese don't leave empty and add something for the requirement places"
-//       );
-//     } else {
-//       dispatch({
-//         type: ACTION_ADD_QUIZ_INFORMATION,
-//       });
-//     }
-//   };
-// };
+export const addInformation = (value) => ({
+  type: ADD_INFORMATION,
+  value,
+});
+
+export const setStep = (value) => ({
+  type: SET_STEP,
+  value,
+});
+
+export const showError = (error) => {
+  return (dispatch) => {
+    dispatch({
+      type: SHOW_ERROR,
+      error,
+    });
+    setTimeout(() => {
+      clearError(dispatch);
+    }, 3000);
+  };
+};
+
+export const templateQuestion = (value) => ({
+  type: TEMPLATE_QUESTION,
+  value,
+});
+
+export const templateAnswers = (value, index) => ({
+  type: TEMPLATE_ANSWERS,
+  value,
+  index,
+});
+
+export const newAnswer = () => ({
+  type: NEW_ANSWER,
+});
+
+export const saveQuiz = (quiz) => {
+  try {
+    return async (dispatch) => {
+      const data = {
+        quizImage: quiz.avatar,
+        quizTitle: quiz.quizTitle,
+        quizDescription: quiz.quizDescription,
+        quizCategory: quiz.quizCategory,
+        quizType: quiz.quizType,
+        quizDifficulty: quiz.quizDifficulty,
+        quizQuestions: quiz.quizQuestions,
+      };
+      await axios.post("/quiz", data);
+
+      dispatch({
+        type: SAVE_QUIZ,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const chooseAnswer = (index) => ({
+  type: CHOOSE_ANSWER,
+  index,
+});
+
+export const getQuiz = (id) => {
+  return async (dispatch) => {
+    const response = await axios.get(`/quiz/${id}`);
+    dispatch({
+      type: GET_QUIZ,
+      quiz: response.data,
+    });
+  };
+};
 
 // export const addQuizQuestion = (question, answers, correct) => {
 //   (dispatch) => {
@@ -98,26 +163,26 @@
 //   value,
 // });
 
-// export const sendError = (error) => {
-//   (dispatch) => {
-//     dispatch({
-//       type: ACTION_SEND_ERROR,
-//       error,
-//     });
-//     setTimeout(() => {
-//       dispatch({
-//         type: ACTION_CLEAR_ERROR,
-//       });
-//     }, 3000);
-//   };
-// };
+export const sendError = (error) => {
+  return (dispatch) => {
+    dispatch({
+      type: SEND_ERROR,
+      error,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: CLEAR_ERROR,
+      });
+    }, 3000);
+  };
+};
 
 // export const clearValues = () => ({
 //   type: ACTION_CLEAR_VALUES,
 // });
 
 // export const getImageInformation = (imageData) => ({
-//   type: ACTION_GET_IMAGE_INFORMATION,
+//   type: GET_IMAGE,
 //   imageData,
 // });
 

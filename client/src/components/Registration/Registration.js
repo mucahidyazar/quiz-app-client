@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import RegistrationContext from "../../context/registration/registrationContext";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
@@ -15,24 +15,38 @@ const Registration = ({
   sectionRegister,
   history,
 }) => {
+  const [activeTab, setActiveTab] = useState("login");
+
+  useEffect(() => {
+    if (user) {
+      history.push("/");
+    }
+  }, [user]);
+
   return (
     <div className="section__registration">
       <div className="registration">
         <div className="registration__header">
           <div
-            className={`registration__header--login registration__header--${sectionLogin}`}
-            onClick={() => setLoginRegisterActive("login")}
+            className={
+              "registration__header--login " +
+              (activeTab === "login" ? "registration__header--active" : "")
+            }
+            onClick={() => setActiveTab("login")}
           >
             Login
           </div>
           <div
-            className={`registration__header--register registration__header--${sectionRegister}`}
-            onClick={() => setLoginRegisterActive("register")}
+            className={
+              "registration__header--register " +
+              (activeTab === "register" ? "registration__header--active" : "")
+            }
+            onClick={() => setActiveTab("register")}
           >
             Register
           </div>
         </div>
-        {sectionLogin === "active" ? <Login /> : <Register />}
+        {activeTab === "login" ? <Login /> : <Register />}
       </div>
     </div>
   );
@@ -46,4 +60,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default Registration;
+export default connect(mapStateToProps)(Registration);

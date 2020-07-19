@@ -1,123 +1,102 @@
-import React, { useContext, useState } from "react";
-import RegistrationContext from "../../context/registration/registrationContext";
-import moment from "moment";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function Settings(props) {
-  const registrationContext = useContext(RegistrationContext);
-  const { user, userUpdate } = registrationContext;
+//REDUX CONNECTION
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import { userUpdate } from "../../redux/actions";
 
+function Settings({ dispatch, history, user }) {
   if (!user) {
-    props.history.push("/");
+    history.push("/");
   }
 
-  const onUpdateUser = e => {
-    e.preventDefault();
-    userUpdate({
-      id: user._id,
-      username: username,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      birthday: birthday,
-      checkbox: checkbox
-    });
-    console.log({
-      id: user._id,
-      username: username,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      birthday: birthday,
-      checkbox: checkbox
-    });
-    props.history.push("/");
-  };
-
-  const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [checkbox, setCheckbox] = useState(false);
-
   useEffect(() => {
-    if (user) {
-      setUsername(user.username);
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
-      setEmail(user.email);
-      setPassword(user.password);
-      setBirthday(moment(user.birthday).format(moment.HTML5_FMT.DATE));
-      setCheckbox(user.checkbox);
-    }
-
-    // eslint-disable-next-line
+    setNewUserInfo({
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      newsLetter: user.newsLetter,
+      birthday: user.birthday,
+    });
   }, []);
 
-  return user ? (
+  const [newUserInfo, setNewUserInfo] = useState(null);
+
+  const handlerUpdateUser = (newItem) => {
+    setNewUserInfo({
+      newsLetter: user.newsLetter,
+      ...newUserInfo,
+      ...newItem,
+    });
+  };
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    dispatch(userUpdate(newUserInfo));
+    history.push(`/${user.username}`);
+  };
+
+  return (
     <div className="settings">
-      <form className="settings__form" onSubmit={onUpdateUser}>
+      <form className="settings__form" onSubmit={handlerSubmit}>
         <input
           type="text"
-          placeholder="Username"
+          placeholder={newUserInfo?.username || "Username"}
           name="username"
-          autoComplete="off"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e) => handlerUpdateUser({ username: e.target.value })}
         />
         <input
           type="text"
-          placeholder="Firstname"
+          placeholder={newUserInfo?.firstName || "First Name"}
           name="firstName"
-          autoComplete="off"
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
+          onChange={(e) => handlerUpdateUser({ firstName: e.target.value })}
         />
         <input
           type="text"
-          placeholder="Lastname"
+          placeholder={newUserInfo?.lastName || "Last Name"}
           name="lastName"
-          autoComplete="off"
-          value={lastName}
-          onChange={e => setLastName(e.target.value)}
+          onChange={(e) => handlerUpdateUser({ lastName: e.target.value })}
         />
         <input
           type="text"
-          placeholder="Email"
+          placeholder={newUserInfo?.email || "Email"}
           name="email"
-          autoComplete="off"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => handlerUpdateUser({ email: e.target.value })}
         />
         <input
           type="password"
           placeholder="Password"
           name="password"
-          autoComplete="off"
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => handlerUpdateUser({ password: e.target.value })}
         />
         <input
           type="date"
           name="birthday"
-          value={birthday}
-          onChange={e => setBirthday(e.target.value)}
+          value={newUserInfo?.birthday || "1991-01-01"}
+          onChange={(e) => handlerUpdateUser({ birthday: e.target.value })}
         />
         <label htmlFor="checkbox">
           <input
             type="checkbox"
             id="checkbox"
             name="checkbox"
-            checked={checkbox}
-            onChange={e => setCheckbox(!checkbox)}
+            checked={newUserInfo?.newsLetter}
+            onChange={(e) => {
+              handlerUpdateUser({ newsLetter: !newUserInfo?.newsLetter });
+            }}
           />
           Subscribe to Newsletter
         </label>
         <button>Save</button>
       </form>
     </div>
-  ) : null;
+  );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+  };
+};
+
+export default connect(mapStateToProps)(Settings);

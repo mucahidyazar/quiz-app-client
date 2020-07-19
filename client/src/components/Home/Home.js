@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import imgQuizTime from "../../public/img/quiz-time.jpg";
 import { Link } from "react-router-dom";
@@ -6,18 +6,21 @@ import Spinner from "../Spinner/Spinner";
 
 //REDUX CONNECTION
 import { connect } from "react-redux";
+
 //REDUX ACTIONS
 import {} from "../../redux/actions";
 
 const Home = ({ quizes }) => {
-  const [randomQuiz, setRandomQuiz] = useState(quizes[0]);
-  const [randomQuizNumber, setRandomQuizNumber] = useState(0);
+  const randomQuiz = {
+    quizTitle: "New Quiz",
+    quizDescription: "New Quiz Description",
+    quizCategory: "Multiple",
+    quizType: "Multiple",
+    quizDifficulty: "hard",
+    quizDate: Date.now(),
+    quizQuestions: [1, 2, 3, 4],
+  };
 
-  useEffect(() => {
-    setRandomQuiz(quizes[0]);
-  }, [quizes]);
-
-  if (!randomQuiz) return <Spinner />;
   return (
     <section className="section__main">
       <div className="section__left">
@@ -62,7 +65,7 @@ const Home = ({ quizes }) => {
         </div>
 
         <Link
-          to={`/quizes/${randomQuizNumber}`}
+          to={`/quiz/0`}
           className={`quiz__button quiz__button--${randomQuiz.quizDifficulty}`}
         >
           Start

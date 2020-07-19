@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
+import { getCurrentQuizes } from "../../services/quizServices";
 
 //Components
 import QuizCard from "./QuizCard/QuizCard";
@@ -10,21 +11,24 @@ import InputSelect from "../Layout/InputSelect/InputSelect";
 //REDUX ACTIONS
 import {
   searchQuizes,
-  setQuizDifficulty,
+  setDifficulty,
   sortQuizes,
+  getQuizes,
 } from "../../redux/actions";
 
 const Quizes = ({ dispatch, quizes, filteredQuizes }) => {
+  useEffect(() => {
+    getCurrentQuizes().then((res) => {
+      dispatch(getQuizes(res.data));
+    });
+  }, []);
+
   const [activeNav, setActiveNav] = useState("all");
   const [sortVisibility, setSortVisibility] = useState(false);
   const [selectedSort, setSelectedSort] = useState("");
 
-  useEffect(() => {
-    activeQuizNav("all");
-  }, [quizes]);
-
   const activeQuizNav = (difficulty = "all") => {
-    dispatch(setQuizDifficulty(difficulty));
+    dispatch(setDifficulty(difficulty));
     setActiveNav(difficulty);
   };
 
@@ -113,22 +117,7 @@ const Quizes = ({ dispatch, quizes, filteredQuizes }) => {
       </div>
       <section className="quizes__board">
         {(filteredQuizes ? filteredQuizes : quizes).map((quiz, index) => (
-          <QuizCard
-            key={index + 1}
-            index={index + 1}
-            quiz={quiz.quizQuestions}
-            info={{
-              id: quiz._id,
-              quizAuthor: quiz.quizAuthor,
-              imageInformation: quiz.imageInformation,
-              title: quiz.quizTitle,
-              description: quiz.quizDescription,
-              category: quiz.quizCategory,
-              type: quiz.quizType,
-              difficulty: quiz.quizDifficulty,
-              date: moment(quizes[0].quizDate).startOf("day").fromNow(),
-            }}
-          />
+          <QuizCard key={index + 1} index={index + 1} quiz={quiz} />
         ))}
       </section>
     </div>

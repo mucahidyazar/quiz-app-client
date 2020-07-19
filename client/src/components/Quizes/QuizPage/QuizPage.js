@@ -1,192 +1,199 @@
 import React, { useState, useContext, useEffect } from "react";
-import QuizesContext from "../../../context/quizes/quizesContext";
+import axios from "../../../services/axios.js";
 
-const QuizPage = props => {
-  // CONTEXTs
-  const quizesContext = useContext(QuizesContext);
-  const { quizes } = quizesContext;
+//REDUX
+import { connect } from "react-redux";
+//REDUX ACTIONS
+import { getQuiz, newAnswer } from "../../../redux/actions";
+
+const QuizPage = ({ dispatch, history, match }) => {
+  // const [summary, setSummary] = useState({
+  //   correct: 0,
+  //   incorrect: 0,
+  //   empty: 0,
+  // });
+  const [quiz, setQuiz] = useState(null);
+  const [quizAnswers, setQuizAnswers] = useState([]);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [yourAnswers, setYourAnswers] = useState();
+  const [question, setQuestion] = useState(0);
+  const [disableJokerOne, setDisableJokerOne] = useState(false);
+  const [jokerAnswers, setJokerAnswers] = useState(null);
+  const [disableJokerTwo, setDisableJokerTwo] = useState(false);
+  const [countdown, setCountdown] = useState(60);
 
   useEffect(() => {
-    if (quizes === null) {
-      props.history.push("/quizes");
-    } else {
-      setCorrectAnswers(
-        quizes[props.match.params.id - 1].quizQuestions.map(que => {
-          return que.correct_answer;
-        })
+    const getQuiz = async () => {
+      return await axios.get(`/quiz/${match.params.id}`);
+    };
+    getQuiz().then((response) => {
+      setQuiz(response.data);
+      setQuizAnswers(
+        response.data.quizQuestions.map((item, index) => ({
+          questionIndex: index,
+          answerIndex: item.answers.findIndex(
+            (answer) => answer.answer === true
+          ),
+        }))
       );
-    }
+    });
+  }, []);
 
+  useEffect(() => {
     setInterval(() => {
-      setCountdown(prevSetCountDown => prevSetCountDown - 1);
+      setCountdown((prevSetCountDown) => prevSetCountDown - 1);
     }, 1000);
 
     return () => {
       clearInterval();
     };
-
-    // eslint-disable-next-line
   }, []);
 
-  // USESTATEs
-  const [question, setQuestion] = useState(0);
-  const [answers, setAnswers] = useState([]);
-  const [correctAnswers, setCorrectAnswers] = useState([]);
-  const [countdown, setCountdown] = useState(60);
-  const [disabledTwoOff, setDisabledTwoOff] = useState(false);
-  const [disabledTime, setDisabledTime] = useState(false);
-  const [chosenAnswer, setChosenAnswer] = useState([]);
+  // const handlerCalculate = (value) => {
+  //   if (value === true) {
+  //     setSummary({
+  //       ...summary,
+  //       correct: summary.correct++,
+  //       empty: summary.empty--,
+  //     });
+  //   } else if (value === false) {
+  //     setSummary({
+  //       ...summary,
+  //       incorrect: summary.incorrect++,
+  //       empty: summary.empty--,
+  //     });
+  //   }
+  // };
 
-  // SOME SETTINGs
-  let quiz = null;
-  let answersArray = null;
-  if (
-    quizes === null &&
-    answersArray === null &&
-    quiz[question].incorrect_answers === null
-  ) {
-    props.history.push("/quizes");
-  } else {
-    quiz = quizes[props.match.params.id - 1].quizQuestions;
+  // SOME SETTINGS
+  // if (quiz) {
+  //   history.push("/quizes");
+  // }
 
-    answersArray = [
-      ...quiz[question].incorrect_answers,
-      quiz[question].correct_answer
-    ];
-  }
-
-  // CORRECTS AND INCORRECTS
-  const corIncor = (quiz, answers) => {
-    if (answers === quiz.correct_answer) {
-      return "correct";
-    } else {
-      return "incorrect";
+  const handlerNext = () => {
+    if (question === quiz.quizQuestions.length - 1) {
+      history.push({
+        pathname: `/result/${match.params.id}`,
+        state: {
+          quiz,
+          yourAnswers,
+          quizAnswers,
+        },
+      });
     }
-  };
 
-  // SETTING ANSWER
-  const setAnswer = (value, index) => {
-    if (answers[index]) {
-      setAnswers(answers.filter((answer, i) => i !== index).concat(value));
-    } else {
-      setAnswers([...answers, value]);
-    }
-  };
-
-  // SETTING CHOSEN
-  const setChosen = (index, answer) => {
-    if (answers[index] === answer) {
-      return "chosen";
-    } else {
-      return "";
-    }
+    setSelectedAnswer(null);
+    setJokerAnswers(null);
+    setQuestion((prev) => prev + 1);
   };
 
   // PUSH RESULT PAGE
   if (countdown < 1) {
-    props.history.push({
-      pathname: `/result/${props.match.params.id}`,
+    history.push({
+      pathname: `/result/${match.params.id}`,
       state: {
-        answers,
-        correctAnswers
-      }
+        quiz,
+        yourAnswers,
+        quizAnswers,
+      },
     });
   }
 
-  // JOKERS
-  const twoOut = () => {
-    quiz = quizes[props.match.params.id - 1].quizQuestions;
-    answersArray = [
-      quiz[question].incorrect_answers[
-        Math.floor(Math.random() * quiz[question].incorrect_answers.length)
-      ],
-      quiz[question].correct_answer
-    ];
-    setChosenAnswer(answersArray);
+  const handlerJokerOne = () => {
+    const que = quiz.quizQuestions[question];
+    const corAnswer = que.answers.filter((answer) => answer.answer === true);
+    const incorAnswers = que.answers.filter(
+      (answer) => answer.answer === false
+    );
+    const choAnswer = incorAnswers.splice(
+      Math.round(Math.random() * 10) - 7,
+      1
+    );
+    const newAnswers = [...choAnswer, ...corAnswer];
+    setJokerAnswers(newAnswers);
+    setDisableJokerOne(true);
   };
 
-  const onClickTwoOut = () => {
-    twoOut();
-    setDisabledTwoOff(true);
+  const handlerJokerTwo = () => {
+    setCountdown((prev) => prev + 15);
+    setDisableJokerTwo(true);
   };
 
-  const onClickPlus15Seconds = () => {
-    setCountdown(countdown + 15);
-    setDisabledTime(true);
-  };
+  // // NEXT QUESTION
+  // const onClickNext = () => {
+  //   if (!answers[question]) {
+  //     setAnswers([...answers, "PASS"]);
+  //   }
+  //   if (question > quiz.length - 2) {
+  //     props.history.push({
+  //       pathname: `/result/${props.match.params.id}`,
+  //       state: {
+  //         answers,
+  //         correctAnswers,
+  //         id: quizes[props.match.params.id - 1]._id,
+  //       },
+  //     });
+  //   } else {
+  //     setQuestion(question + 1);
+  //     setCountdown(countdown + 15);
+  //     setChosenAnswer([]);
+  //   }
+  // };
 
-  // NEXT QUESTION
-  const onClickNext = () => {
-    if (!answers[question]) {
-      setAnswers([...answers, "PASS"]);
+  useEffect(() => {
+    if (quiz?.quizQuestions.length) {
+      setYourAnswers(new Array(quiz?.quizQuestions?.length));
     }
-    if (question > quiz.length - 2) {
-      props.history.push({
-        pathname: `/result/${props.match.params.id}`,
-        state: {
-          answers,
-          correctAnswers,
-          id: quizes[props.match.params.id - 1]._id
-        }
-      });
-    } else {
-      setQuestion(question + 1);
-      setCountdown(countdown + 15);
-      setChosenAnswer([]);
-    }
-  };
+  }, [quiz]);
 
-  // ANSWER SECTION
   const answerSection = () => {
-    if (chosenAnswer.length > 1) {
-      return chosenAnswer.map((answerArray, index) => (
-        <div
-          className={`section__answers ${corIncor(
-            quiz[question],
-            answerArray
-          )} ${setChosen(question, answerArray)}`}
-          key={index}
-          onClick={e => setAnswer(e.target.innerHTML, question)}
-        >
-          {answerArray}
-        </div>
-      ));
-    } else {
-      return answersArray.map((answerArray, index) => (
-        <div
-          className={`section__answers ${corIncor(
-            quiz[question],
-            answerArray
-          )} ${setChosen(question, answerArray)}`}
-          key={index}
-          onClick={e => setAnswer(e.target.innerHTML, question)}
-        >
-          {answerArray}
-        </div>
-      ));
-    }
+    return (jokerAnswers || quiz.quizQuestions[question].answers).map(
+      (answer, index) => {
+        return (
+          <div
+            className={
+              "section__answers " + (selectedAnswer === index ? "chosen" : "")
+            }
+            key={index}
+            onClick={(e) => {
+              setSelectedAnswer(index);
+              setYourAnswers((prev) => {
+                const data = [...prev];
+                data[question] = index;
+                prev = data;
+                return prev;
+              });
+            }}
+          >
+            {answer.value}
+          </div>
+        );
+      }
+    );
   };
 
-  return quizes ? (
+  return quiz && yourAnswers ? (
     <div className="section__quizpage">
       <div className="section__information">
         <div className="section__information-countdown">{countdown}</div>
       </div>
-      <div className="section__question">{quiz[question].question}</div>
+      <div className="section__question">
+        {quiz.quizQuestions[question].question}
+      </div>
       <div className="section__answers">{answerSection()}</div>
       <div className="section__buttons">
         <div className="jokers">
           <button
-            className={`jokers__half ${disabledTwoOff ? "disabled" : ""}`}
-            disabled={disabledTwoOff}
-            onClick={onClickTwoOut}
+            className={`jokers__half ${disableJokerOne ? "disabled" : ""}`}
+            disabled={disableJokerOne}
+            onClick={handlerJokerOne}
           >
             <i className="fas fa-hands-helping"></i> 2 OUT
           </button>
           <button
-            className={`jokers__time ${disabledTime ? "disabled" : ""}`}
-            disabled={disabledTime}
-            onClick={onClickPlus15Seconds}
+            className={`jokers__time ${disableJokerTwo ? "disabled" : ""}`}
+            disabled={disableJokerTwo}
+            onClick={handlerJokerTwo}
           >
             <i className="far fa-clock"></i> +15
           </button>
@@ -195,13 +202,19 @@ const QuizPage = props => {
           <div className="section__buttons-finish">
             <i className="fas fa-times-circle"></i> FINISH
           </div>
-          <div className="section__buttons-next" onClick={onClickNext}>
+          <div className="section__buttons-next" onClick={handlerNext}>
             <i className="fas fa-arrow-circle-right"></i> NEXT
           </div>
         </div>
       </div>
     </div>
-  ) : null;
+  ) : (
+    <p>Loading...</p>
+  );
 };
 
-export default QuizPage;
+const mapStateToProps = (state) => ({
+  quiz: state.quiz.selectedQuiz,
+});
+
+export default connect(mapStateToProps)(QuizPage);

@@ -14,7 +14,9 @@ export default function ProfileQuizes({ userQuizes }) {
             </div>
           ))}
         </div>
-      ) : null}
+      ) : (
+        <p>There is no quiz</p>
+      )}
     </div>
   );
 }

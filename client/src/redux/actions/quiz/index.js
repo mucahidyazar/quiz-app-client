@@ -1,45 +1,26 @@
-import axios from "../../../axios-orders";
+import axios from "../../../services/axios";
 import {
-  ACTION_GET_QUIZES,
-  ACTION_GET_QUIZ_SCOREBOARD,
-  ACTION_GET_USER_QUIZES,
-  ACTION_SET_QUIZ_DIFFICUTY,
-  ACTION_SET_VALID_QUIZES,
-  ACTION_SEARCH_QUIZES,
-  ACTION_SORT_QUIZES,
+  GET_QUIZES,
+  DELETE_QUIZ,
+  SET_DIFFICULTY,
+  GET_QUIZ_SCOREBOARD,
+  SEARCH_QUIZES,
+  SORT_QUIZES,
+  SAVE_QUIZ,
 } from "../../types";
 
-export const deleteQuiz = (quizId) => {
-  try {
-    axios.delete(`/quiz/${quizId}`);
-    getQuizes();
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const getQuizes = () => {
-  return async (dispatch) => {
-    const quizes = await axios.get("quizes");
-    dispatch({
-      type: ACTION_GET_QUIZES,
-      quizes: quizes.data,
-    });
-  };
-};
-
-export const getQuizScoreboard = (quizScoreboard) => ({
-  type: ACTION_GET_QUIZ_SCOREBOARD,
-  quizScoreboard,
+export const getQuizes = (quizes) => ({
+  type: GET_QUIZES,
+  quizes,
 });
 
-export const getUserQuizes = (id) => {
+export const deleteQuiz = (id) => {
   return async (dispatch) => {
     try {
-      const userQuizes = await axios.get(`/quizes/${id}`);
+      await axios.delete(`/quiz/${id}`);
       dispatch({
-        type: ACTION_GET_USER_QUIZES,
-        userQuizes: userQuizes.data,
+        type: DELETE_QUIZ,
+        id,
       });
     } catch (err) {
       console.error(err);
@@ -47,22 +28,38 @@ export const getUserQuizes = (id) => {
   };
 };
 
+export const getQuizScoreboard = (quizScoreboard) => ({
+  type: GET_QUIZ_SCOREBOARD,
+  quizScoreboard,
+});
+
 export const searchQuizes = (value) => ({
-  type: ACTION_SEARCH_QUIZES,
+  type: SEARCH_QUIZES,
   value,
 });
 
-export const setQuizDifficulty = (difficult) => ({
-  type: ACTION_SET_QUIZ_DIFFICUTY,
+export const setDifficulty = (difficult) => ({
+  type: SET_DIFFICULTY,
   difficult,
 });
 
-export const setValidQuizes = (quizes) => ({
-  type: ACTION_SET_VALID_QUIZES,
-  quizes,
-});
-
 export const sortQuizes = (by) => ({
-  type: ACTION_SORT_QUIZES,
+  type: SORT_QUIZES,
   by,
 });
+
+export const savePoint = (quizId, correct, incorrect, empty) => {
+  return async (dispatch) => {
+    try {
+      await axios.post("/scoreboard", {
+        quizId,
+        correct,
+        incorrect,
+        empty,
+      });
+      //return dispatch({});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

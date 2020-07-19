@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import defaultUser from "../../public/png/default-user.png";
 import quizImage from "../../public/img/quiz-time.jpg";
@@ -13,8 +13,6 @@ const Leaderboard = ({
   specialQuizScoreboard,
   users,
 }) => {
-  useEffect(() => {}, [quizes]);
-
   const onSearchQuizes = (e) => {
     dispatch(searchQuizes(e.target.value));
     if (e.target.value === "") {
