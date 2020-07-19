@@ -4,7 +4,6 @@ import React from "react";
 import { connect } from "react-redux";
 //REDUX ACTIONS
 import { addInformation } from "../../../redux/actions";
-import { addImage } from "../../../redux/actions/create";
 
 const QuizInformation = ({ dispatch, quiz, handlerSetNextStep }) => {
   const handlerInput = (value) => {

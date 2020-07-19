@@ -1,17 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../../../services/axios.js";
 
 //REDUX
 import { connect } from "react-redux";
 //REDUX ACTIONS
-import { getQuiz, newAnswer } from "../../../redux/actions";
+import {} from "../../../redux/actions";
 
 const QuizPage = ({ dispatch, history, match }) => {
-  // const [summary, setSummary] = useState({
-  //   correct: 0,
-  //   incorrect: 0,
-  //   empty: 0,
-  // });
   const [quiz, setQuiz] = useState(null);
   const [quizAnswers, setQuizAnswers] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState(null);

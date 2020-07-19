@@ -1,5 +1,4 @@
 import React from "react";
-import CreateQuizContext from "../../../context/createQuiz/createQuizContext";
 
 //REDUX CONNECTION
 import { connect } from "react-redux";

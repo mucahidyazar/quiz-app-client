@@ -2,55 +2,62 @@ const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema({
   profilePhoto: {
-    type: Object
+    type: Object,
   },
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   firstName: {
-    type: String
+    type: String,
   },
   lastName: {
-    type: String
+    type: String,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   birthday: {
-    type: Date
+    type: Date,
   },
   checkbox: {
-    type: Boolean
+    type: Boolean,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   totalQuiz: {
-    type: Number
+    type: Number,
+    default: 0,
   },
   totalCompleted: {
-    type: Number
+    type: Number,
+    default: 0,
   },
   totalSolved: {
-    type: Number
+    type: Number,
+    default: 0,
   },
   totalTrue: {
-    type: Number
+    type: Number,
+    default: 0,
   },
   totalPass: {
-    type: Number
+    type: Number,
+    default: 0,
   },
   totalFalse: {
-    type: Number
+    type: Number,
+    default: 0,
   },
   totalPoint: {
-    type: Number
-  }
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("user", UserSchema);

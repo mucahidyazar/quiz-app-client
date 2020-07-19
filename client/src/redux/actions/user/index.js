@@ -1,5 +1,4 @@
 import axios from "../../../services/axios";
-import setAuthToken from "../../../utils/setAuthToken";
 import {
   UPDATE_USER,
   CLEAR_ERRORS,
@@ -22,7 +21,7 @@ export const getUser = (user) => ({
 export const addAvatar = (data) => {
   return async (dispatch) => {
     try {
-      const avatar = await axios.post("user/upload-avatar", data);
+      await axios.post("user/upload-avatar", data);
     } catch (error) {
       console.log(error);
     }

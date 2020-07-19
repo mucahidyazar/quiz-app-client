@@ -12,12 +12,7 @@ function Settings({ dispatch, history, user }) {
 
   useEffect(() => {
     setNewUserInfo({
-      username: user.username,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      newsLetter: user.newsLetter,
-      birthday: user.birthday,
+      ...user,
     });
   }, []);
 

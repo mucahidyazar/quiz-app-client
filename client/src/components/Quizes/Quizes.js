@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import moment from "moment";
 import { getCurrentQuizes } from "../../services/quizServices";
 
 //Components

@@ -18,14 +18,12 @@ router.get("/", async (req, res) => {
 router.post(
   "/",
   [
-    check("username", "Please add username")
-      .not()
-      .isEmpty(),
+    check("username", "Please add username").not().isEmpty(),
     check("email", "Please include a valid email").isEmail(),
     check(
       "password",
       "Please enter a password with 6 or more characters"
-    ).isLength({ min: 6 })
+    ).isLength({ min: 6 }),
   ],
   async (req, res) => {
     res.header(
@@ -53,7 +51,7 @@ router.post(
           totalTrue: 0,
           totalPass: 0,
           totalFalse: 0,
-          totalPoint: 0
+          totalPoint: 0,
         });
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
@@ -61,14 +59,14 @@ router.post(
 
         const payload = {
           user: {
-            id: user.id
-          }
+            id: user.id,
+          },
         };
         jwt.sign(
           payload,
           config.get("jwtSecret"),
           {
-            expiresIn: 3600
+            expiresIn: 3600,
           },
           (err, token) => {
             if (err) throw err;
@@ -100,7 +98,7 @@ router.put("/", auth, async (req, res) => {
     totalQuiz = count;
   });
 
-  User.findById(req.user.id, function(err, doc) {
+  User.findById(req.user.id, function (err, doc) {
     if (err) throw err;
     doc.totalCompleted = doc.totalCompleted + 1;
     totalSolved && (doc.totalSolved = doc.totalSolved + totalSolved);
@@ -116,7 +114,7 @@ router.put("/", auth, async (req, res) => {
   });
 });
 
-router.put("/:id", auth, async function(req, res) {
+router.put("/:id", auth, async function (req, res) {
   res.header(
     "Accept",
     "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
@@ -129,7 +127,7 @@ router.put("/:id", auth, async function(req, res) {
     email,
     password,
     birthday,
-    checkbox
+    checkbox,
   } = req.body;
 
   try {
@@ -159,13 +157,13 @@ router.post("/image", auth, (req, res) => {
     "Content-Type, Authorization, Content-Length, X-Requested-With, x-auth-token"
   );
   User.findById(req.user.id, async (err, user) => {
-    if (user.profilePhoto !== null) {
+    if (user.profilePhoto) {
       fs.unlink(
         path.join(
           __dirname,
           `../client/public/img/${user.profilePhoto.filename}`
         ),
-        err => {
+        (err) => {
           console.error(err);
         }
       );

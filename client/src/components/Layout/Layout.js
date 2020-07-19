@@ -13,13 +13,11 @@ import Settings from "../Settings/Settings";
 import QuizPage from "../Quizes/QuizPage/QuizPage";
 import ResultPage from "../Quizes/ResultPage/ResultPage";
 import Registration from "../Registration/Registration";
-import Spinner from "../Spinner/Spinner";
 
 //REDUX CONNECTION
 import { connect } from "react-redux";
 //REDUX ACTIONS
 import { getUser, getQuizes } from "../../redux/actions";
-import { user } from "../../redux/reducers/user";
 
 const Layout = ({ dispatch }) => {
   useEffect(() => {

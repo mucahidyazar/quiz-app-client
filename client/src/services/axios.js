@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: "https://quiz-app-servr.herokuapp.com/",
   //proxy: 4000,
 });
 

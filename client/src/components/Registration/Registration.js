@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import RegistrationContext from "../../context/registration/registrationContext";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
 
 //REDUX
 import { connect } from "react-redux";
 //REDUX ACTIONS
-import { setLoginRegisterActive } from "../../redux/actions";
+import {} from "../../redux/actions";
 
 const Registration = ({
   dispatch,

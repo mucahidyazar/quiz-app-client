@@ -1,4 +1,4 @@
-import axios from "../../../axios-orders";
+import axios from "../../../services/axios";
 import { GET_IMAGE } from "../../types";
 
 export const addImage = (data, photoType) => {

@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import Joi from "joi-browser";
 import Form from "../../common/Form";
-import setAuthToken from "../../../utils/setAuthToken";
 
 //REDUX
 import { connect } from "react-redux";

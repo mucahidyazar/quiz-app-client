@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React from "react";
 //Components
 import CreateQuizInformation from "./CreateQuizInformation/CreateQuizInformation";
 import CreateQuizQuestions from "./CreateQuizQuestions/CreateQuizQuestions";

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import moment from "moment";
 import imgQuizTime from "../../public/img/quiz-time.jpg";
 import { Link } from "react-router-dom";
-import Spinner from "../Spinner/Spinner";
 
 //REDUX CONNECTION
 import { connect } from "react-redux";

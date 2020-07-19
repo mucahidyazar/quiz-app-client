@@ -6,7 +6,6 @@ import {
   GET_QUIZ_SCOREBOARD,
   SEARCH_QUIZES,
   SORT_QUIZES,
-  SAVE_QUIZ,
 } from "../../types";
 
 export const getQuizes = (quizes) => ({
