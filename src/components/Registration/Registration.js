@@ -17,10 +17,10 @@ const Registration = ({
   const [activeTab, setActiveTab] = useState("login");
 
   useEffect(() => {
-    if (user) {
+    if (user && history) {
       history.push("/");
     }
-  }, [user]);
+  }, [user, history]);
 
   return (
     <div className="section__registration">

@@ -216,12 +216,6 @@ export const create = (state = initialState, action) => {
         selectedQuiz: action.quiz,
       };
 
-    case CLEAR_ERROR:
-      return {
-        ...state,
-        error: "",
-      };
-
     case SEND_ERROR:
       return {
         ...state,

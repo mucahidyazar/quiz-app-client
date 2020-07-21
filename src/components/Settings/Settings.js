@@ -11,10 +11,12 @@ function Settings({ dispatch, history, user }) {
   }
 
   useEffect(() => {
-    setNewUserInfo({
-      ...user,
-    });
-  }, []);
+    if (user) {
+      setNewUserInfo({
+        ...user,
+      });
+    }
+  }, [user]);
 
   const [newUserInfo, setNewUserInfo] = useState(null);
 

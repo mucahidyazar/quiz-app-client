@@ -16,13 +16,6 @@ function ResultPage({ dispatch, location, history }) {
     empty: 0,
   });
 
-  useEffect(() => {
-    if (yourAnswers.length) {
-      console.log("handle");
-      handleTrue();
-    }
-  }, [yourAnswers]);
-
   const handleTrue = () => {
     yourAnswers.forEach((answer, index) => {
       if (quizAnswers[index].answerIndex === answer) {
@@ -59,6 +52,12 @@ function ResultPage({ dispatch, location, history }) {
     history.push("/");
   };
 
+  useEffect(() => {
+    if (yourAnswers.length) {
+      handleTrue();
+    }
+  });
+
   return (
     <div className="resultpage">
       <div className="resultpage-tfp">
@@ -84,10 +83,10 @@ function ResultPage({ dispatch, location, history }) {
         </div>
       </div>
       <div className="resultpage__options">
-        <a onClick={handlerSavePoint}>
+        <Link to="/scoreboard" onClick={handlerSavePoint}>
           <i className="fas fa-thumbtack"></i>
           <span>Save Your Score</span>
-        </a>
+        </Link>
         <Link to="/" onClick={handleReturnHome}>
           <i className="fas fa-home"></i>
           <span>Home</span>

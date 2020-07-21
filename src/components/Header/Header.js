@@ -77,7 +77,7 @@ const Header = ({ dispatch, user }) => {
                   <Link
                     to="/home"
                     className="nav__options--logout"
-                    onClick={() => logout()}
+                    onClick={() => dispatch(logout())}
                   >
                     <i className="fas fa-sign-out-alt"></i>Logout
                   </Link>

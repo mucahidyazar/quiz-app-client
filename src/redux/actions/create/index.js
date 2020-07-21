@@ -72,8 +72,8 @@ export const newAnswer = () => ({
 });
 
 export const saveQuiz = (quiz) => {
-  try {
-    return async (dispatch) => {
+  return async (dispatch) => {
+    try {
       const data = {
         quizImage: quiz.avatar,
         quizTitle: quiz.quizTitle,
@@ -88,10 +88,10 @@ export const saveQuiz = (quiz) => {
       dispatch({
         type: SAVE_QUIZ,
       });
-    };
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 export const chooseAnswer = (index) => ({

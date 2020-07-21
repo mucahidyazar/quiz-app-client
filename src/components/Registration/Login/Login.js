@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
-import Joi from "joi-browser";
+import Joi from "@hapi/joi";
 import Form from "../../common/Form";
 
 //REDUX
@@ -17,15 +18,15 @@ class Login extends Form {
   };
 
   schema = {
-    email: Joi.string().required().label("Email"),
+    email: Joi.string().required().label("Email"), //label('Username') yaparak normalde "username" is not allowed to be empty gosterecegi hatadaki username'yi buyuk harfle baslatiyor
     password: Joi.string().required().label("Password"),
   };
 
   doSomething = (e) => {
     this.props.dispatch(
       login({
-        email: e.target.elements.email.value,
-        password: e.target.elements.password.value,
+        email: this.state.data.email,
+        password: this.state.data.password,
       })
     );
   };

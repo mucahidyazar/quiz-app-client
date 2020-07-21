@@ -17,10 +17,12 @@ import {
 
 const Quizes = ({ dispatch, quizes, filteredQuizes }) => {
   useEffect(() => {
-    getCurrentQuizes().then((res) => {
-      dispatch(getQuizes(res.data));
-    });
-  }, []);
+    if (dispatch) {
+      getCurrentQuizes().then((res) => {
+        dispatch(getQuizes(res.data));
+      });
+    }
+  }, [dispatch]);
 
   const [activeNav, setActiveNav] = useState("all");
   const [sortVisibility, setSortVisibility] = useState(false);

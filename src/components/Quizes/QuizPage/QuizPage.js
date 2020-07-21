@@ -17,33 +17,6 @@ const QuizPage = ({ dispatch, history, match }) => {
   const [disableJokerTwo, setDisableJokerTwo] = useState(false);
   const [countdown, setCountdown] = useState(60);
 
-  useEffect(() => {
-    const getQuiz = async () => {
-      return await axios.get(`/quiz/${match.params.id}`);
-    };
-    getQuiz().then((response) => {
-      setQuiz(response.data);
-      setQuizAnswers(
-        response.data.quizQuestions.map((item, index) => ({
-          questionIndex: index,
-          answerIndex: item.answers.findIndex(
-            (answer) => answer.answer === true
-          ),
-        }))
-      );
-    });
-  }, []);
-
-  useEffect(() => {
-    setInterval(() => {
-      setCountdown((prevSetCountDown) => prevSetCountDown - 1);
-    }, 1000);
-
-    return () => {
-      clearInterval();
-    };
-  }, []);
-
   // const handlerCalculate = (value) => {
   //   if (value === true) {
   //     setSummary({
@@ -140,6 +113,33 @@ const QuizPage = ({ dispatch, history, match }) => {
       setYourAnswers(new Array(quiz?.quizQuestions?.length));
     }
   }, [quiz]);
+
+  useEffect(() => {
+    const getQuiz = async () => {
+      return await axios.get(`/quiz/${match.params.id}`);
+    };
+    getQuiz().then((response) => {
+      setQuiz(response.data);
+      setQuizAnswers(
+        response.data.quizQuestions.map((item, index) => ({
+          questionIndex: index,
+          answerIndex: item.answers.findIndex(
+            (answer) => answer.answer === true
+          ),
+        }))
+      );
+    });
+  }, [match]);
+
+  useEffect(() => {
+    setInterval(() => {
+      setCountdown((prevSetCountDown) => prevSetCountDown - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval();
+    };
+  }, []);
 
   const answerSection = () => {
     return (jokerAnswers || quiz.quizQuestions[question].answers).map(

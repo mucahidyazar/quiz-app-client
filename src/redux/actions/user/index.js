@@ -77,14 +77,15 @@ export const logout = () => ({
   type: LOGOUT,
 });
 
-export const register = (registerObject) => {
+export const register = (data) => {
   return async (dispatch) => {
     try {
-      const newUser = await axios.post("user", registerObject);
+      const response = await axios.post("user", data);
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: newUser.data,
+        payload: response.data,
       });
+      localStorage.setItem("token", response.data.token);
     } catch (error) {
       dispatch({
         type: REGISTER_FAIL,

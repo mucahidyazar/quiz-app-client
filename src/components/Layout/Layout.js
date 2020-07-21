@@ -21,13 +21,15 @@ import { getUser, getQuizes } from "../../redux/actions";
 
 const Layout = ({ dispatch }) => {
   useEffect(() => {
-    getCurrentUser().then((res) => {
-      dispatch(getUser(res.data.user));
-    });
-    getCurrentQuizes().then((res) => {
-      dispatch(getQuizes(res.data));
-    });
-  }, []);
+    if (localStorage.getItem("token")) {
+      getCurrentUser().then((res) => {
+        dispatch(getUser(res.data.user));
+      });
+      getCurrentQuizes().then((res) => {
+        dispatch(getQuizes(res.data));
+      });
+    }
+  }, [dispatch]);
 
   return (
     <div className="container">

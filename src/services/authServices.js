@@ -1,6 +1,8 @@
 import axios from "./axios";
 
-axios.setToken(getToken());
+if (getToken()) {
+  axios.setToken(getToken());
+}
 
 export async function getCurrentUser() {
   return await axios.get("/user/me");
